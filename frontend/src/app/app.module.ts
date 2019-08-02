@@ -10,43 +10,23 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
-import {
-  MatAutocompleteModule,
-  MatDatepickerModule,
-  MatRadioModule,
-  MatSlideToggleModule,
-  MatSliderModule,
-  MatMenuModule,
-  MatGridListModule,
-  MatSidenavModule,
-  MatStepperModule,
-  MatPaginatorModule,
-  MatSortModule,
-  MatTableModule,
-  MatSnackBarModule,
-  MatTooltipModule,
-  MatDialogModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatChipsModule,
-  MatButtonToggleModule,
-  MatExpansionModule,
-  MatTabsModule,
-  MatNativeDateModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule, MatFormFieldModule
-} from '@angular/material';
+import {MatAutocompleteModule,MatDatepickerModule,MatRadioModule,MatSlideToggleModule,MatSliderModule,MatMenuModule,MatGridListModule,MatSidenavModule,MatStepperModule,MatPaginatorModule,MatSortModule,MatTableModule,MatSnackBarModule,MatTooltipModule,MatDialogModule,MatProgressBarModule,MatProgressSpinnerModule,MatChipsModule,MatButtonToggleModule,MatExpansionModule,MatTabsModule,MatNativeDateModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule, MatFormFieldModule} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignupComponentComponent } from './signup-component/signup-component.component';
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/Title',    pathMatch: 'full'},
   { path: 'Title', component: TitleComponentComponent},
+  { path: 'Signup', component: SignupComponentComponent},
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    TitleComponentComponent
+    TitleComponentComponent,
+    SignupComponentComponent
   ],
   imports: [
     BrowserModule,
