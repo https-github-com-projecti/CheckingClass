@@ -1,57 +1,48 @@
-html{
-    height:50em;
-    width:auto;
-    background-image: url('../../assets/Title_1.jpg');
-    /* background-repeat: repeat; */
-    background-size: 100%;
+body {
+    font-size: 10px;
+    font-family: Arial,Helvetica,sans-serif;
 }
-/* .header {
-    padding: 10px;
-    text-align: center;
-    background: #1abc9c;
-    color: white;
-    font-size: 20px;
-} */
+
+div {
+    display: block;
+}
 
 * {box-sizing: border-box}
 
-.container{
-    float: left;
-    padding: 0;
-    margin-left: 0;
-    width: auto;
-    height: auto; 
-    /* background-color: black; */
-} 
+.siteBackground {
+    width: 100%;
+    position: absolute;
+    background-image: url(../../assets/Title_1.jpg);
+    background-position: center;
+    background-position-y: -450px;
+}
 
-.button_title_start{
-    margin-top: 4cm;
-    margin-left: 16.2cm;
-}
-.panel_login{
-    background-color: chartreuse;
-    width: 0;
-    height: auto;
-    margin-left: 30cm;
-    margin-top: 1cm; 
-}
-.button_title_login{
-    background-color: transparent;
-    padding: 5px;
-    padding-right: 1cm;
-    padding-left: 1cm;
-    border-block-color: black;
-    border-radius: 25px;
-    color: black;
-    font-size: 20px;
-    font-style: inherit;
-    /* font-family: monospace; */
-    font-weight: 550
-}
-.panel_icon{
+.panel_title_top{
     /* background-color: blue; */
-    width: 8.7cm;
-    height: 4.4cm;
-    margin-left: 13.1cm;
-    margin-top: 4.35cm;
+    width: 100%;
+    position: absolute;
+}
+
+.panel_title_Start{
+    /* background-color: blue; */
+    width: 100%;
+    position: absolute;
+    text-align: center;
+}
+
+.title_button_login{
+    padding: 8px 30px;
+    font-size: 25px;
+    border-radius: 30px;
+}
+
+.panel_title_top_img{
+    background-color: white;
+    width: 100%;
+    position: absolute;
+}
+
+.button_title_startnow{
+    font-size: 30px;
+    border-radius: 30px;
 }
