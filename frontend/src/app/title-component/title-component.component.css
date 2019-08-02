@@ -46,3 +46,13 @@ div {
     font-size: 30px;
     border-radius: 30px;
 }
+
+.panel_title_data{
+    width: 100%;
+    position: absolute;
+}
+
+hr{
+    border: 2px solid rgba(58, 48, 48, 0.178);
+    /* margin-bottom: 25px; */
+}
