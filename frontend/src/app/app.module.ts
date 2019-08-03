@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TitleComponentComponent } from './title-component/title-component.component';
-
 import { RouterModule,Routes } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -15,18 +14,21 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponentComponent } from './signup-component/signup-component.component';
+import { LoginComponentComponent } from './login-component/login-component.component';
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/Title',    pathMatch: 'full'},
   { path: 'Title', component: TitleComponentComponent},
   { path: 'Signup', component: SignupComponentComponent},
+  { path: 'Login', component: LoginComponentComponent},
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
     TitleComponentComponent,
-    SignupComponentComponent
+    SignupComponentComponent,
+    LoginComponentComponent
   ],
   imports: [
     BrowserModule,

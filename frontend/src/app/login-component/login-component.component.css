@@ -1,0 +1,50 @@
+.login_siteblackground{
+    position: absolute;
+    /* background-color: yellowgreen; */
+    width: 1366px;
+    height: 600px;
+    left: 0px;
+    top: 0px;
+}
+
+div{
+    display: block;
+}
+
+body {
+    font-size: 10px;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+* {box-sizing: border-box}
+
+.panel_site_input{
+    text-align: center;
+}
+
+.input-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 485.25px;
+    /* margin-top: 20px; */
+    margin-left: 88px;
+}
+
+.input-full-width{
+    width: 90%;
+    font-size: 18px;
+    margin-left: 60px;
+}
+
+.button-form {
+    border-radius: 25px;
+    width: 90px;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.login_icon{
+    margin-top: 12px;
+    position: absolute;
+    font-size: 48px;
+}
