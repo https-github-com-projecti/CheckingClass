@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css"></style>
+    </head>
+    <body>
+        <div class="login_siteblackground">
+            <mat-icon style="font-size: 40px;cursor: pointer;margin-left: 1100px;margin-top: 15px;" [routerLink]="['/Title']">exit_to_app</mat-icon>
+            <div style="position: absolute;width: 683px;height: 560px;margin-left: 25%;top: 10%;" class="panel_site_input">
+                <label style="font-size: 40px;font-weight: 600;">Login</label>
+                <div style="margin-top: 15px">
+                    <label style="font-size: 12px">Not already have a Check name account?</label>
+                    <label style="font-size: 13px;margin-left: 5px;color: red;cursor: pointer;" [routerLink]="['/Signup']">Sign up</label>
+                </div>
+                <form class="input-form" style="margin-top:20px;">
+                    <mat-icon class="login_icon">account_circle</mat-icon>
+                    <mat-form-field class="input-full-width">
+                        <input matInput placeholder="Name or E-mail" value="">
+                    </mat-form-field>
+                </form>
+
+                <form class="input-form" style="margin-top:20px;">
+                    <mat-icon class="login_icon" >vpn_key</mat-icon>
+                    <mat-form-field class="input-full-width">
+                        <input type="password" matInput placeholder="Password" value="">
+                    </mat-form-field>
+                </form>
+
+                <form>
+                    <button class="button-form" mat-raised-button color="accent">Login</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
