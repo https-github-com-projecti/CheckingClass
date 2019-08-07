@@ -1,32 +1,155 @@
-.panel_site_input{
-    text-align: center;
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+html {
+  font-family: Arial;
+  font-size: 16px;
+  background: #5e42a6;
 }
 
-body {
-    font-size: 10px;
-    font-family: Arial,Helvetica,sans-serif;
+.sidebar {
+  position: fixed;
+  width: 25%;
+  height: 100vh;
+  /* background: #312450; */
+  background: linear-gradient(to top,#312450,#5f3bad);
+  font-size: 0.65em;
+  top:0px;
+  left: 0px;
 }
 
-div {
-    display: block;
+.nav {
+  position: relative;
+  margin: 0 15%;
+  text-align: right;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-weight: bold;
 }
 
-* {box-sizing: border-box}
+.nav ul {
+  list-style: none;
+}
+.nav ul li {
+  position: relative;
+  margin: 3.2em 0;
+}
+.nav li{
+  font-size: 12px;
+}
+.nav ul li a {
+  line-height: 5em;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.35);
+  display: block;
+  transition: all ease-out 300ms;
+}
+.nav ul li.active a {
+  color: white;
+}
+.nav ul li:not(.active)::after {
+  opacity: 0.2;
+}
+.nav ul li:not(.active):hover a {
+  color: rgba(255, 255, 255, 0.75);
+}
+.nav ul li::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 0.2em;
+  background: black;
+  left: 0;
+  bottom: 0;
+  background-image: linear-gradient(to right, #694ab8,#3f89dd, #40e248);
+}
 
-.input-form {
+.twitter {
+    position: absolute;
+  width: 75%;
+  float: right;
+  height: 900px;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to left,#27184e,#573f94,#9e80e7);
+  top:0px;
+  left: 25%;
+}
+.twitter .container {
+    position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #9578df;
+  width: 50%;
+  height: 90%;
+  margin-left: 25%;
+  margin-top: 6%;
+  border-style: inherit;
+  border-width: 5px;
+  border-color: #5836af ;
+  border-radius: 70px;
+}
+
+.twitter .l_signup{
+    color: white;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.example-form {
     min-width: 150px;
     max-width: 500px;
-    width: 485.25px;
-    /* margin-top: 20px; */
-}
-
-.input-full-width{
     width: 100%;
-    font-size: 18px;
+    margin-top: 2vh;
+  }
+  
+  .example-full-width {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    color: aliceblue;
+  }
+
+  .color_text{
+      color: aliceblue;
+      font-size: 16px;
+  }
+
+  .site_form{
+      width: 80%;
+  }
+
+  .l_login{
+      color: aliceblue;
+      font-size: 16px;
+  }
+
+  .f_login{
+      margin-top: 2vh;
+  }
+
+  .f_login .l_link_login{
+      color: #60d66a;
+      font-size: 16px;
+      margin-left: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+.b_color{
+    color: white;
+    background-color: #60d66a;
+    margin-top: 3vh;
+    width: 100%;
+    height: 70%;
+    border-radius: 25px;
+    font-size: 14px;
 }
 
-.button-form {
-    border-radius: 25px;
-    width: 90px;
-    font-size: 15px;
+.f_b_site{
+    margin-left: 60%;
+    width: 20%;
 }

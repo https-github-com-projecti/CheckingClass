@@ -1,35 +1,51 @@
+<!-- This is a reverse engineering of the "Hyperspace" -->
 <!DOCTYPE html>
 <html>
     <head>
         <style type="text/css"></style>
     </head>
     <body>
-        <div class="login_siteblackground">
-            <mat-icon style="font-size: 40px;cursor: pointer;margin-left: 1100px;margin-top: 15px;" [routerLink]="['/Title']">exit_to_app</mat-icon>
-            <div style="position: absolute;width: 683px;height: 560px;margin-left: 25%;top: 10%;" class="panel_site_input">
-                <label style="font-size: 40px;font-weight: 600;">Login</label>
-                <div style="margin-top: 15px">
-                    <label style="font-size: 12px">Not already have a Check name account?</label>
-                    <label style="font-size: 13px;margin-left: 5px;color: red;cursor: pointer;" [routerLink]="['/Signup']">Sign up</label>
-                </div>
-                <form class="input-form" style="margin-top:20px;">
-                    <mat-icon class="login_icon">account_circle</mat-icon>
-                    <mat-form-field class="input-full-width">
-                        <input matInput placeholder="Name or E-mail" value="">
-                    </mat-form-field>
-                </form>
+     <main class="main">
+        <aside class="sidebar">
+          <nav class="nav">
+            <ul>
+              <li><a href="#" [routerLink]="['/Home']">Welcome</a></li>
+              <li class="active"><a href="#" [routerLink]="['/Login']">Log in</a></li>
+              <li><a href="#" [routerLink]="['/Signup']">Sign up</a></li>
+              <li><a href="#">My Class</a></li>
+            </ul>
+          </nav>
+        </aside>
+      
+        <section class="twitter">
+          <div class="container">
+              <label class="l_login">Log in</label>
+              <form class="f_signup">
+                <label class="l_signup" >Not already have a Check name account?</label>
+                <label class="l_link_signup" [routerLink]="['/Signup']">Sign up</label>
+              </form>
 
-                <form class="input-form" style="margin-top:20px;">
-                    <mat-icon class="login_icon" >vpn_key</mat-icon>
-                    <mat-form-field class="input-full-width">
-                        <input type="password" matInput placeholder="Password" value="">
-                    </mat-form-field>
-                </form>
-
-                <form>
-                    <button class="button-form" mat-raised-button color="accent">Login</button>
-                </form>
+              <div class="site_form">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" color="primary">
+                  <input matInput placeholder="Username or E-mail" value="" class="color_text">
+                </mat-form-field>
+              </form>
             </div>
-        </div>
+
+            <div class="site_form">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" color="primary">
+                  <input matInput type="password" placeholder="Password" value="" class="color_text">
+                </mat-form-field>
+              </form>   
+            </div>
+
+            <form class="f_b_site">
+                <button mat-raised-button class="b_color">Login</button>
+            </form>
+          </div>
+        </section>
+      </main>
     </body>
 </html>
