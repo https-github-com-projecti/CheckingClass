@@ -12,13 +12,16 @@
               <li><a href="#" [routerLink]="['/Home']">Welcome</a></li>
               <li><a href="#" [routerLink]="['/Login']">Log in</a></li>
               <li class="active"><a href="#" [routerLink]="['/Signup']">Sign up</a></li>
-              <li><a href="#">My Class</a></li>
+              <li><a href="#" [routerLink]="['/Myclass']">My Class</a></li>
             </ul>
           </nav>
         </aside>
       
         <section class="twitter">
           <div class="container">
+              <div class="picture_container"></div>
+
+              <div class="login_container">
               <label class="l_signup">Sign up</label>
               <form class="f_login">
                 <label class="l_login" >Already have a Check name account?</label>
@@ -80,6 +83,7 @@
             <form class="f_b_site">
                 <button mat-raised-button class="b_color">Sign up</button>
             </form>
+            </div>
           </div>
         </section>
       </main>

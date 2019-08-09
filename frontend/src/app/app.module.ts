@@ -3,25 +3,32 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RouterModule,Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
-import {MatAutocompleteModule,MatDatepickerModule,MatRadioModule,MatSlideToggleModule,MatSliderModule,MatMenuModule,MatGridListModule,MatSidenavModule,MatStepperModule,MatPaginatorModule,MatSortModule,MatTableModule,MatSnackBarModule,MatTooltipModule,MatDialogModule,MatProgressBarModule,MatProgressSpinnerModule,MatChipsModule,MatButtonToggleModule,MatExpansionModule,MatTabsModule,MatNativeDateModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule, MatFormFieldModule} from '@angular/material';
+import {MatAutocompleteModule,MatDatepickerModule,MatRadioModule,MatSlideToggleModule,MatSliderModule,
+  MatMenuModule,MatGridListModule,MatSidenavModule,MatStepperModule,MatPaginatorModule,MatSortModule, 
+  MatTableModule, MatSnackBarModule, MatTooltipModule,MatDialogModule, MatProgressBarModule, 
+  MatProgressSpinnerModule, MatChipsModule, MatButtonToggleModule,MatExpansionModule, MatTabsModule, 
+  MatNativeDateModule, MatCardModule, MatInputModule,MatListModule,MatToolbarModule, MatFormFieldModule
+} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponentComponent } from './signup-component/signup-component.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { HomeComponentComponent } from './home-component/home-component.component';
-import { Subscription } from 'rxjs'
+import { Subscription } from 'rxjs';
+import { MyClassComponent } from './my-class/my-class.component'
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/Home',    pathMatch: 'full'},
   { path: 'Home', component: HomeComponentComponent},
   { path: 'Signup', component: SignupComponentComponent},
   { path: 'Login', component: LoginComponentComponent},
+  { path: 'Myclass', component: MyClassComponent},
 ]
 
 @NgModule({
@@ -29,7 +36,8 @@ const appRoutes: Routes = [
     AppComponent,
     SignupComponentComponent,
     LoginComponentComponent,
-    HomeComponentComponent
+    HomeComponentComponent,
+    MyClassComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +46,8 @@ const appRoutes: Routes = [
     MatButtonModule, 
     MatCheckboxModule,
     BrowserAnimationsModule,
-    MatIconModule,BrowserModule,
+    MatIconModule, 
+    BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
