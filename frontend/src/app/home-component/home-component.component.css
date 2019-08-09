@@ -9,7 +9,7 @@ html {
   position: fixed;
   width: 25%;
   height: 100vh;
-  background: linear-gradient(to top left,#624b96,#5c3e9c,#8e72ca,#9e7fe0);
+  background: linear-gradient(to left bottom,#0000FF,#0033FF,#0066FF,#0099FF,#00CCFF,#00FFFF);
   font-size: 0.65em;
   top:0px;
   left: 0px;
@@ -33,7 +33,7 @@ html {
   margin: 3.2em 0;
 }
 .nav li{
-  font-size: 12px;
+  font-size: 12.5px;
 }
 .nav ul li a {
   line-height: 5em;
@@ -61,12 +61,12 @@ html {
   background: black;
   left: 0;
   bottom: 0;
-  background-image: linear-gradient(to right, #694ab8,#3f89dd, #40e248);
+  background-image: linear-gradient(to right, #0000FF,#0033CC, #006699,#009966,#00CC33,#00FF00);
 }
 
 .twitter {
   position: absolute;
-  width: 75%;
+  width: 74.8%;
   float: right;
   height: 100vh;
   background: #5e42a6;
@@ -75,6 +75,7 @@ html {
   background-image: url(../../assets/Title_1.jpg);
   background-position: center;
   background-size: 1366px 768px;
+  border-left-style: ridge;
 }
 .twitter .container {
   display: flex;

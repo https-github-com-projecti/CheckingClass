@@ -10,7 +10,7 @@ html {
   width: 25%;
   height: 100vh;
   /* background: #312450; */
-  background: linear-gradient(to top left,#624b96,#5c3e9c,#8e72ca,#9e7fe0);
+  background: linear-gradient(to left bottom,#0000FF,#0033FF,#0066FF,#0099FF,#00CCFF,#00FFFF);
   font-size: 0.65em;
   top:0px;
   left: 0px;
@@ -34,7 +34,7 @@ html {
   margin: 3.2em 0;
 }
 .nav li{
-  font-size: 12px;
+  font-size: 12.5px;
 }
 .nav ul li a {
   line-height: 5em;
@@ -62,19 +62,20 @@ html {
   background: black;
   left: 0;
   bottom: 0;
-  background-image: linear-gradient(to right, #694ab8,#3f89dd, #40e248);
+  background-image: linear-gradient(to right, #0000FF,#0033CC, #006699,#009966,#00CC33,#00FF00);
 }
 
 .twitter {
     position: absolute;
-  width: 75%;
+    width: 74.8%;
   float: right;
   height: 100%;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to left bottom,#27184e,#573f94,#9d7de4);
+  background: linear-gradient(to left bottom,#F5FFFA,#66CCFF);
   top:0px;
   left: 25%;
+  border-left-style: ridge;
 }
 .twitter .container {
     position: static;
@@ -87,8 +88,8 @@ html {
   height: 95%;
   margin-left: 10%;
   margin-top: 2%;
-  border-style: inherit;
-  border-width: 5px;
+  /* border-style: inherit; */
+  /* border-width: 5px; */
   border-color: #5836af ;
   border-radius: 70px;
 }
