@@ -1,25 +1,26 @@
-<!-- This is a reverse engineering of the "Hyperspace" -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <style type="text/css"></style>
-    </head>
-    <body>
-     <main class="main">
-        <aside class="sidebar">
-          <nav class="nav">
-            <ul>
-              <li><a href="#" [routerLink]="['/Home']">My class</a></li>
-              <li class="active"><a href="#" [routerLink]="['/Login']">Log in</a></li>
-              <li><a href="#" [routerLink]="['/Signup']">Sign up</a></li>
-              <li><a href="#" [routerLink]="['/Setting']">Setting</a></li>
-            </ul>
-          </nav>
-        </aside>
-      
-        <section class="twitter">
-          <div class="container">
-            <div class="picture_container"></div>
+<head>
+  <style type="text/css"></style>
+</head>
+<body>
+<main class="main">
+  <nav>
+    <a href="#" class="logo">Check name</a>
+    <ul class="links">
+      <form>
+        <button class="bt_create" mat-icon-button aria-label="Example icon-button with a heart icon">
+          <mat-icon>add</mat-icon>
+        </button>
+      </form>
+
+      <img id="blah" [src]="mypic" alt="your image" class="pic_set">
+    </ul>
+  </nav>
+
+  <div id="show" class="show">
+      <div class="container">
+      <div class="picture_container"></div>
 
               <div class="login_container">
               <label class="l_login">Log in</label>
@@ -49,7 +50,7 @@
             </form>
           </div>
           </div>
-        </section>
-      </main>
-    </body>
+  </div>
+</main>
+</body>
 </html>

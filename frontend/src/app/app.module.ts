@@ -19,16 +19,16 @@ import {MatSelectModule} from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponentComponent } from './signup-component/signup-component.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
-import { HomeComponentComponent } from './home-component/home-component.component';
 import { Subscription } from 'rxjs';
-import { MyClassComponent } from './my-class/my-class.component'
+import { Home2Component } from './home2/home2.component';
+import { SettingComponent } from './setting/setting.component'
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/Home',    pathMatch: 'full'},
-  { path: 'Home', component: HomeComponentComponent},
+  { path: 'Home', component: Home2Component},
   { path: 'Signup', component: SignupComponentComponent},
   { path: 'Login', component: LoginComponentComponent},
-  { path: 'Myclass', component: MyClassComponent},
+  { path: 'Setting', component: SettingComponent},
 ]
 
 @NgModule({
@@ -36,8 +36,8 @@ const appRoutes: Routes = [
     AppComponent,
     SignupComponentComponent,
     LoginComponentComponent,
-    HomeComponentComponent,
-    MyClassComponent
+    Home2Component,
+    SettingComponent,
   ],
   imports: [
     BrowserModule,
