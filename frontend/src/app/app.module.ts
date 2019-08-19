@@ -1,3 +1,4 @@
+import { HomeService } from './service/home.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -21,7 +22,8 @@ import { SignupComponentComponent } from './signup-component/signup-component.co
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { Subscription } from 'rxjs';
 import { Home2Component } from './home2/home2.component';
-import { SettingComponent } from './setting/setting.component'
+import { SettingComponent } from './setting/setting.component';
+import { ClassComponent } from './class/class.component';
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/Home',    pathMatch: 'full'},
@@ -38,6 +40,7 @@ const appRoutes: Routes = [
     LoginComponentComponent,
     Home2Component,
     SettingComponent,
+    ClassComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,7 +100,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [HomeService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

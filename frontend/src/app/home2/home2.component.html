@@ -4,19 +4,35 @@
   <style type="text/css"></style>
 </head>
 <body>
-<main class="main">
+<main id="main_I" class="main">
   <nav>
-    <a href="#" class="logo">Check name</a>
+    <a [routerLink]="['/Home']" class="logo">Check name</a>
     <ul class="links">
       <form>
-        <button class="bt_create" mat-icon-button aria-label="Example icon-button with a heart icon">
+        <button id="btn_creat" class="bt_create" mat-icon-button aria-label="Example icon-button with a heart icon">
           <mat-icon>add</mat-icon>
         </button>
       </form>
-
       <img id="blah" [src]="mypic" alt="your image" class="pic_set">
+      <div id="show_prop" class="show_prop">
+          <li class="menu-item"><a>name</a></li>
+          <hr>
+          <li class="menu-item"><a>Profile</a></li>
+          <li class="menu-item" [routerLink]="['/Setting']"><a>Setting</a></li>
+          <li class="menu-item" (click)="logout()"><a>Logout</a></li>
+      </div>
     </ul>
   </nav>
+
+  <div class="card_site_blackground">
+    <mat-grid-list class="grid_site"  cols="3" rowHeight="2:1" >
+      <mat-grid-tile *ngFor="let hero of heroes">
+        <div class="card_grid_site">
+            {{ hero }}
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 
   <div id="show" class="show">
       <div class="container">
@@ -32,7 +48,8 @@
               <div class="site_form">
               <form class="example-form">
                 <mat-form-field class="example-full-width" color="primary">
-                  <input matInput placeholder="Username or E-mail" value="" class="color_text">
+                  <input matInput placeholder="Username or E-mail" value="" class="color_text" 
+                  name="username" [(ngModel)]="username">
                 </mat-form-field>
               </form>
             </div>
@@ -40,16 +57,55 @@
             <div class="site_form">
               <form class="example-form">
                 <mat-form-field class="example-full-width" color="primary">
-                  <input matInput type="password" placeholder="Password" value="" class="color_text">
+                  <input matInput type="password" placeholder="Password" value="" class="color_text" 
+                  name="password" [(ngModel)]="password">
                 </mat-form-field>
               </form>   
             </div>
 
             <form class="f_b_site">
-                <button mat-raised-button class="b_color">Login</button>
+                <button mat-raised-button class="b_color" (click)="login()">Login</button>
             </form>
           </div>
           </div>
+  </div>
+
+  <div id="create" class="create_site">
+    <div class="creatclass_site">
+        <span id="p_create" class="close">&times;</span>
+        <br>
+        <label class="lcc"><h2>Create class</h2></label>
+
+        <div class="cc_site_form">
+            <form class="example-form">
+                <label class="ldfcc">Class name :</label>
+              <mat-form-field class="cc_example-full-width" color="primary">
+                <input matInput placeholder="Class name" value="" class="cc_color_text" 
+                name="Classname" >
+              </mat-form-field>
+            </form>
+
+            <form class="example-form">
+                <label class="ldfcc">Description :</label>
+              <mat-form-field class="cc_example-full-width" color="primary">
+                <textarea  matInput placeholder="Description" value="" class="cc_color_text" 
+                name="Classname" ></textarea>
+              </mat-form-field>
+            </form>
+
+            <form class="example-form">
+                <label class="ldfcc">Class ID :</label>
+              <mat-form-field class="cc_example-full-width" color="primary">
+                <input matInput placeholder="Class ID" value="" class="cc_color_text" 
+                name="Classname" >
+              </mat-form-field>
+            </form>
+
+            <form class="cc_f_b_site">
+                <button mat-raised-button class="b_color" >save</button>
+            </form>
+          </div>
+    </div>
   </div>
 </main>
 </body>
