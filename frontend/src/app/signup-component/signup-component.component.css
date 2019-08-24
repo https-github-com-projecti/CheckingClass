@@ -108,6 +108,7 @@ html {
   /* background-size: 700px 600px; */
   /* background-position-y: 0px; */
   border-radius: 70px 0px 0px 70px;
+  align-items: center;
 }
 
 .login_container{
@@ -185,4 +186,12 @@ html {
     margin-left: 60%;
     width: 20%;
     margin-bottom: 30px;
+}
+
+.pic_set{
+  width: 250px;
+  height: 250px;
+  border-radius: 100%;
+  margin-left: calc((250px - 45%)/2);
+  margin-top:15px;
 }

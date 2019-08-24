@@ -1,22 +1,21 @@
+import { Article } from './../Entity/article.entity';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs/Observable";
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
-  public API = '//localhost:8080';
-  private serviceUrl = 'http://localhost:8080/';
-  private serviceUrl2 = 'http://localhost:8080/Results/'
+  public API = 'http://localhost:8080/';
   constructor(private httpClient: HttpClient) { }
 
   login(a,b){                
     localStorage.setItem('isLogin', a,);
     localStorage.setItem('stateLogin',b);
   }
-
-  getTodoList(): Observable<any> {
-    return this.httpClient.get<any>(this.serviceUrl);
+  getUser(): Observable<any> {
+    return this.httpClient.get(this.API + 'allArticle');
   }
 }

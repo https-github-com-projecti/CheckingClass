@@ -26,9 +26,11 @@
 
   <div class="card_site_blackground">
     <mat-grid-list class="grid_site"  cols="3" rowHeight="2:1" >
-      <mat-grid-tile *ngFor="let hero of heroes">
+      <mat-grid-tile *ngFor="let article of articles">
         <div class="card_grid_site">
-            {{ hero }}
+          <p>Title : {{article.Title}}</p>
+          <p>Desc : {{article.Desc}}</p>
+          <p>Content : {{article.Content}}</p>
         </div>
       </mat-grid-tile>
     </mat-grid-list>

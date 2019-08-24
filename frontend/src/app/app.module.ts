@@ -1,37 +1,40 @@
-import { HomeService } from './service/home.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
+import {SingupService} from './service/singup.service';
+import {HomeService} from './service/home.service';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FileSelectDirective} from 'ng2-file-upload';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {RouterModule, Routes} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
-import {MatAutocompleteModule,MatDatepickerModule,MatRadioModule,MatSlideToggleModule,MatSliderModule,
-  MatMenuModule,MatGridListModule,MatSidenavModule,MatStepperModule,MatPaginatorModule,MatSortModule, 
-  MatTableModule, MatSnackBarModule, MatTooltipModule,MatDialogModule, MatProgressBarModule, 
-  MatProgressSpinnerModule, MatChipsModule, MatButtonToggleModule,MatExpansionModule, MatTabsModule, 
-  MatNativeDateModule, MatCardModule, MatInputModule,MatListModule,MatToolbarModule, MatFormFieldModule
+import {
+  MatAutocompleteModule, MatDatepickerModule, MatRadioModule, MatSlideToggleModule, MatSliderModule,
+  MatMenuModule, MatGridListModule, MatSidenavModule, MatStepperModule, MatPaginatorModule, MatSortModule,
+  MatTableModule, MatSnackBarModule, MatTooltipModule, MatDialogModule, MatProgressBarModule,
+  MatProgressSpinnerModule, MatChipsModule, MatButtonToggleModule, MatExpansionModule, MatTabsModule,
+  MatNativeDateModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule, MatFormFieldModule
 } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SignupComponentComponent } from './signup-component/signup-component.component';
-import { LoginComponentComponent } from './login-component/login-component.component';
-import { Subscription } from 'rxjs';
-import { Home2Component } from './home2/home2.component';
-import { SettingComponent } from './setting/setting.component';
-import { ClassComponent } from './class/class.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {SignupComponentComponent} from './signup-component/signup-component.component';
+import {LoginComponentComponent} from './login-component/login-component.component';
+import {Subscription} from 'rxjs';
+import {Home2Component} from './home2/home2.component';
+import {SettingComponent} from './setting/setting.component';
+import {ClassComponent} from './class/class.component';
+import {from} from 'rxjs';
 
 const appRoutes: Routes = [
-  {path: '',   redirectTo: '/Home',    pathMatch: 'full'},
-  { path: 'Home', component: Home2Component},
-  { path: 'Signup', component: SignupComponentComponent},
-  { path: 'Login', component: LoginComponentComponent},
-  { path: 'Setting', component: SettingComponent},
-]
+  {path: '', redirectTo: '/Home', pathMatch: 'full'},
+  {path: 'Home', component: Home2Component},
+  {path: 'Signup', component: SignupComponentComponent},
+  {path: 'Login', component: LoginComponentComponent},
+  {path: 'Setting', component: SettingComponent},
+];
 
 @NgModule({
   declarations: [
@@ -41,15 +44,16 @@ const appRoutes: Routes = [
     Home2Component,
     SettingComponent,
     ClassComponent,
+    FileSelectDirective,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
-    MatButtonModule, 
+    MatButtonModule,
     MatCheckboxModule,
     BrowserAnimationsModule,
-    MatIconModule, 
+    MatIconModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -98,9 +102,10 @@ const appRoutes: Routes = [
     MatSortModule,
     MatPaginatorModule,
     RouterModule.forRoot(appRoutes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [HomeService,],
+  providers: [HomeService, SingupService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

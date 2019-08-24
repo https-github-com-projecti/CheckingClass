@@ -1,13 +1,21 @@
+import { Article } from './../Entity/article.entity';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { Observable } from 'rxjs/observable';
 import { DataSource } from '@angular/cdk/collections';
-// import { from } from 'rxjs';
+// import { , config } from 'rxjs';
 import {HomeService} from '../service/home.service';
-import { timer } from 'rxjs';
+import { Config } from 'protractor';
 
+export interface Articles {
+  articlesID: String;
+  articlesTitle: string;
+  articles: string;
+  articlesAddress: string;
+  
+}
 
 @Component({
   selector: 'app-home2',
@@ -19,13 +27,11 @@ import { timer } from 'rxjs';
 export class Home2Component implements OnInit {
   username: String = "";
   password: String = "";
-  private activeTodos: any = [];
-
-  // heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado', 'Narawich Saphimarn'];
-  heroes:Array<any>;
+  activeTodos: Array<any>;
+  articles: Article[];
 
   mypic: string = 'https://via.placeholder.com/150/FFFFFF/000000/?text=Check%20name%20';
-  constructor(private homeService : HomeService,) { }
+  constructor(private homeService : HomeService) { }
 
   readURL(event:any) {
     if (event.target.files && event.target.files[0]) {
@@ -39,6 +45,11 @@ export class Home2Component implements OnInit {
   ngOnInit() {
     this.loadData();
 
+    this.homeService.getUser().subscribe(data => {
+      this.articles = data;
+      console.log(this.articles);
+    });
+    
     var show_ui = document.getElementById("show");
     var stat_login = localStorage.getItem('stateLogin');
     var img_btn = document.getElementById("blah");
@@ -95,9 +106,7 @@ export class Home2Component implements OnInit {
     timer:0.5;
     if(localStorage.getItem('stateLogin') == 'true'){
       if(localStorage.getItem('isLogin') == "admin"){
-        this.heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado', 'Narawich Saphimarn','test','Angular','Golang','MongoDB','Base64'];
       }else if(localStorage.getItem('isLogin') == "NS"){
-        this.heroes = ['NS', 'Project'];
       }
     }
   }

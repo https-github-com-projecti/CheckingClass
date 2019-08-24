@@ -16,10 +16,17 @@
               </ul>
           </nav>
         </aside>
-      
+
         <section class="twitter">
           <div class="container">
-              <div class="picture_container"></div>
+              <div class="picture_container">
+                  <!-- <img id="blah" [ngfSrc]="userFile" alt="your image" class="pic_set">
+                  <form>
+                      <button ngfSelect [(file)]="userFile" accept="image/*" multiple="1">
+                        Tap to Select
+                      </button>
+                  </form> -->
+              </div>
 
               <div class="login_container">
               <label class="l_signup">Sign up</label>
@@ -31,7 +38,7 @@
               <div class="site_form">
               <form class="example-form">
                 <mat-form-field class="example-full-width" color="primary">
-                  <input matInput placeholder="Name" value="" class="color_text">
+                  <input matInput placeholder="Name" value="" class="color_text" name="tName" [(ngModel)]="newData.tName">
                 </mat-form-field>
               </form>
             </div>
@@ -39,7 +46,7 @@
             <div class="site_form">
                 <form class="example-form">
                   <mat-form-field class="example-full-width" color="primary">
-                    <input matInput placeholder="User name" value="" class="color_text">
+                    <input matInput placeholder="User name" value="" class="color_text" name="userName" [(ngModel)]="newData.userName">
                   </mat-form-field>
                 </form>
               </div>
@@ -47,45 +54,45 @@
             <div class="site_form">
               <form class="example-form">
                 <mat-form-field class="example-full-width" color="primary">
-                  <input matInput placeholder="Teacher ID" value="" class="color_text">
+                  <input matInput placeholder="Teacher ID" value="" class="color_text" name="tId" [(ngModel)]="newData.tId">
                 </mat-form-field>
-              </form>   
+              </form>
             </div>
 
             <div class="site_form">
                 <form class="example-form">
                   <mat-form-field class="example-full-width" color="primary">
-                    <input matInput placeholder="E-mail" value="" class="color_text">
+                    <input matInput placeholder="E-mail" value="" class="color_text" name="tEmail" [(ngModel)]="newData.tEmail">
                   </mat-form-field>
-                </form>   
+                </form>
               </div>
 
               <div class="site_form">
                 <form class="example-form">
                   <mat-form-field class="example-full-width" color="primary">
-                    <input matInput placeholder="Work place" value="" class="color_text">
+                    <input matInput placeholder="Work place" value="" class="color_text" name="tWorkPlace" [(ngModel)]="newData.tWorkPlace">
                   </mat-form-field>
-                </form>   
+                </form>
               </div>
 
               <div class="site_form">
                 <form class="example-form">
                   <mat-form-field class="example-full-width" color="primary">
-                    <input matInput type="password" placeholder="Password" value="" class="color_text">
+                    <input matInput type="password" placeholder="Password" value="" class="color_text" name="tPassword" [(ngModel)]="newData.tPassword">
                   </mat-form-field>
-                </form>   
+                </form>
               </div>
 
               <div class="site_form">
                 <form class="example-form">
                   <mat-form-field class="example-full-width" color="primary">
-                    <input matInput type="password" placeholder="Confirm password" value="" class="color_text">
+                    <input matInput type="password" placeholder="Confirm password" value="" class="color_text" name="tComfirmPassword" [(ngModel)]="tComfirmPassword">
                   </mat-form-field>
-                </form>   
+                </form>
               </div>
 
             <form class="f_b_site">
-                <button mat-raised-button class="b_color">Sign up</button>
+                <button mat-raised-button class="b_color" (click)="save()">Sign up</button>
             </form>
             </div>
           </div>
