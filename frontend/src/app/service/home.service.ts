@@ -15,7 +15,7 @@ export class HomeService {
     localStorage.setItem('isLogin', a,);
     localStorage.setItem('stateLogin',b);
   }
-  getUser(): Observable<any> {
-    return this.httpClient.get(this.API + 'allArticle');
+  getUser() {
+    return this.httpClient.get(this.API + 'home/' + 'ping');
   }
 }

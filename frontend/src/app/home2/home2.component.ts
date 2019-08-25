@@ -46,8 +46,7 @@ export class Home2Component implements OnInit {
     this.loadData();
 
     this.homeService.getUser().subscribe(data => {
-      this.articles = data;
-      console.log(this.articles);
+      console.log(data);
     });
     
     var show_ui = document.getElementById("show");

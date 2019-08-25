@@ -4,6 +4,9 @@ import {SingupService} from './../service/singup.service';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import { DataSource } from '@angular/cdk/collections';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
 
 export interface User {
   tName: string;
@@ -35,7 +38,16 @@ export class SignupComponentComponent implements OnInit {
   // tPassword:string = "";
   tComfirmPassword = '';
 
-  newData: any = {
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  matcher = new MyErrorStateMatcher();
+
+  constructor(private singupService: SingupService, private httpClient: HttpClient) {
+  }
+
+  newData: User = {
     tName: '',
     userName: '',
     tId: '',
@@ -43,15 +55,6 @@ export class SignupComponentComponent implements OnInit {
     tWorkPlace: '',
     tPassword: '',
   };
-
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-  matcher = new MyErrorStateMatcher();
-
-  constructor(private singupService: SingupService) {
-  }
 
 
   // userFile: string = 'https://via.placeholder.com/150/FFFFFF/000000/?text=Check%20name%20';
@@ -65,6 +68,7 @@ export class SignupComponentComponent implements OnInit {
   //   }
   // }
   ngOnInit() {
+    
   }
 
   save() {
