@@ -4,28 +4,33 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/narawichsaphimarn/backend/models"
+	//"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 )
 
-func NewUser(c *gin.Context){
+var testUsers []models.User
+
+func NewUser(c *gin.Context) {
 	var p models.User
 	if err := c.ShouldBindJSON(&p); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	//fmt.Println(p.ID)
-	fmt.Println(p.TName)
-	fmt.Println(p.UserName)
-	fmt.Println(p.TId)
-	fmt.Println(p.TEmail)
-	fmt.Println(p.TWorkPlace)
-	fmt.Println(p.TPassword)
+	//fmt.Println(p)
+	addUser := models.User{
+		len(testUsers) + 1,
+		p.TName,
+		p.UserName,
+		p.TId,
+		p.TEmail,
+		p.TWorkPlace,
+		p.TPassword,
+		p.TPicture,
+	}
 
-	fmt.Println(p)
-	//c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
+	testUsers = append(testUsers, addUser)
+	fmt.Println(testUsers)
 }
 
-func AllUsers(c *gin.Context){
-	var p models.User
-	c.JSON(http.StatusOK, p)
+func AllUsers(c *gin.Context) {
+	c.JSON(http.StatusOK, testUsers)
 }
