@@ -1,18 +1,18 @@
 package main
 
 import (
-	"github.com/narawichsaphimarn/backend/api"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-contrib/cors"
 	"time"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	"github.com/narawichsaphimarn/backend/api"
 	// 	"log"
 	// 	"net/http"
 )
 
-func welcome (c *gin.Context){
+func welcome(c *gin.Context) {
 	c.JSON(200, gin.H{
-		"massage" : "Hello API",
-
+		"massage": "Hello API",
 	})
 }
 
@@ -20,7 +20,7 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:8080/"},
-		AllowMethods:     []string{"POST, GET, OPTIONS, PUT, DELETE, UPDATE, PATH"},
+		AllowMethods:     []string{"POST, GET, OPTIONS, PUT, DELETE, UPDATE"},
 		AllowHeaders:     []string{"Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
@@ -38,6 +38,19 @@ func main() {
 	{
 		c2.POST("/newUser", api.NewUser)
 		c2.GET("/allUsers", api.AllUsers)
+		c2.POST("/loginUser", api.UserLogin)
+	}
+
+	c3 := r.Group("/class")
+	{
+		c3.POST("/newClass", api.CreatClass)
+		c3.GET("/allClass", api.AllClass)
+		c3.GET("/myClass/:user", api.MyClass)
+	}
+
+	c4 := r.Group("qr")
+	{
+		c4.POST("/createqr", api.CreateBarcode)
 	}
 	r.Run(":8080")
 }

@@ -4,93 +4,95 @@
     <head>
         <style type="text/css"></style>
     </head>
-    <body>
-     <main class="main">
-        <section class="twitter">
-            <span class="close" [routerLink]="(['/Home'])">&times;</span>
-          <div class="container">
-              <div class="picture_container">                  
+    <div class="wallpaper"></div>
+    <body id="bodyId">
+        <div class="icon-site">
+            <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
+        </div>
+
+        <main class="main-site">
+          <form class="form_picture">
+            <div>
+              <div>
                   <div class="picture_site">
-                    <img [src]="imgURL" alt="your image" class="image_site" />
+                      <img [src]="imgURL" alt="your image" class="image_site" (click)="inputFile.click()" />
                   </div>
-                  <form class="selectfile_site">
-                      <input #imageInput type="file" id="onFileSelected" class="ng-hide" accept="image/*" (change)="onFileSelected($event)" #inputFile>
-                      <button mat-raised-button (click)="inputFile.click()" color="primary" class="imageSelect">Select File</button>
-                      <!-- <br><br><span style="color:black;font-weight: 600;" *ngIf="message">{{message}}</span> -->
-                  </form>
-
-  
+                  <input #imageInput type="file" id="onFileSelected" class="ng-hide" accept="image/*" (change)="onFileSelected($event)" #inputFile>
               </div>
-
+            </div>
+          </form>
+          <form class="form_input">
               <div class="login_container">
-              <label class="l_signup">Sign up</label>
-              <form class="f_login">
-                <label class="l_login" >Already have a Check name account?</label>
-                <label class="l_link_login" [routerLink]="['/Login']">Log in</label>
-              </form>
-
-              <div class="site_form">
-              <form class="example-form">
-                <mat-form-field class="example-full-width" color="primary">
-                  <input matInput placeholder="Name" value="" class="color_text" name="tName" [(ngModel)]="newData.tName">
-                </mat-form-field>
-              </form>
-            </div>
-
-            <div class="site_form">
-                <form class="example-form">
-                  <mat-form-field class="example-full-width" color="primary">
-                    <input matInput placeholder="User name" value="" class="color_text" name="userName" [(ngModel)]="newData.userName">
-                  </mat-form-field>
+                  <label class="l_signup">Sign up</label>
+                  <form class="f_login">
+                    <label class="l_login" >Already have a Check name account?</label>
+                    <label class="l_link_login" [routerLink]="['/Home']">Log in</label>
+                  </form>
+    
+                  <div class="site_form">
+                  <form class="example-form">
+                    <mat-form-field class="example-full-width2" color="primary">
+                      <input matInput placeholder="First name" value="" class="color_text" name="tFirstName" [(ngModel)]="newData.tFirstName">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width2" color="primary">
+                      <input matInput placeholder="Last name" value="" class="color_text" name="tLastName" [(ngModel)]="newData.tLastName">
+                    </mat-form-field>
+                  </form>
+                </div>
+    
+                <div class="site_form">
+                    <form class="example-form">
+                      <mat-form-field class="example-full-width" color="primary">
+                        <input matInput placeholder="User name" value="" class="color_text" name="userName" [(ngModel)]="newData.userName">
+                      </mat-form-field>
+                    </form>
+                  </div>
+    
+                <div class="site_form">
+                  <form class="example-form">
+                    <mat-form-field class="example-full-width" color="primary">
+                      <input matInput placeholder="Teacher ID" value="" class="color_text" name="tId" [(ngModel)]="newData.tId">
+                    </mat-form-field>
+                  </form>
+                </div>
+    
+                <div class="site_form">
+                    <form class="example-form">
+                      <mat-form-field class="example-full-width" color="primary">
+                        <input matInput placeholder="E-mail" value="" class="color_text" name="tEmail" [(ngModel)]="newData.tEmail">
+                      </mat-form-field>
+                    </form>
+                  </div>
+    
+                  <div class="site_form">
+                    <form class="example-form">
+                      <mat-form-field class="example-full-width" color="primary">
+                        <input matInput placeholder="Work place" value="" class="color_text" name="tWorkPlace" [(ngModel)]="newData.tWorkPlace">
+                      </mat-form-field>
+                    </form>
+                  </div>
+    
+                  <div class="site_form">
+                    <form class="example-form">
+                      <mat-form-field class="example-full-width" color="primary">
+                        <input matInput type="password" placeholder="Password" value="" class="color_text" name="tPassword" [(ngModel)]="newData.tPassword">
+                      </mat-form-field>
+                    </form>
+                  </div>
+    
+                  <div class="site_form">
+                    <form class="example-form">
+                      <mat-form-field class="example-full-width" color="primary">
+                        <input matInput type="password" placeholder="Confirm password" value="" class="color_text" name="tComfirmPassword" [(ngModel)]="tComfirmPassword">
+                      </mat-form-field>
+                    </form>
+                  </div>
+    
+                <form class="f_b_site">
+                    <button mat-raised-button class="b_color" (click)="checkData()">Sign up</button>
                 </form>
-              </div>
-
-            <div class="site_form">
-              <form class="example-form">
-                <mat-form-field class="example-full-width" color="primary">
-                  <input matInput placeholder="Teacher ID" value="" class="color_text" name="tId" [(ngModel)]="newData.tId">
-                </mat-form-field>
-              </form>
-            </div>
-
-            <div class="site_form">
-                <form class="example-form">
-                  <mat-form-field class="example-full-width" color="primary">
-                    <input matInput placeholder="E-mail" value="" class="color_text" name="tEmail" [(ngModel)]="newData.tEmail">
-                  </mat-form-field>
-                </form>
-              </div>
-
-              <div class="site_form">
-                <form class="example-form">
-                  <mat-form-field class="example-full-width" color="primary">
-                    <input matInput placeholder="Work place" value="" class="color_text" name="tWorkPlace" [(ngModel)]="newData.tWorkPlace">
-                  </mat-form-field>
-                </form>
-              </div>
-
-              <div class="site_form">
-                <form class="example-form">
-                  <mat-form-field class="example-full-width" color="primary">
-                    <input matInput type="password" placeholder="Password" value="" class="color_text" name="tPassword" [(ngModel)]="newData.tPassword">
-                  </mat-form-field>
-                </form>
-              </div>
-
-              <div class="site_form">
-                <form class="example-form">
-                  <mat-form-field class="example-full-width" color="primary">
-                    <input matInput type="password" placeholder="Confirm password" value="" class="color_text" name="tComfirmPassword" [(ngModel)]="tComfirmPassword">
-                  </mat-form-field>
-                </form>
-              </div>
-
-            <form class="f_b_site">
-                <button mat-raised-button class="b_color" (click)="checkData()">Sign up</button>
-            </form>
-            </div>
-          </div>
-        </section>
-      </main>
+                </div>
+          </form>
+        </main>
     </body>
 </html>

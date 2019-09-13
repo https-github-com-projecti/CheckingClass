@@ -1,1 +1,50 @@
-<p>class works!</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/node_modules/qrcode-generator/js/qrcode.js"></script>
+    <script src="/node_modules/qrcode-generator/js/qrcode_UTF8.js"></script>
+    <script src="/node_modules/angular-qrcode/angular-qrcode.js"></script>
+  <style type="text/css"></style>
+</head>
+<body id="bodyId">
+  <div class="icon-site">
+    <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
+  </div>
+  <div class="profile-site">
+    <form>
+      <img id="blah" src="{{mypic}}" alt="your image" class="pic_set" />
+    </form>
+    <form>
+      <button mat-fab (click)="createAuthenicate()">
+        <mat-icon svgIcon="add" aria-label="tool"></mat-icon>
+      </button>
+    </form>
+  </div>
+
+  <main id="mainId">
+    <form class="list">
+      <nav class="nav">
+          <li ><a [routerLink]="['/People']">People</a></li>
+          <li ><a  [routerLink]="['/Authen']">student authenticate</a></li>
+          <li><a  [routerLink]="['/Score']">Student score</a></li>
+      </nav>
+    </form>
+    <form class="class_site">
+      <div class="title_site" style="overflow: hidden;
+      background-image: url('../../assets/abstract-polygonal-space-low-poly-dark-background-3d-rendering_7247-223-min.jpg');background-size: 100%;">
+        <p>{{name_Class}}</p>
+      </div>
+      <hr>
+      <div class="panel">
+      <div class="grid-container">
+        <div *ngFor="let x of Qrcode" class="panel">
+        <div class="card_grid_site">
+          <img src="../../assets/qrcode_test-min.png" style="width: 60%;" ([ngModel])="Qr(x)"/>
+          <p>Date : {{x.time}}     เช็คครั้งที่ : {{x.id}}</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    </form>
+  </main>
+</body>

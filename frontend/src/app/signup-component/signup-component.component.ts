@@ -1,5 +1,5 @@
-import { Subscription } from 'rxjs';
-import {newUser} from './../Entity/newUser.entity';
+import { Router, Route } from '@angular/router';
+import { Subscription, throwError } from 'rxjs';
 import {SingupService} from './../service/singup.service';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
@@ -7,9 +7,11 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import { DataSource } from '@angular/cdk/collections';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
+import { error } from 'util';
 
 export interface User {
-  tName: string;
+  tFirstName: string;
+  tLastName: string;
   userName: string;
   tId: string;
   tEmail: string;
@@ -35,7 +37,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class SignupComponentComponent implements OnInit {
   tComfirmPassword = null;
   private imagePath;
-  imgURL: any = "../../assets/fbb2978e127f2920ab9774076ade2a36.png";;
+  imgURL: any = "../../assets/fbb2978e127f2920ab9774076ade2a36.png";
   private message: string;
   private reader = new FileReader();
   private img: any = null;
@@ -43,11 +45,15 @@ export class SignupComponentComponent implements OnInit {
 
 
   matcher = new MyErrorStateMatcher();
-  constructor(private singupService: SingupService, private httpClient: HttpClient) {
-  }
+  constructor(
+    private singupService: SingupService, private httpClient: HttpClient,
+    private router : Router,
+    ) 
+    {}
 
   newData: User = {
-    tName: null,
+    tFirstName: null,
+    tLastName: null,
     userName: null,
     tId: null,
     tEmail: null,
@@ -74,6 +80,7 @@ export class SignupComponentComponent implements OnInit {
       this.newData.tPicture = this.base64;
       this.imgURL = this.img;
     }
+    console.log(this.newData.tPicture);
   }
   
   ngOnInit() {
@@ -81,7 +88,8 @@ export class SignupComponentComponent implements OnInit {
   }
 
   checkData() {
-    if(this.newData.tName == null){ alert("กรุณาป้อน Name") }
+    if(this.newData.tFirstName == null){ alert("กรุณาป้อน First Name") }
+    else if(this.newData.tLastName == null){ alert("กรุณาป้อน Last Name")}
     else if(this.newData.userName == null){ alert("กรุณาป้อน User name") }
     else if(this.newData.tId == null){ alert("กรุณาป้อน ID") }
     else if(this.newData.tEmail == null){ alert("กรุณาป้อน E-mail") }
@@ -97,12 +105,18 @@ export class SignupComponentComponent implements OnInit {
     this.singupService.registerUsers(this.newData).subscribe(
       data => {
         if (data){
-          alert(data);
+          alert('Error');
+          console.log(data);
         }
         else {
           alert('success');
+          this.router.navigate(['/Home']);
         }
-      }      
+      },
+      error  => {
+        alert('Error กรุณาลองใหม่');
+        console.log('Error', error);
+      }   
     );
   }
 }

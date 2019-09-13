@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css"></style>
+</head>
+<body id="bodyId">
+  <div class="icon-site">
+    <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
+  </div>
+  <div class="profile-site">
+    <form>
+      <img id="blah" src="{{mypic}}" alt="your image" class="pic_set" />
+    </form>
+    <form>
+      <button mat-fab>
+        <mat-icon svgIcon="add" aria-label="tool"></mat-icon>
+      </button>
+    </form>
+  </div>
+
+  <main id="mainId">
+    <form class="list">
+      <nav class="nav">
+          <li class="active"><a>People</a></li>
+          <li ><a>student authenticate</a></li>
+          <li><a>Student score</a></li>
+      </nav>
+    </form>
+    <form class="class_site">
+      <div class="title_site">
+
+      </div>
+      <hr>
+      <div class="panel">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="step === 0" hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Teacher
+              </mat-panel-title>
+              <!-- <mat-panel-description>
+                Type your name and age
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Student
+              </mat-panel-title>
+              <!-- <mat-panel-description>
+                Currently I am {{panelOpenState ? 'open' : 'closed'}}
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </form>
+  </main>
+</body>

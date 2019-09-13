@@ -1,8 +1,8 @@
-import { Article } from './../Entity/article.entity';
-import { HttpClient } from '@angular/common/http';
+import { userLogin, classOrder } from './../home2/home2.component';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import {Observable, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +17,32 @@ export class HomeService {
   }
   getUser() {
     return this.httpClient.get(this.API + 'home/' + 'ping');
+  }
+
+  public LoginUser(login : userLogin): Observable<userLogin> {
+    const headers = new HttpHeaders();
+    headers.append('Access-Control-Allow-Origin', this.API);
+    headers.append('Access-Control-Allow-Credentials', 'true');
+    headers.append('Content-Type', 'application/json');
+    console.log(JSON.stringify(login));
+    return this.httpClient.post<userLogin>(this.API + 'user/' + 'loginUser', JSON.stringify(login), {headers});
+  }
+
+  public CreateClass(newClass : classOrder): Observable<classOrder> {
+    const headers = new HttpHeaders();
+    headers.append('Access-Control-Allow-Origin', this.API);
+    headers.append('Access-Control-Allow-Credentials', 'true');
+    headers.append('Content-Type', 'application/json');
+    console.log(JSON.stringify(newClass));
+    return this.httpClient.post<classOrder>(this.API + 'class/' + 'newClass', JSON.stringify(newClass), {headers});
+  }
+
+  public getClass(){
+    var us = localStorage.getItem('isLogin');
+    return this.httpClient.get(this.API + 'class/' + 'myClass/' + us);
+  }
+
+  getAllClass() {
+    return this.httpClient.get(this.API + 'class/' + 'allClass');
   }
 }

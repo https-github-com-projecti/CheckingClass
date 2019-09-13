@@ -21,30 +21,38 @@ import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SignupComponentComponent} from './signup-component/signup-component.component';
-import {LoginComponentComponent} from './login-component/login-component.component';
 import {Subscription} from 'rxjs';
 import {Home2Component} from './home2/home2.component';
 import {SettingComponent} from './setting/setting.component';
 import {ClassComponent} from './class/class.component';
 import {from} from 'rxjs';
+import { PeopleComponent } from './people/people.component';
+import { AuthenicatStudentComponent } from './authenicat-student/authenicat-student.component';
+import { StudentScoreComponent } from './student-score/student-score.component';
+
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/Home', pathMatch: 'full'},
   {path: 'Home', component: Home2Component},
   {path: 'Signup', component: SignupComponentComponent},
-  {path: 'Login', component: LoginComponentComponent},
   {path: 'Setting', component: SettingComponent},
+  {path: 'Class', component: ClassComponent},
+  {path: 'People', component: PeopleComponent},
+  {path: 'Authen', component: AuthenicatStudentComponent},
+  {path: 'Score', component: StudentScoreComponent},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponentComponent,
-    LoginComponentComponent,
     Home2Component,
     SettingComponent,
     ClassComponent,
     FileSelectDirective,
+    PeopleComponent,
+    AuthenicatStudentComponent,
+    StudentScoreComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +74,6 @@ const appRoutes: Routes = [
     FormsModule,
     MatSelectModule,
     MatFormFieldModule,
-    RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
@@ -74,7 +81,6 @@ const appRoutes: Routes = [
     MatListModule,
     MatToolbarModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),
     MatCheckboxModule,
     MatAutocompleteModule,
     MatDatepickerModule,
@@ -101,7 +107,6 @@ const appRoutes: Routes = [
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
   ],
   providers: [HomeService, SingupService],
