@@ -3,15 +3,15 @@ package api
 import (
 	"fmt"
 	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/narawichsaphimarn/backend/models"
+
 	//"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 )
 
 var testUsers []models.User
-
-//var pare models.User
 
 func NewUser(c *gin.Context) {
 	var p models.User
@@ -49,14 +49,25 @@ func UserLogin(c *gin.Context) {
 		log.Println("====== Only Bind By Query String ======")
 		log.Println(Ui.Username)
 		log.Println(Ui.Password)
-	} 
+	}
 	for _, copy := range testUsers {
 		if Ui.Username == copy.UserName && Ui.Password == copy.TPassword {
-			c.JSON(http.StatusOK, copy)
+			c.JSON(http.StatusOK, "Success")
 			fmt.Println(copy)
+		} else {
+			c.JSON(http.StatusOK, "Unsuccess")
 		}
 	}
-	
-	fmt.Println(testUsers)
-	fmt.Println(Ui)
+}
+
+func UserData(c *gin.Context) {
+	user := c.Param("user")
+	defer c.Request.Body.Close()
+	var sp []models.User
+	for _, copy := range testUsers {
+		if copy.UserName == user {
+			sp = append(sp, copy)
+			c.JSON(http.StatusOK, sp)
+		}
+	}
 }

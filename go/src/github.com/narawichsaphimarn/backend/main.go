@@ -11,9 +11,7 @@ import (
 )
 
 func welcome(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"massage": "Hello API",
-	})
+	c.JSON(200, "online")
 }
 
 func main() {
@@ -39,6 +37,7 @@ func main() {
 		c2.POST("/newUser", api.NewUser)
 		c2.GET("/allUsers", api.AllUsers)
 		c2.POST("/loginUser", api.UserLogin)
+		c2.GET("/userData/:user", api.UserData)
 	}
 
 	c3 := r.Group("/class")

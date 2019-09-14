@@ -9,10 +9,10 @@
     <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
   </div>
   <div class="profile-site">
-    <form class="img-dropdown">
-      <img id="blah" [routerLink]="['/Home']" src="{{mypic}}" alt="your image" class="pic_set" />
+    <form class="img-dropdown" *ngFor="let item of userdata">
+      <img id="blah" [routerLink]="['/Home']" src="data:image/gif;base64,{{mypic}}" alt="your image" class="pic_set" />
       <div class="dropdown-content">
-        <a >Name : {{name}}</a>
+        <a >Sign in as : {{item.userName}} </a>
         <hr>
         <a >Profile</a>
         <a >Setting</a>

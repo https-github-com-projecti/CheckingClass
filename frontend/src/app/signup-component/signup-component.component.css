@@ -98,26 +98,32 @@ body .icon-site:hover {
 }
 
 .picture_site{
+  display: flex;
   width: 250px;
   height: 250px;
   background:white;
   margin-top:  25%;
   margin-left: calc((100% - 250px) / 2);
-  border-radius: 5%; 
+  border-radius: 10%; 
   text-align: center;
-  /* border-style: solid; */
   box-shadow: 5px 5px 15px rgba(0, 140, 186, 0.7);
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 .picture_site .image_site{
-  width: 250px;
-  height: 250px;
-  border-radius: 5%;  
+  /* width: 250px; */
+  width: 100%;
   padding: 10px;
   cursor: pointer;
   border-style: 5px solid;
   image-resolution: 300dpi;
-  image-rendering: auto;
+  image-rendering: crisp-edges;
   image-orientation: from-image;
+  background-size: cover;
+  overflow: hidden;
+  padding: 10px;
 }
 .form_picture .ng-hide{
   visibility: hidden;

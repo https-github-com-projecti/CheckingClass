@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { error } from 'util';
 
+
 export interface User {
   tFirstName: string;
   tLastName: string;
@@ -27,6 +28,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
+// declare var ImageCompressor: any;
+ 
+// const compressor = new ImageCompressor();
+
 @Component({
   selector: 'app-signup-component',
   templateUrl: './signup-component.component.html',
@@ -42,9 +47,8 @@ export class SignupComponentComponent implements OnInit {
   private reader = new FileReader();
   private img: any = null;
   private base64 :string = null;
-
-
   matcher = new MyErrorStateMatcher();
+
   constructor(
     private singupService: SingupService, private httpClient: HttpClient,
     private router : Router,

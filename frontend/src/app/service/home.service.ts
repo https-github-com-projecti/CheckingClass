@@ -11,11 +11,15 @@ export class HomeService {
   public API = 'http://localhost:8080/';
   constructor(private httpClient: HttpClient) { }
 
+  status(x){
+    localStorage.setItem('statusLogin', x);
+  }
+
   login(a,b){                
     localStorage.setItem('isLogin', a,);
     localStorage.setItem('stateLogin',b);
   }
-  getUser() {
+  getStatus() {
     return this.httpClient.get(this.API + 'home/' + 'ping');
   }
 
@@ -44,5 +48,10 @@ export class HomeService {
 
   getAllClass() {
     return this.httpClient.get(this.API + 'class/' + 'allClass');
+  }
+
+  getUserdata(){
+    var us = localStorage.getItem('isLogin');
+    return this.httpClient.get(this.API + 'user/' + 'userData/' + us);
   }
 }
