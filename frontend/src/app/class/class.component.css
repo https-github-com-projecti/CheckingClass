@@ -16,6 +16,23 @@ html {
     radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);  
 }
 
+html .wallpaper{
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-attachment: fixed;
+  background-image: url('../../assets/wp1895396-min.jpg');
+  opacity: 0.7;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 100;
+  top: 0px;
+  left: 0px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -27,7 +44,7 @@ hr {
 }
 
 body {
-  /* position: absolute; */
+  position: relative;
   line-height: normal;
   font-size: 16px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -38,6 +55,7 @@ body {
   /* background: radial-gradient(circle at 94.02% 88.03%, #ffffff, transparent 100%),
     radial-gradient(circle at 25.99% 27.79%, rgba(103, 241, 48, 0.6), transparent 100%),
     radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%); */
+  z-index: 100;
 }
 
 body .icon-site{
@@ -64,31 +82,114 @@ body .icon-site:hover {
   cursor: pointer;
 }
 
-body .profile-site img{
+body .profile-site{
   position: fixed;
+  z-index: 500;
+}
+.img-dropdown{
+  position: fixed;
+  display: flex;
+  float: right;
   width: 90px;
-  right: 10px;
-  background-color: white;
+  height: 90px;
+  top: 2%;
+  right: 1%;
   border-radius: 100%;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 5px;
   z-index: 500;
   transition: all ease-out 300ms;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.img-dropdown img{
+  display: inline;
+  width: 90px;
+  background-color: rgb(255, 255, 255);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  transition: all ease-out 300ms;
+  justify-content: center;
+  align-items: center;
+  z-index: 502;
+  image-resolution: 320dpi; 
+  image-rendering: auto;
+  padding: 2px;
 }
 body .profile-site button{
   position: fixed;
-  z-index: 500;
+  z-index: 400;
   top: 120px;
   right: 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 10px;
 }
-body .profile-site img:hover {
+.img-dropdown:hover  img {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  width: 200px;
+  border-radius: 10%;
+}
+.img-dropdown:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
   cursor: pointer;
+  width: 450px;
+  height: 270px;
+  border-radius: 10%;
 }
 body .profile-site button:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+.dropdown{
+  position: absolute;
+  display: inline-block;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown .dropdown-content {
+  float: right;
+  display: none;
+  position: relative;
+  background-color: #f9f9f9de;
+  min-width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  cursor: pointer;
+  /* margin-top: 50vh; */
+  margin-left: 10px; 
+  /* z-index: 1000; */
+  /* margin-left: -8em; */
+}
+
+.dropdown2 {
+  position: relative;
+  display: inline-block;
+}
+.dropdown2 .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9ea;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  margin-left: -8em;
+  margin-top: 30%;
+}
+
+.dropdown-content a {
+  cursor: pointer;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {
+  background-color: #191f70e1;
+  color: white;
+  border-radius: 7px 2px;
+  box-shadow: 2px 2px 5px gray;
+}
+.dropdown2:hover .dropdown-content {
+  display: block;
 }
 
 main{
@@ -97,6 +198,7 @@ main{
   /* background-color: blue; */
   width: 100%;
   height: 100vh;
+  z-index: 400;
 }
 main .list{
   position: fixed;
@@ -110,12 +212,13 @@ main .list{
 main .class_site{
   position: relative;
   width: 70%;
-  height: auto;
-  min-height: 100vh;
+  height: 100vh;
   float: right;
   /* background-color: yellow; */
   display: block;
   justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .list nav{
@@ -241,7 +344,7 @@ main .class_site{
   width: 100%;
 }
 
-.title_site > p{
+.title_site div > p{
   margin: 15% 0 0 0;
   padding: 10px;
   text-overflow: ellipsis;

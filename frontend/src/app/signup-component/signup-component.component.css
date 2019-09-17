@@ -120,7 +120,7 @@ body .icon-site:hover {
   border-style: 5px solid;
   image-resolution: 300dpi;
   image-rendering: crisp-edges;
-  image-orientation: from-image;
+  image-orientation: from-image; 
   background-size: cover;
   overflow: hidden;
   padding: 10px;

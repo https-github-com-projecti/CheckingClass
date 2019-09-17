@@ -6,17 +6,28 @@
     <script src="/node_modules/angular-qrcode/angular-qrcode.js"></script>
   <style type="text/css"></style>
 </head>
+<div class="wallpaper"></div>
 <body id="bodyId">
   <div class="icon-site">
     <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
   </div>
   <div class="profile-site">
-    <form>
-      <img id="blah" src="{{mypic}}" alt="your image" class="pic_set" />
+    <form class="dropdown">
+      <form class="img-dropdown" >
+        <img id="blah" [routerLink]="['/Home']" ng src="{{mypic}}" alt="your image" class="pic_set" />
+        <div class="dropdown-content" >
+          <a >Sign in as :  </a>
+          <hr>
+          <a >Profile</a>
+          <a >Setting</a>
+          <hr>
+          <a (click)="logout()">Log out</a>
+        </div>
+      </form>
     </form>
-    <form>
-      <button mat-fab (click)="createAuthenicate()">
-        <mat-icon svgIcon="add" aria-label="tool"></mat-icon>
+    <form class="dropdown2">
+      <button mat-fab >
+        <mat-icon svgIcon="add" aria-label="tool" style="margin-top:-20px;" (click)="createAuthenicate()"></mat-icon>
       </button>
     </form>
   </div>
@@ -29,17 +40,20 @@
           <li><a  [routerLink]="['/Score']">Student score</a></li>
       </nav>
     </form>
+    
     <form class="class_site">
       <div class="title_site" style="overflow: hidden;
       background-image: url('../../assets/abstract-polygonal-space-low-poly-dark-background-3d-rendering_7247-223-min.jpg');background-size: 100%;">
-        <p>{{name_Class}}</p>
+        <div *ngFor="let class of myClass">
+          <p> {{class.t_class_name}} </p>
+        </div>
       </div>
       <hr>
       <div class="panel">
       <div class="grid-container">
         <div *ngFor="let x of Qrcode" class="panel">
         <div class="card_grid_site">
-          <img src="../../assets/qrcode_test-min.png" style="width: 60%;" ([ngModel])="Qr(x)"/>
+          <img src="data:image/gif;base64,{{x.Qrcode}}" style="width: 60%;" ([ngModel])="Qr(x)"/>
           <p>Date : {{x.time}}     เช็คครั้งที่ : {{x.id}}</p>
         </div>
       </div>

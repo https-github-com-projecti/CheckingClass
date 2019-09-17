@@ -30,6 +30,19 @@ import { PeopleComponent } from './people/people.component';
 import { AuthenicatStudentComponent } from './authenicat-student/authenicat-student.component';
 import { StudentScoreComponent } from './student-score/student-score.component';
 
+import {A11yModule} from '@angular/cdk/a11y';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {PortalModule} from '@angular/cdk/portal';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {CdkStepperModule} from '@angular/cdk/stepper';
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatTreeModule} from '@angular/material/tree';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import 'hammerjs';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/Home', pathMatch: 'full'},
@@ -108,9 +121,20 @@ const appRoutes: Routes = [
     MatSortModule,
     MatPaginatorModule,
     ReactiveFormsModule,
+    A11yModule,
+    DragDropModule,
+    PortalModule,
+    ScrollingModule,
+    CdkStepperModule,
+    CdkTableModule,
+    CdkTreeModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatDividerModule,
+    MatTreeModule,
+    NoopAnimationsModule,
   ],
   providers: [HomeService, SingupService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

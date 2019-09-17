@@ -9,7 +9,8 @@ type Qrcode struct {
 type CreateQr struct {
 	Id		int		`json:"id"`
 	Qrcode	string	`json:"qrcode`
-	Time string 	`json:"time"`
+	Time 	string 	`json:"time"`
+	User 	string 	`json:"user"`
 }
 
 type newQr []Qrcode

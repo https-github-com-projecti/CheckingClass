@@ -3,12 +3,11 @@ package api
 import (
 	"fmt"
 	"log"
-
 	"github.com/gin-gonic/gin"
 	"github.com/narawichsaphimarn/backend/models"
-
-	//"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
+	"strconv"
+	"flag"
 )
 
 var testUsers []models.User
@@ -34,7 +33,6 @@ func NewUser(c *gin.Context) {
 
 	testUsers = append(testUsers, addUser)
 	fmt.Println(testUsers)
-
 }
 
 func AllUsers(c *gin.Context) {
@@ -45,7 +43,7 @@ func AllUsers(c *gin.Context) {
 func UserLogin(c *gin.Context) {
 	var Ui models.UserLogin
 	defer c.Request.Body.Close()
-	if c.ShouldBindJSON(&Ui) == nil {
+	if c.ShouldBindJSON(&Ui) != nil {
 		log.Println("====== Only Bind By Query String ======")
 		log.Println(Ui.Username)
 		log.Println(Ui.Password)
@@ -53,21 +51,31 @@ func UserLogin(c *gin.Context) {
 	for _, copy := range testUsers {
 		if Ui.Username == copy.UserName && Ui.Password == copy.TPassword {
 			c.JSON(http.StatusOK, "Success")
-			fmt.Println(copy)
-		} else {
-			c.JSON(http.StatusOK, "Unsuccess")
 		}
 	}
 }
 
-func UserData(c *gin.Context) {
+func GetId(c *gin.Context) {
 	user := c.Param("user")
 	defer c.Request.Body.Close()
-	var sp []models.User
+	// var sp []models.User
 	for _, copy := range testUsers {
 		if copy.UserName == user {
-			sp = append(sp, copy)
-			c.JSON(http.StatusOK, sp)
+			// sp = append(sp, copy)
+			c.JSON(http.StatusOK, copy.ID)
+		}
+	}
+}
+
+func GetPicture(c *gin.Context){
+	flag.Parse()
+	id := c.Param("id");
+	i, _  := strconv.Atoi(id)
+	defer c.Request.Body.Close()
+	for _, mypic := range testUsers {
+		if (mypic.ID == i){
+			c.JSON(http.StatusOK, mypic.TPicture)
+			// fmt.Println("MyPic = " + mypic.TPicture)
 		}
 	}
 }

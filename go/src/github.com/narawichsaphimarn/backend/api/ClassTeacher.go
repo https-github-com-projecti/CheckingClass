@@ -4,6 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/narawichsaphimarn/backend/models"
 	"net/http"
+	"strconv"
+	"flag"
+	"math/rand"
+	// "fmt"
 )
 
 var testClass []models.TClass
@@ -14,6 +18,7 @@ func CreatClass(c *gin.Context){
 	if err := c.ShouldBindJSON(&p); err != nil {
 		c.JSON(http.StatusOK, "Can't creat class")
 	}
+	num := RandPassClass()
 
 	newClass := models.TClass{
 		Id:                len(testClass) + 1,
@@ -21,6 +26,7 @@ func CreatClass(c *gin.Context){
 		TClassDescription: p.TClassDescription,
 		TClassId:          p.TClassId,
 		TUser:             p.TUser,
+		TClassPass:        num,
 	}
 
 	testClass = append(testClass, newClass)
@@ -44,13 +50,30 @@ func MyClass(c *gin.Context){
 	c.JSON(http.StatusOK, sp)
 }
 
-//func AddDataClass(){
-//	addNewClass := models.TClass{
-//		len(testClass) + 1,
-//		"Project 1",
-//		"สำหรับลงโปรเเจ็ค",
-//		"523495",
-//		"NS",
-//	}
-//	testClass = append(testClass, addNewClass)
-//}
+func OneClass(c *gin.Context){
+	flag.Parse()
+	id := c.Param("id")
+	i, _  := strconv.Atoi(id)
+	defer c.Request.Body.Close()
+	var copy []models.TClass
+	for _, sp := range testClass {
+		if (sp.Id == i ){
+			copy = append(copy, sp)
+		} 
+	}
+	c.JSON(http.StatusOK, copy)
+}
+
+func RandPassClass() (i int){
+	classnum := rand.Intn(100000000)
+	for _, copy := range testClass {
+		if (classnum == copy.TClassPass) {
+			RandPassClass()
+		}
+	}
+	i = classnum
+	return 
+}
+
+
+

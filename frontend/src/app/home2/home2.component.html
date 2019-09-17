@@ -9,22 +9,24 @@
     <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
   </div>
   <div class="profile-site">
-    <form class="img-dropdown" *ngFor="let item of userdata">
-      <img id="blah" [routerLink]="['/Home']" src="data:image/gif;base64,{{mypic}}" alt="your image" class="pic_set" />
-      <div class="dropdown-content">
-        <a >Sign in as : {{item.userName}} </a>
-        <hr>
-        <a >Profile</a>
-        <a >Setting</a>
-        <hr>
-        <a (click)="logout()">Log out</a>
-      </div>
+    <form class="dropdown">
+      <form class="img-dropdown" >
+        <img id="blah" [routerLink]="['/Home']" ng src="{{mypic}}" alt="your image" class="pic_set" />
+        <div class="dropdown-content" >
+          <a >Sign in as :  </a>
+          <hr>
+          <a >Profile</a>
+          <a >Setting</a>
+          <hr>
+          <a (click)="logout()">Log out</a>
+        </div>
+      </form>
     </form>
     <form class="dropdown2">
-      <button mat-fab>
-        <mat-icon svgIcon="add" aria-label="tool"></mat-icon>
+      <button mat-fab >
+        <mat-icon svgIcon="add" aria-label="tool" style="margin-top:-20px;"></mat-icon>
         <div class="dropdown-content">
-          <a >Create Class</a>
+          <a id="bt_createClass">Create Class</a>
           <a >Join Class</a>
         </div>
       </button>
@@ -64,15 +66,44 @@
       </form>
     </div>
   </section>
-    <div class="grid-container">
-        <div *ngFor="let x of teacherClass" class="panel" (click)="selectClass(x)">
+  </main>
+  <div class="class-container" id="CreateClass">
+      <div class="class_panel">
+        <label class="label_font"> Create class </label>
+        <form class="input-form-sit">
+          <mat-form-field class="example-full-width" color="primary">
+            <input matInput placeholder="Class name" id="clear_class1" value=" " class="color_text" 
+            name="className" [(ngModel)]="newclass.t_class_name">
+          </mat-form-field>
+        </form>
+
+        <form class="input-form-sit">
+          <mat-form-field class="example-full-width" color="primary">
+              <textarea matInput placeholder="Description" id="clear_class2" value=" " name="description"
+              [(ngModel)]="newclass.t_class_description"></textarea>
+          </mat-form-field>
+        </form> 
+
+        <form class="input-form-sit">
+          <mat-form-field class="example-full-width" color="primary">
+            <input matInput placeholder="Class ID" id="clear_class3" value=" " class="color_text" 
+            name="class_id" [(ngModel)]="newclass.t_class_id">
+          </mat-form-field>
+        </form>
+
+        <form class="f_b_site" id="bt_saveClass">
+            <button mat-raised-button (click)="checkClassOrder()">Create class</button>
+        </form>
+      </div>
+  </div>
+  <div class="grid-container">
+      <div *ngFor="let x of teacherClass" class="panel" (click)="selectClass(x)">
         <div class="card_grid_site">
           <p style="margin-top: 130px;padding: 10px;color: white;font-family: Arial;font-size: 19px;font-weight: 500;text-overflow: ellipsis;letter-spacing: 3px;" name="className">Class name : {{x.t_class_name}}</p>
           <p style="margin-left: 10px;text-overflow: ellipsis;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" name="classDesc">Desc : {{x.t_class_description}}</p>
           <p style="margin-left: 10px;text-overflow: ellipsis;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" name="classId">Content : {{x.t_class_id}}</p>
         </div>
-      </div>
     </div>
-  </main>
+  </div>
 </body>
 </html>

@@ -6,6 +6,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { DatePipe } from '@angular/common';
 import {HomeService} from '../service/home.service';
 import { stringify } from '@angular/compiler/src/util';
+import { Router } from '@angular/router';
 
 export interface createQrcode {
   time : string;
@@ -20,19 +21,16 @@ export interface createQrcode {
 })
 export class ClassComponent implements OnInit {
   mypic: string = '../../assets/fbb2978e127f2920ab9774076ade2a36.png';
-  name_Class: string = "Project"
+  myClass: Object = null ;
   guillaumeNery = 'Hello my code';
   pipe = new DatePipe('en-US');
   private nows = Date.now();
   myFormattedDates = this.pipe.transform(this.nows, 'medium');
-  Qrcode : any;
+  Qrcode : Object = null;
+  private userdata = null;
+  public getPic = null; 
+  public check : any = null;
 
-  // class : classOrder = {
-  //   t_class_name: null,
-  //   t_class_description: null,
-  //   t_class_id: null,
-  //   user: null,
-  // }
 
   newQr : createQrcode = {
     time : null,
@@ -41,23 +39,19 @@ export class ClassComponent implements OnInit {
   }
 
   select_Class: any = {
-    t_class_name : null,
-    t_class_description : null,
-    t_class_id : null,
-    user : null,
+    id : null,
+    t_class_name: null,
+    t_class_description: null,
+    t_class_id: null,
+    user: null,
   }
-  class : classOrder [] = [{
-    t_class_name: "Test1",
-    t_class_description: "Test1",
-    t_class_id: "Test1",
-    user: "Test1",}
-  ];
 
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private homeService : HomeService,
     private classService : ClassService,
+    private router : Router,
   ) {
     this.matIconRegistry.addSvgIcon(
       "add",
@@ -66,26 +60,63 @@ export class ClassComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.loadData();
+    this.classService.getmyClass().subscribe(data =>{
+      this.myClass = data;
+      console.log(data);
+    });
   }
 
   createAuthenicate(){
     const now = Date.now();
     const myFormattedDate : string = this.pipe.transform(now, 'medium');
     const user = localStorage.getItem('isLogin');
-    // console.log(myFormattedDate,user);
     this.newQr.time = myFormattedDate;
-    this.newQr.user = "NS";
-    this.newQr.passOfCouse = "12345"
-    console.log(this.newQr);
+    this.newQr.user = user;
+    this.newQr.passOfCouse = this.myClass[0]["t_class_pass"];
+
     this.classService.createQr(this.newQr).subscribe(
-      data => {
-        console.log(data);
-        this.Qrcode = data;
-      }     
+        data => {
+          this.check = data;
+          if (this.check  == "Success"){
+            this.loadData();
+          }
+        },
+        error  => {
+          alert('Error กรุณาลองใหม่');
+          console.log('Error', error);
+        }     
     );
   }
 
   Qr(x){
     console.log(x);
+  }
+
+  loadData() {
+    this.homeService.getUserdata().subscribe(data =>{
+      this.userdata = data;
+      this.homeService.setID(this.userdata);
+      this.homeService.getGetPic().subscribe(data =>{
+        this.getPic = data;
+        console.log(this.isEmptyOrSpaces(this.getPic));
+        if (this.getPic.trim() === ''){}
+        else {  this.mypic = this.getPic }
+      });
+    });
+    this.classService.getmyQr().subscribe(
+      data =>{
+        console.log(data);
+        this.Qrcode = data;
+      }
+    );
+  }
+  isEmptyOrSpaces(str){
+    return str === null || str.match(/^ *$/) !== null;
+  }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['/Home']);
   }
 }

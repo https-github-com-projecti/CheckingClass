@@ -37,7 +37,8 @@ func main() {
 		c2.POST("/newUser", api.NewUser)
 		c2.GET("/allUsers", api.AllUsers)
 		c2.POST("/loginUser", api.UserLogin)
-		c2.GET("/userData/:user", api.UserData)
+		c2.GET("/getId/:user", api.GetId)
+		c2.GET("/getMyPic/:id", api.GetPicture)
 	}
 
 	c3 := r.Group("/class")
@@ -45,11 +46,14 @@ func main() {
 		c3.POST("/newClass", api.CreatClass)
 		c3.GET("/allClass", api.AllClass)
 		c3.GET("/myClass/:user", api.MyClass)
+		c3.GET("/selectClass/:id", api.OneClass)
 	}
 
-	c4 := r.Group("qr")
+	c4 := r.Group("/qr")
 	{
 		c4.POST("/createqr", api.CreateBarcode)
+		c4.GET("/allQr", api.AllQr)
+		c4.GET("/myQr/:user", api.MyQr)
 	}
 	r.Run(":8080")
 }

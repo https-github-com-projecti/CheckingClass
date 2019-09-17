@@ -9,14 +9,19 @@ import {Observable, throwError} from 'rxjs';
 })
 export class HomeService {
   public API = 'http://localhost:8080/';
+  public data : any;
   constructor(private httpClient: HttpClient) { }
+
+  setID(z){
+    localStorage.setItem('id', z);
+  }
 
   status(x){
     localStorage.setItem('statusLogin', x);
   }
 
   login(a,b){                
-    localStorage.setItem('isLogin', a,);
+    localStorage.setItem('isLogin', a);
     localStorage.setItem('stateLogin',b);
   }
   getStatus() {
@@ -52,6 +57,12 @@ export class HomeService {
 
   getUserdata(){
     var us = localStorage.getItem('isLogin');
-    return this.httpClient.get(this.API + 'user/' + 'userData/' + us);
+    return this.httpClient.get(this.API + 'user/' + 'getId/' + us);
   }
+
+  getGetPic(){
+    var id = localStorage.getItem('id');
+    return this.httpClient.get(this.API + 'user/' + 'getMyPic/' + id);
+  }
+
 }

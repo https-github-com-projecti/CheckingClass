@@ -9,7 +9,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { error } from 'util';
 
-
 export interface User {
   tFirstName: string;
   tLastName: string;
@@ -28,16 +27,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
-// declare var ImageCompressor: any;
- 
-// const compressor = new ImageCompressor();
 
 @Component({
   selector: 'app-signup-component',
   templateUrl: './signup-component.component.html',
   styleUrls: ['./signup-component.component.css']
 })
-
 
 export class SignupComponentComponent implements OnInit {
   tComfirmPassword = null;
@@ -51,8 +46,7 @@ export class SignupComponentComponent implements OnInit {
 
   constructor(
     private singupService: SingupService, private httpClient: HttpClient,
-    private router : Router,
-    ) 
+    private router : Router,) 
     {}
 
   newData: User = {
@@ -69,7 +63,7 @@ export class SignupComponentComponent implements OnInit {
   onFileSelected(files){
     if (files.length === 0)
       return;
- 
+    
     var mimeType = files.target.files[0].type;
     if (mimeType.match(/image\/*/) == null) {
       this.message = "Only file image Ex file .png";
@@ -77,18 +71,21 @@ export class SignupComponentComponent implements OnInit {
       return;
     }
     this.imagePath = files;
-    this.reader.readAsDataURL(files.target.files[0]); 
-    this.reader.onload = (_event) => { 
-      this.img = this.reader.result;
-      this.base64 = btoa(this.img);
-      this.newData.tPicture = this.base64;
-      this.imgURL = this.img;
+    if (files.target.files.length == 1) {
+      this.reader.readAsDataURL(files.target.files[0]); 
+      this.reader.onload = (_event) => { 
+        this.img = this.reader.result;
+        this.newData.tPicture = this.img;
+        this.imgURL = this.img;
+      }
     }
-    console.log(this.newData.tPicture);
+    console.log("img = " + this.img);
+    console.log("newData.tPicture = " + this.newData.tPicture);
+    console.log(this.imagePath);
   }
   
   ngOnInit() {
-  
+    console.log(this.newData.tPicture);
   }
 
   checkData() {
