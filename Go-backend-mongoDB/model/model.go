@@ -4,14 +4,15 @@ import (
 	"time"
 	"github.com/globalsign/mgo/bson"
 )
-//USER
+//USERTeacher
 type UserInfo struct {
 	User []User `json:"users"`
 }
 
 type User struct {
 	ID         bson.ObjectId	  `json:"user_id" bson:"_id,omitempty"`
-	TName      string             `json:"TName" bson:"TName"`
+	FirstName      string         `json:"FirstName" bson:"FirstName"`
+	LastName      string          `json:"LastName" bson:"LastName"`
 	UserName   string             `json:"UserName" bson:"UserName"`
 	TId        string             `json:"TId" bson:"TId"`
 	TEmail     string             `json:"TEmail" bson:"TEmail"`
@@ -21,6 +22,8 @@ type User struct {
 
 	
 }
+
+
 //Subject
 type SubjectInfo struct {
 	Subject []Subject `json:"subjects"`
@@ -48,6 +51,21 @@ type Attendance struct {
 	AName      		string             	`json:"AName" bson:"AName"`
 	ATime			time.Time			`json:"ATime" bson:"ATime"`
 	Astudent		string				`json:"Astudent" bson:"Astudent"`
+	
+}
+//Student
+type StudentInfo struct {
+	Student []Student `json:"students"`
+}
+
+type Student struct {
+	ObjectID       bson.ObjectId 	`json:"attendance_id" bson:"_id,omitempty"`
+	StudentID			string             	`json:"StudentID" bson:"StudentID"`
+	SName      		string             	`json:"SName" bson:"SName"`
+	Susername		string             	`json:"Susername" bson:"Susername"`
+	Spassword		string             	`json:"Spassword" bson:"Spassword"`
+	Sphone			string             	`json:"Sphone" bson:"Sphone"`
+	Semail			string  		`json:"Semail" bson:"Semail"`
 	
 }
 

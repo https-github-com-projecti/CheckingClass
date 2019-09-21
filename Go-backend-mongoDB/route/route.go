@@ -46,6 +46,7 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	// }	
 	// route.POST("QRCODE/create", QRcodeAPI.AddSubjectHandeler)
 	
+
 	//Attendance	
 	attendanceRepository := repository.AttendanceRepositoryMongo{
 		ConnectionDB: connectionDB,
@@ -53,7 +54,18 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	attendanceAPI := api.AttendanceAPI{
 		AttendanceRepository: &attendanceRepository,
 	}	
-	route.GET("Attendance/list", attendanceAPI.AttendanceListHandler)
+	route.GET("Attendance/alllist", attendanceAPI.AllAttendanceListHandler)
+	route.POST("Attendance/new", attendanceAPI.CreateAttendanceHandeler)
+	route.GET("Attendance/list/:AName", attendanceAPI.FindbyANameAttendanceHandler)
+
+	//Student
+	studentRepository := repository.StudentRepositoryMongo{
+		ConnectionDB: connectionDB,
+	}
+	studentAPI := api.StudentAPI{
+		StudentRepository: &studentRepository,
+	}	
+	route.GET("Student/alllist", studentAPI.AllStudentListHandler)
 
 
 }

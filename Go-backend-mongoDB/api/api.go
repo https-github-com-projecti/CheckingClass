@@ -153,7 +153,7 @@ func (api SubjectAPI) EditaddstudentHandler(context *gin.Context) {
 type AttendanceAPI struct {
 	AttendanceRepository repository.AttendanceRepository
 }
-func (api AttendanceAPI) AttendanceListHandler(context *gin.Context) {
+func (api AttendanceAPI) AllAttendanceListHandler(context *gin.Context) {
 	var attendancesInfo model.AttendanceInfo
 	attendances, err := api.AttendanceRepository.GetAllAttendance()
 	if err != nil {
@@ -164,6 +164,53 @@ func (api AttendanceAPI) AttendanceListHandler(context *gin.Context) {
 	attendancesInfo.Attendance = attendances
 	context.JSON(http.StatusOK, attendancesInfo)
 }
+func (api AttendanceAPI) CreateAttendanceHandeler(context *gin.Context) {
+	var attendance model.Attendance
+	err := context.ShouldBindJSON(&attendance)
+	if err != nil {
+		log.Println("error CreateAttendanceHandeler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	err = api.AttendanceRepository.CreateAttendance(attendance)
+	if err != nil {
+		log.Println("error CreateAttendanceHandeler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	context.JSON(http.StatusCreated, gin.H{"status": "susess"})
+
+}
+
+func (api AttendanceAPI) FindbyANameAttendanceHandler(context *gin.Context) {
+	var attendancesInfo model.AttendanceInfo
+	aName := context.Param("AName")
+	attendances, err := api.AttendanceRepository.FindbyAName(aName)
+	if err != nil {
+		log.Println("error FindbyANameAttendanceHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+	}
+	attendancesInfo.Attendance = attendances
+	context.JSON(http.StatusNoContent, gin.H{"message": "susess"})
+}
+
+//Student
+type StudentAPI struct {
+	StudentRepository repository.StudentRepository
+}
+
+func (api StudentAPI) AllStudentListHandler(context *gin.Context) {
+	var studentInfo model.StudentInfo
+	student, err := api.StudentRepository.GetAllStudent()
+	if err != nil {
+		log.Println("error UserListHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	studentInfo.Student = student
+	context.JSON(http.StatusOK, studentInfo)
+}
+
 
 
 //QRCODE

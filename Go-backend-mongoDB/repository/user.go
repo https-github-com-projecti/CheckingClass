@@ -22,6 +22,7 @@ const (
 	collectionUser = "User"
 	collectionSubject = "Subject"
 	collectionAttendance = "Attendance"
+	collectionStudent = "Student"
 )
 
 func (UserMongo UserRepositoryMongo) GetAllUser() ([]model.User, error) {
@@ -82,8 +83,12 @@ func (SubjectMongo SubjectRepositoryMongo) Editaddstudent(ID string, subject mod
 	newStudent := bson.M{"$set": bson.M{"Sstudent": subject.Sstudent, }}
 	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).UpdateId(objectID, newStudent)
 }
+
+//Attendance
 type AttendanceRepository interface {
 	GetAllAttendance() ([]model.Attendance, error)
+	CreateAttendance(attendance model.Attendance) error
+	FindbyAName(Aname string)([]model.Attendance, error)
 	
 }
 
@@ -94,4 +99,28 @@ func (AttendanceMongo AttendanceRepositoryMongo) GetAllAttendance() ([]model.Att
 	var attendance []model.Attendance
 	err := AttendanceMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Find(nil).All(&attendance)
 	return attendance, err
+}
+func (AttendanceMongo AttendanceRepositoryMongo) CreateAttendance(attendance model.Attendance) error {
+	return AttendanceMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Insert(attendance)
+}
+func (AttendanceMongo AttendanceRepositoryMongo) FindbyAName(Aname string) ([]model.Attendance, error) {
+	var attendance []model.Attendance
+	objectID := bson.ObjectIdHex(Aname)
+	err := AttendanceMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Find(bson.M{"AName": objectID, }).All(&attendance)
+	return attendance, err
+}
+
+//Student
+type StudentRepository interface {
+	GetAllStudent() ([]model.Student, error)
+	
+}
+
+type StudentRepositoryMongo struct {
+	ConnectionDB *mgo.Session
+}
+func (StudentMongo StudentRepositoryMongo) GetAllStudent() ([]model.Student, error) {
+	var student []model.Student
+	err := StudentMongo.ConnectionDB.DB(DBName).C(collectionStudent).Find(nil).All(&student)
+	return student, err
 }
