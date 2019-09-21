@@ -1,0 +1,5 @@
+{"_id":{"$oid":"5d7fa6297d55191abc1581e2"},"SID":"523000","SName":"Computer programming","Description":"คอมพิวเตอร์โปรแกรมมิ่ง 1 วันจันทร์ 8.00 - 16.00 น.","Teacher":"ยงศิลป์"}
+{"_id":{"$oid":"5d7fa7768ac5f29f00dba1c8"},"SID":"523111","SName":"Computer programming2","Description":"","Teacher":""}
+{"_id":{"$oid":"5d7fa7d58ac5f29f00dba1ff"},"SID":"523001","SName":"Computer programming2","Description":"","Teacher":""}
+{"_id":{"$oid":"5d7fa80f8ac5f29f00dba21b"},"SID":"523001","SName":"Computer programming65","Description":"","Teacher":""}
+{"_id":{"$oid":"5d7fa8928ac5f29f00dba25b"},"SID":"523001-2","SName":"Computer programming65","Description":"11asdasdasdas","Teacher":"yongsin12dfgd3","Sstudent":"Moo"}
