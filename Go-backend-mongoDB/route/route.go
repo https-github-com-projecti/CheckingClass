@@ -17,6 +17,7 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	userAPI := api.UserAPI{
 		UserRepository: &userRepository,
 	}	
+	
 	route.GET("user/list", userAPI.UserListHandler)
 	route.POST("user/Add", userAPI.AddUserHandeler)
 	route.PUT("user/Edit/:user_id", userAPI.EditPasswordHandler)
@@ -66,6 +67,7 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 		StudentRepository: &studentRepository,
 	}	
 	route.GET("Student/alllist", studentAPI.AllStudentListHandler)
+	route.POST("Student/new", studentAPI.CreateStudentHandeler)
 
 
 }

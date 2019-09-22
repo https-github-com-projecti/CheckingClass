@@ -11,9 +11,9 @@ type UserInfo struct {
 
 type User struct {
 	ID         bson.ObjectId	  `json:"user_id" bson:"_id,omitempty"`
-	FirstName      string         `json:"FirstName" bson:"FirstName"`
-	LastName      string          `json:"LastName" bson:"LastName"`
-	UserName   string             `json:"UserName" bson:"UserName"`
+	FirstName  string         		`json:"tFirstName" bson:"tFirstName"`
+	LastName   string          		`json:"tLastName" bson:"tLastName"`
+	UserName   string             `json:"serName" bson:"UserName"`
 	TId        string             `json:"TId" bson:"TId"`
 	TEmail     string             `json:"TEmail" bson:"TEmail"`
 	TWorkPlace string             `json:"TWorkPlace" bson:"TWorkPlace"`
@@ -31,14 +31,21 @@ type SubjectInfo struct {
 
 type Subject struct {
 	SubjectID       bson.ObjectId 		`json:"subject_id" bson:"_id,omitempty"`
-	SID				string             	`json:"SID" bson:"SID"`
-	SName      		string             	`json:"SName" bson:"SName"`
-	SDescription 	string				`json:"SDescription" bson:"Description"`
-	STeacher	  	string          	`json:"STeacher" bson:"Teacher"`
-	Sstudent		string      		`json:"Sstudent" bson:"Sstudent"`
+	SID				string             	`json:"TSID" bson:"TSID"`
+	SName      		string             	`json:"TSName" bson:"TSName"`
+	SDescription 	string				`json:"TSDescription" bson:"TSDescription"`
+	STeacher	  	string          	`json:"TSTeacher" bson:"TSTeacher"`
+	Spassword		string				`json:"TSpassword" bson:"TSpassword"`
+	TstudentInfo	[]TstudentInfo     `json:"TstudentInfo" bson:"TstudentInfo"`
 
 	
 }
+type TstudentInfo struct {
+	StudentID		string             	`json:"StudentID" bson:"StudentID"`
+	SName      		string             	`json:"SName" bson:"SName"`
+}
+
+
 
 //Attendance
 type AttendanceInfo struct {
@@ -59,12 +66,12 @@ type StudentInfo struct {
 }
 
 type Student struct {
-	ObjectID       bson.ObjectId 	`json:"attendance_id" bson:"_id,omitempty"`
-	StudentID			string             	`json:"StudentID" bson:"StudentID"`
-	SName      		string             	`json:"SName" bson:"SName"`
-	Susername		string             	`json:"Susername" bson:"Susername"`
-	Spassword		string             	`json:"Spassword" bson:"Spassword"`
-	Sphone			string             	`json:"Sphone" bson:"Sphone"`
+	ObjectID       bson.ObjectId 	`json:"student_id" bson:"_id,omitempty"`
+	StudentID		string          `json:"SID" bson:"SID"`
+	SName      		string          `json:"SName" bson:"SName"`
+	Susername		string          `json:"Susername" bson:"Susername"`
+	Spassword		string          `json:"Spassword" bson:"Spassword"`
+	Sphone			string          `json:"Sphone" bson:"Sphone"`
 	Semail			string  		`json:"Semail" bson:"Semail"`
 	
 }
