@@ -11,6 +11,7 @@ type UserInfo struct {
 
 type User struct {
 	ID         bson.ObjectId	  `json:"user_id" bson:"_id,omitempty"`
+
 	FirstName  string         		`json:"tFirstName" bson:"tFirstName"`
 	LastName   string          		`json:"tLastName" bson:"tLastName"`
 	UserName   string             `json:"serName" bson:"UserName"`
@@ -29,20 +30,21 @@ type SubjectInfo struct {
 	Subject []Subject `json:"subjects"`
 }
 
+
+
+
 type Subject struct {
 	SubjectID       bson.ObjectId 		`json:"subject_id" bson:"_id,omitempty"`
-	SID				string             	`json:"TSID" bson:"TSID"`
-	SName      		string             	`json:"TSName" bson:"TSName"`
-	SDescription 	string				`json:"TSDescription" bson:"TSDescription"`
-	STeacher	  	string          	`json:"TSTeacher" bson:"TSTeacher"`
-	Spassword		string				`json:"TSpassword" bson:"TSpassword"`
-	TstudentInfo	[]TstudentInfo     `json:"TstudentInfo" bson:"TstudentInfo"`
+	TSID			string             	`json:"TSID" bson:"TSID"`
+	TSName      	string             	`json:"TSName" bson:"TSName"`
+	TSDescription 	string				`json:"TSDescription" bson:"TSDescription"`
+	TSTeacher	  	string          	`json:"TSTeacher" bson:"TSTeacher"`
+	TSpassword		string				`json:"TSpassword" bson:"TSpassword"`
+	TstudentInfo	[]TstudentInfos     `json:"TstudentInfo" bson:"TstudentInfo"`
 
-	
 }
-type TstudentInfo struct {
+type TstudentInfos struct {
 	StudentID		string             	`json:"StudentID" bson:"StudentID"`
-	SName      		string             	`json:"SName" bson:"SName"`
 }
 
 
@@ -57,7 +59,7 @@ type Attendance struct {
 	AID				string             	`json:"AID" bson:"AID"`
 	AName      		string             	`json:"AName" bson:"AName"`
 	ATime			time.Time			`json:"ATime" bson:"ATime"`
-	Astudent		string				`json:"Astudent" bson:"Astudent"`
+	Astudent		[]TstudentInfos		`json:"Astudent" bson:"Astudent"`
 	
 }
 //Student
@@ -68,7 +70,8 @@ type StudentInfo struct {
 type Student struct {
 	ObjectID       bson.ObjectId 	`json:"student_id" bson:"_id,omitempty"`
 	StudentID		string          `json:"SID" bson:"SID"`
-	SName      		string          `json:"SName" bson:"SName"`
+	SfirstName      string          `json:"SfirstName" bson:"SfirstName"`
+	SlastName      string          `json:"SlastName" bson:"SlastName"`
 	Susername		string          `json:"Susername" bson:"Susername"`
 	Spassword		string          `json:"Spassword" bson:"Spassword"`
 	Sphone			string          `json:"Sphone" bson:"Sphone"`

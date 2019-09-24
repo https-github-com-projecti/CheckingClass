@@ -9,7 +9,7 @@ import (
 type AttendanceRepository interface {
 	GetAllAttendance() ([]model.Attendance, error)
 	CreateAttendance(attendance model.Attendance) error
-	FindbyAName(Aname string)([]model.Attendance, error)
+	FindbyAName(Aname string, attendance model.AttendanceInfo)error
 	
 }
 
@@ -24,9 +24,7 @@ func (AttendanceMongo AttendanceRepositoryMongo) GetAllAttendance() ([]model.Att
 func (AttendanceMongo AttendanceRepositoryMongo) CreateAttendance(attendance model.Attendance) error {
 	return AttendanceMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Insert(attendance)
 }
-func (AttendanceMongo AttendanceRepositoryMongo) FindbyAName(Aname string) ([]model.Attendance, error) {
-	var attendance []model.Attendance
+func (AttendanceMongo AttendanceRepositoryMongo) FindbyAName(Aname string, attendance model.AttendanceInfo)  error {
 	objectID := bson.ObjectIdHex(Aname)
-	err := AttendanceMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Find(bson.M{"AName": objectID, }).All(&attendance)
-	return attendance, err
+	return AttendanceMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Find(bson.M{"AName": objectID, }).All(&attendance)
 }

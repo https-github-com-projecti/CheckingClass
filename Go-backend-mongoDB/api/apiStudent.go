@@ -43,3 +43,14 @@ func (api StudentAPI) CreateStudentHandeler(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{"status": "susess"})
 
 }
+func (api StudentAPI) ShowsubjectlistStudentHandeler(context *gin.Context) {
+	var studentInfo model.StudentInfo
+	student, err := api.StudentRepository.GetAllStudent()
+	if err != nil {
+		log.Println("error UserListHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	studentInfo.Student = student
+	context.JSON(http.StatusOK, studentInfo)
+}

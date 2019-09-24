@@ -36,7 +36,10 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	route.POST("Subject/Add", subjectAPI.AddSubjectHandeler)
 	route.PUT("Subject/Edit/:subject_id", subjectAPI.EditDescriptionHandler)
 	route.DELETE("Subject/Delete/:subject_id", subjectAPI.DeleteSubjectByIDHandler)
-	route.PUT("Subject/Editaddstudent/:subject_id", subjectAPI.EditaddstudentHandler)
+
+	route.GET("Subject/list/:subject_id",subjectAPI.GETONESubjectHandeler)
+
+	route.PUT("Tester/:subject_id/:student_id",subjectAPI.JoinClassHandeler)
 
 	//QRCode
 	// qrcodeRepository := repository.QRCodeRepositoryMongo{
@@ -68,6 +71,9 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	}	
 	route.GET("Student/alllist", studentAPI.AllStudentListHandler)
 	route.POST("Student/new", studentAPI.CreateStudentHandeler)
+	route.GET("Student/subjectlist:ID", studentAPI.ShowsubjectlistStudentHandeler)
 
+
+	
 
 }

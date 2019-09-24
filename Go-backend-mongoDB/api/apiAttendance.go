@@ -44,13 +44,19 @@ func (api AttendanceAPI) CreateAttendanceHandeler(context *gin.Context) {
 }
 
 func (api AttendanceAPI) FindbyANameAttendanceHandler(context *gin.Context) {
-	var attendancesInfo model.AttendanceInfo
-	aName := context.Param("AName")
-	attendances, err := api.AttendanceRepository.FindbyAName(aName)
+	var attendanceInfo model.AttendanceInfo
+	attendanceName := context.Param("AName")
+	err := context.ShouldBindJSON(&attendanceInfo)
 	if err != nil {
-		log.Println("error FindbyANameAttendanceHandler", err.Error())
+		log.Println("error1 FindbyANameAttendanceHandler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
 	}
-	attendancesInfo.Attendance = attendances
-	context.JSON(http.StatusNoContent, gin.H{"message": "susess"})
+	err = api.AttendanceRepository.FindbyAName(attendanceName, attendanceInfo)
+	if err != nil {
+		log.Println("error2 FindbyANameAttendanceHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, gin.H{"status": "susess"})
 }

@@ -7,8 +7,11 @@ import (
 	"net/http"
 	// b64 "encoding/base64"
 	// "github.com/skip2/go-qrcode"
-
 	"github.com/gin-gonic/gin"
+	// "github.com/globalsign/mgo/bson"
+	// "encoding/json"
+	// "fmt"
+	
 )
 //Subject
 type SubjectAPI struct {
@@ -68,20 +71,31 @@ func (api SubjectAPI) DeleteSubjectByIDHandler(context *gin.Context) {
 	context.JSON(http.StatusNoContent, gin.H{"message": "susess"})
 }
 
-func (api SubjectAPI) EditaddstudentHandler(context *gin.Context) {
-	var subject model.Subject
+func (api SubjectAPI) GETONESubjectHandeler(context *gin.Context) {
+	var subjectsInfo model.SubjectInfo
 	subjectID := context.Param("subject_id")
-	err := context.ShouldBindJSON(&subject)
+	onesubject, err:= api.SubjectRepository.GetSubject(subjectsInfo ,subjectID)
 	if err != nil {
-		log.Println("error EditaddstudentHandler", err.Error())
+		log.Println("error GETONESubjectHandeler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
-	err = api.SubjectRepository.Editaddstudent(subjectID, subject)
+	context.JSON(http.StatusOK, onesubject)
+}
+func (api SubjectAPI) JoinClassHandeler(context *gin.Context) {
+	subjectID := context.Param("subject_id")
+	studentID := context.Param("student_id")
+	err := api.SubjectRepository.JoinClass(subjectID,studentID)
 	if err != nil {
-		log.Println("error EditaddstudentHandler", err.Error())
+		log.Println("error JoinClassHandeler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
 	context.JSON(http.StatusOK, gin.H{"status": "susess"})
+	
+
 }
+
+
+///TEST
+
