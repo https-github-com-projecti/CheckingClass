@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style type="text/css"></style>
-    </head>
-    <body>
-     <main class="main">
-        <aside class="sidebar">
-          <nav class="nav">
-            <ul>
-              <li><a href="#" [routerLink]="['/Home']">My class</a></li>
-              <li class="active"><a href="#" [routerLink]="['/Setting']">Setting</a></li>
-            </ul>
-          </nav>
-        </aside>
-        <section class="twitter">
-            <div class="container">
-            </div>
-        </section>
+<head>
+  <style type="text/css"></style>
+</head>
+<div class="wallpaper"></div>
+<body id="bodyId">
+    <div class="icon-site">
+        <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
+    </div>
+
+    <main id="mainId">
+        <form class="list">
+            <nav class="nav">
+                <li ><a [routerLink]="['/Home']">Home</a></li>
+                <li ><a  [routerLink]="['/ProfileSetting']">Profile setting</a></li>
+                <li class="active"><a>setting</a></li>
+            </nav>
+          </form>
+          
+          <form class="class_site">
+            <mat-card class="profileSite">Simple card</mat-card>
+          </form>
     </main>
-    </body>
-</html>
+</body>
+

@@ -11,13 +11,15 @@
   <div class="profile-site">
     <form class="dropdown">
       <form class="img-dropdown" >
-        <img id="blah" [routerLink]="['/Home']" ng src="{{mypic}}" alt="your image" class="pic_set" />
+        <mat-card >
+            <img mat-card-avatar id="blah" [routerLink]="['/Home']" src="{{mypic}}" alt="your image" />
+        </mat-card>
         <div class="dropdown-content" >
-          <a >Sign in as :  </a>
-          <hr>
+          <a >Sign in as : {{Username}} </a>
+          <mat-divider></mat-divider>
           <a >Profile</a>
           <a >Setting</a>
-          <hr>
+          <mat-divider></mat-divider>
           <a (click)="logout()">Log out</a>
         </div>
       </form>
@@ -27,7 +29,7 @@
         <mat-icon svgIcon="add" aria-label="tool" style="margin-top:-20px;"></mat-icon>
         <div class="dropdown-content">
           <a id="bt_createClass">Create Class</a>
-          <a >Join Class</a>
+          <a id="btJoinClass">Join Class</a>
         </div>
       </button>
     </form>
@@ -47,17 +49,20 @@
         <div class="input_login">
                 <form class="input-form-sit">
                   <mat-form-field class="example-full-width" color="primary">
-                    <input matInput placeholder="Username" value="" class="color_text" 
+                    <input matInput placeholder="Enter your username" value="" class="color_text" 
                     name="username" [(ngModel)]="userlogins.username">
                   </mat-form-field>
                 </form>
-  
+
                 <form class="input-form-sit">
                   <mat-form-field class="example-full-width" color="primary">
-                    <input matInput type="password" placeholder="Password" value="" class="color_text" 
-                    name="password" [(ngModel)]="userlogins.password">
-                  </mat-form-field>
-                </form>   
+                      <input matInput placeholder="Enter your password" [type]="hide ? 'text' : 'password'" value="" class="color_text" 
+                      name="password" [(ngModel)]="userlogins.password">
+                      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                      </button>
+                    </mat-form-field>
+                </form>
 
                 <form class="f_b_site">
                     <button mat-raised-button (click)="checkLogin()">Login</button>
@@ -67,6 +72,7 @@
     </div>
   </section>
   </main>
+
   <div class="class-container" id="CreateClass">
       <div class="class_panel">
         <label class="label_font"> Create class </label>
@@ -99,10 +105,28 @@
   <div class="grid-container">
       <div *ngFor="let x of teacherClass" class="panel" (click)="selectClass(x)">
         <div class="card_grid_site">
-          <p style="margin-top: 130px;padding: 10px;color: white;font-family: Arial;font-size: 19px;font-weight: 500;text-overflow: ellipsis;letter-spacing: 3px;" name="className">Class name : {{x.t_class_name}}</p>
-          <p style="margin-left: 10px;text-overflow: ellipsis;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" name="classDesc">Desc : {{x.t_class_description}}</p>
-          <p style="margin-left: 10px;text-overflow: ellipsis;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" name="classId">Content : {{x.t_class_id}}</p>
+          <div style="width: 270px; height: 200px;position: relative;margin-left: 10px;">
+            <div>
+              <p class="textPanel" name="className">{{x.t_class_name}}</p>
+            </div>
+            <p class="textIDpanel" name="classId">{{x.t_class_id}}</p>
+            <p class="textDescPanel" name="classDesc">Description : {{x.t_class_description}}</p>
+          </div>
+          <mat-icon svgIcon="delete" id="btn_screen" aria-label="tool"></mat-icon>
         </div>
+    </div>
+  </div>
+
+  <div class="joinContainer" id="joinContainer">
+    <div class="joinPanel">
+      <form class="input-form-sit">
+        <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label>Enter your code</mat-label>
+          <input matInput id="inputJoinClass" placeholder="Enter your code" name="joinName" [(ngModel)]="joinName">
+          <mat-hint style="font-size: 14px;">กรุณานำรหัสที่อาจารย์ผู้สอนมาใส่เพื่อเพิ่มวิชาที่ท่านต้องการเรียน</mat-hint>
+        </mat-form-field>
+        <button mat-raised-button class="btnJoinClass" (click)="join()">Join class</button>
+      </form>
     </div>
   </div>
 </body>

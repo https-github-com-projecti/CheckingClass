@@ -43,6 +43,7 @@ export class SignupComponentComponent implements OnInit {
   private img: any = null;
   private base64 :string = null;
   matcher = new MyErrorStateMatcher();
+  hide = false;
 
   constructor(
     private singupService: SingupService, private httpClient: HttpClient,
@@ -105,14 +106,8 @@ export class SignupComponentComponent implements OnInit {
     console.log(this.newData);
     this.singupService.registerUsers(this.newData).subscribe(
       data => {
-        if (data){
-          alert('Error');
-          console.log(data);
-        }
-        else {
           alert('success');
           this.router.navigate(['/Home']);
-        }
       },
       error  => {
         alert('Error กรุณาลองใหม่');

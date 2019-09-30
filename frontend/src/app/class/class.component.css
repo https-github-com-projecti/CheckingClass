@@ -11,9 +11,9 @@ html {
   top: 0px;
   left: 0px;
   z-index: -100;
-  background: radial-gradient(circle at 94.02% 88.03%, #ffffff, transparent 100%),
+  /* background: radial-gradient(circle at 94.02% 88.03%, #ffffff, transparent 100%),
     radial-gradient(circle at 25.99% 27.79%, rgba(151, 241, 48, 0.6), transparent 100%),
-    radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);  
+    radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);   */
 }
 
 html .wallpaper{
@@ -23,6 +23,7 @@ html .wallpaper{
   height: 100%;
   background-attachment: fixed;
   background-image: url('../../assets/wp1895396-min.jpg');
+  filter: blur(50%);
   opacity: 0.7;
   height: 100vh;
   background-size: cover;
@@ -43,12 +44,18 @@ hr {
   margin: 5% 5% 0px 0;
 }
 
+body .profile-site .dropdown .img-dropdown .dropdown-content > hr {
+  border: 1px solid ;
+  width: 80%;
+  margin-left: calc((220px - 80%) / 2);
+}
+
 body {
   position: relative;
   line-height: normal;
   font-size: 16px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  width: auto;
+  width: 100%;
   height: auto;
   min-height: 100%;
   margin: 0 0 0 0;
@@ -60,7 +67,6 @@ body {
 
 body .icon-site{
     position: relative;
-    position: fixed;
     float: left;
     top: 0px;
     left: 0px;
@@ -103,18 +109,33 @@ body .profile-site{
   padding: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.img-dropdown img{
+.img-dropdown mat-card img{
   display: inline;
   width: 90px;
+  height: 90px;
+  margin-top: 4px;
   background-color: rgb(255, 255, 255);
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   transition: all ease-out 300ms;
   justify-content: center;
   align-items: center;
   z-index: 502;
   image-resolution: 320dpi; 
   image-rendering: auto;
-  padding: 2px;
+}
+.img-dropdown:hover >  mat-card{
+  /* box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5); */
+  width: 200px;
+  height: 200px;
+  border-radius: 10%;
+  /* padding: 2px; */
+}
+.img-dropdown:hover >  mat-card img{
+  display: inline;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 10%;
 }
 body .profile-site button{
   position: fixed;
@@ -123,11 +144,6 @@ body .profile-site button{
   right: 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 10px;
-}
-.img-dropdown:hover  img {
-  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
-  width: 200px;
-  border-radius: 10%;
 }
 .img-dropdown:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
@@ -154,10 +170,7 @@ body .profile-site button:hover {
   min-width: 220px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   cursor: pointer;
-  /* margin-top: 50vh; */
   margin-left: 10px; 
-  /* z-index: 1000; */
-  /* margin-left: -8em; */
 }
 
 .dropdown2 {
@@ -165,14 +178,14 @@ body .profile-site button:hover {
   display: inline-block;
 }
 .dropdown2 .dropdown-content {
+  float: right;
   display: none;
-  position: absolute;
-  background-color: #f9f9f9ea;
-  min-width: 160px;
+  position: relative;
+  background-color: #f9f9f9de;
+  min-width: 220px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  margin-left: -8em;
-  margin-top: 30%;
+  cursor: pointer;
+  margin-left: 10px; 
 }
 
 .dropdown-content a {
@@ -193,12 +206,9 @@ body .profile-site button:hover {
 }
 
 main{
-  position: relative;
-  margin: 0 0 0 0;
-  /* background-color: blue; */
+  position: static;
   width: 100%;
-  height: 100vh;
-  z-index: 400;
+  height: 100%;
 }
 main .list{
   position: fixed;
@@ -318,38 +328,131 @@ main .class_site{
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 22px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
   transition: all ease-out 400ms;
-  /* border-top: 20px solid transparent; */
   border-bottom: 50px solid rgba(255, 255, 255, 0.582);
-  /* background-image: url("../../assets/wallpaper-n-40-min.jpg"); */
   background-repeat: no-repeat;
   background-size: 100%;
-  /* background-image: url('../../assets/qrcode_test-min.png');
-  background-size: 256px 256px; */
 }
 .grid-container .panel .card_grid_site:hover{
-  padding: 10px;
-  width: 100%;
-  height: 55vh;
   border: 10px solid linear-gradient(to bottom, rgba(255, 255, 255, 0.7),rgba(255, 0, 0, 0.925));
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 22px 0 rgba(0, 0, 0, 0.19);
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7),rgba(245, 129, 94, 0.7));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7),rgba(245, 129, 94, 0.7));
   grid-gap: 5px;
-  /* background-image: url("../../assets/wallpaper-n-40-min.jpg"); */
-  /* background-position: center; */
   background-repeat: no-repeat;
   background-size: 100%;
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
-.panel{
+.class_site .panel{
   display: flex;
   width: 100%;
+  /* height: 100%; */
+  /* background-color: blue; */
+}
+.class_site .title_site .panelTextTitle{
+  /* background-color: yellow; */
+  width: 100%; 
+  height: 100px;
+  top: 0;
+  display: block;
 }
 
-.title_site div > p{
-  margin: 15% 0 0 0;
+.class_site .title_site .panelTextTitle > p:nth-child(1){
+  font-size: 32px;
+  font-family: Serif;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px black, 2px 2px 25px blue, 0 0 10px darkblue;
+  color: aliceblue;
+}
+.class_site .title_site .panelTextTitle > p:nth-child(2){
+  font-size: 17px;
+  font-family: Serif;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px black, 2px 2px 25px rgb(255, 0, 0), 0 0 10px rgb(139, 0, 0);
+  color: aliceblue;
+}
+.class_site .title_site .panelTextTitle > p:nth-child(3){
+  font-size: 17px;
+  font-family: Serif;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px black, 2px 2px 25px rgb(255, 0, 0), 0 0 10px rgb(139, 0, 0);
+  color: aliceblue;
+}
+
+.showQr-contrainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  z-index: 2000;
+  margin: 0px 0px 0px 0px;
+  /* top: 0; */
+  top: -100%;
+  left: 0;
+  transform: rotateX(60deg);
+}
+
+.showQr-contrainer .ShowQrPanel-container{
+  width: 90%;
+  height: 90%;
+  top: 0;
+  background-color: rgba(127, 255, 255, 0.425);
+  border-radius: 20px;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 22px 0 rgba(0, 0, 0, 0.19);
+}
+.showQr-contrainer .ShowQrPanel-container .qrCode_Container{
+  width: 70%;
+  height: 100%;
+  /* background-color: beige; */
+  top:0;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.showQr-contrainer .ShowQrPanel-container .qrCode_Container .QrCode_panel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 600px;
+  /* background-color: black; */
+  border-radius: 10%;
   padding: 10px;
-  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.showQr-contrainer .ShowQrPanel-container .qrCode_Container .QrCode_panel > img {
+  border-radius: 10%;
+  box-shadow: 1px 1px 2px black, 0 0 5px blue, 0 0 2px darkblue;
+}
+.showQr-contrainer .ShowQrPanel-container .peple_Container{
+  width: 30%;
+  height: 100%;
+  background-color: black;
+  top:0;
+  float: right;
+  border: 2px red solid;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.showQr-contrainer .ShowQrPanel-container .peple_Container .peple_Container_header{
+  width: 100%;
+  height: 20%;
+  background-color: aquamarine;
+}
+.card_grid_site mat-icon {
+  color: #aaaaaa;
+  float: right;
   font-size: 28px;
-  font-family: Sans-serif;
-  color: white;
-  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  font-weight: bold;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.card_grid_site mat-icon:hover,
+.card_grid_site mat-icon:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }

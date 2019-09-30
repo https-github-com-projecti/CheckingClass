@@ -14,9 +14,12 @@
           <form class="form_picture">
             <div>
               <div>
-                  <form class="picture_site">
+                  <!-- <form class="picture_site">
                       <img [src]="imgURL" alt="your image" class="image_site" (click)="inputFile.click()" />
-                  </form>
+                  </form> -->
+                  <mat-card class="picture_site">
+                      <img mat-card-avatar  [src]="imgURL" alt="your image" style="width: 100%; height: 100%;" (click)="inputFile.click()"/>
+                  </mat-card>
                   <input #imageInput type="file" id="onFileSelected" class="ng-hide" accept="image/*" (change)="onFileSelected($event)" #inputFile>
               </div>
             </div>
@@ -75,16 +78,22 @@
                   <div class="site_form">
                     <form class="example-form">
                       <mat-form-field class="example-full-width" color="primary">
-                        <input matInput type="password" placeholder="Password" value="" class="color_text" name="tPassword" [(ngModel)]="newData.tPassword">
-                      </mat-form-field>
+                          <input matInput placeholder="Enter your password" [type]="hide ? 'text' : 'password'" value="" class="color_text" name="tPassword" [(ngModel)]="newData.tPassword">
+                          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                          <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                          </button>
+                        </mat-form-field>
                     </form>
                   </div>
     
                   <div class="site_form">
                     <form class="example-form">
                       <mat-form-field class="example-full-width" color="primary">
-                        <input matInput type="password" placeholder="Confirm password" value="" class="color_text" name="tComfirmPassword" [(ngModel)]="tComfirmPassword">
-                      </mat-form-field>
+                          <input matInput placeholder="Confirm your password" [type]="hide ? 'text' : 'password'" value="" class="color_text" name="tComfirmPassword" [(ngModel)]="tComfirmPassword">
+                          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                          <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                          </button>
+                        </mat-form-field>
                     </form>
                   </div>
     

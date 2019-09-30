@@ -13,14 +13,40 @@ html {
   z-index: -100;
 }
 
+html .wallpaper{
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-attachment: fixed;
+  background-image: url('../../assets/photo-1501349800519-48093d60bde0-min.jpg');
+  filter: blur(50%);
+  opacity: 0.7;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 100;
+  top: 0px;
+  left: 0px;
+}
+
 * {
   box-sizing: border-box;
 }
 
 hr {
-    border: 1px solid red;
-    margin-bottom: 25px;
-  }
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  width: 80%;
+  margin: 5% 5% 0 0;
+}
+
+.dropdown-content > hr {
+  border: 1px solid ;
+  width: 80%;
+  margin-left: calc((220px - 80%) / 2);
+}
+
 
 body {
   position: relative;
@@ -28,16 +54,16 @@ body {
   font-size: 16px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   width: auto;
-  height: 100vh;
+  height: 100%;
   margin: 0 0 0 0;
-  background: radial-gradient(circle at 94.02% 88.03%, #ffffff, transparent 100%),
+  /* background: radial-gradient(circle at 94.02% 88.03%, #ffffff, transparent 100%),
     radial-gradient(circle at 25.99% 27.79%, rgba(238, 241, 48, 0.6), transparent 100%),
-    radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);
+    radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%); */
+  z-index: 100;
 }
 
 body .icon-site{
     position: relative;
-    position: fixed;
     float: left;
     top: 0px;
     left: 0px;
@@ -59,39 +85,111 @@ body .icon-site:hover {
   cursor: pointer;
 }
 
-body .profile-site img{
+body .profile-site{
   position: fixed;
+  z-index: 500;
+}
+.img-dropdown{
+  position: fixed;
+  display: flex;
+  float: right;
   width: 90px;
-  right: 10px;
-  background-color: white;
+  height: 90px;
+  top: 2%;
+  right: 1%;
   border-radius: 100%;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 5px;
   z-index: 500;
   transition: all ease-out 300ms;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.img-dropdown mat-card img{
+  display: inline;
+  width: 90px;
+  height: 90px;
+  margin-top: 4px;
+  background-color: rgb(255, 255, 255);
+  transition: all ease-out 300ms;
+  justify-content: center;
+  align-items: center;
+  z-index: 502;
+  image-resolution: 320dpi; 
+  image-rendering: auto;
+}
+.img-dropdown:hover >  mat-card{
+  /* box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5); */
+  width: 200px;
+  height: 200px;
+  border-radius: 10%;
+  /* padding: 2px; */
+}
+.img-dropdown:hover >  mat-card img{
+  display: inline;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 10%;
 }
 body .profile-site button{
   position: fixed;
-  z-index: 500;
+  z-index: 400;
   top: 120px;
   right: 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 10px;
 }
-body .profile-site img:hover {
+.img-dropdown:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
   cursor: pointer;
+  width: 450px;
+  height: 270px;
+  border-radius: 10%;
 }
 body .profile-site button:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
+.dropdown{
+  position: absolute;
+  display: inline-block;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown .dropdown-content {
+  float: right;
+  display: none;
+  position: relative;
+  background-color: #f9f9f9de;
+  min-width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  cursor: pointer;
+  /* margin-top: 50vh; */
+  margin-left: 10px; 
+  /* z-index: 1000; */
+  /* margin-left: -8em; */
+}
+.dropdown-content a {
+  cursor: pointer;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {
+  background-color: #191f70e1;
+  color: white;
+  border-radius: 7px 2px;
+  box-shadow: 2px 2px 5px gray;
+}
 
 main{
   position: relative;
-  margin: 0 0 0 0;
-  /* background-color: blue; */
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 main .list{
   position: fixed;
@@ -103,13 +201,15 @@ main .list{
   object-position: right;
 }
 main .class_site{
+  position: relative;
   width: 70%;
   height: 100vh;
   float: right;
   /* background-color: yellow; */
-  display: flex;
-  /* align-items: center; */
+  display: block;
   justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .list nav{
@@ -160,11 +260,110 @@ main .class_site{
 }
 
 .class_site .title_site{
-  margin: 5% 0% 0% -10%;
+  margin: 5% 0% 0% 0%;
   border-radius: 10px 10px 10px 10px;
   padding: 10px;
   width: 80%;
   height: 30vh;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7),rgba(104, 94, 245, 0.7));
+  /* background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7),rgba(94, 207, 245, 0.7)); */
+  background: white;
+  border: 1px rgba(0, 0, 0, 0.5);
+  border-style: double;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.class_site .panel{
+  display: flex;
+  width: 100%;
+  /* height: 100%; */
+  /* background-color: blue; */
+}
+
+.class_site .title_site .panelTextTitle{
+  /* background-color: yellow; */
+  width: 100%; 
+  height: 100px;
+  top: 0;
+  display: block;
+}
+
+.class_site .title_site .panelTextTitle > p:nth-child(1){
+  font-size: 32px;
+  font-family: Serif;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px black, 2px 2px 25px blue, 0 0 10px darkblue;
+  color: aliceblue;
+}
+.class_site .title_site .panelTextTitle > p:nth-child(2){
+  font-size: 17px;
+  font-family: Serif;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px black, 2px 2px 25px rgb(255, 0, 0), 0 0 10px rgb(139, 0, 0);
+  color: aliceblue;
+}
+.class_site .title_site .panelTextTitle > p:nth-child(3){
+  font-size: 17px;
+  font-family: Serif;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px black, 2px 2px 25px rgb(255, 0, 0), 0 0 10px rgb(139, 0, 0);
+  color: aliceblue;
+}
+
+
+.studentTable-container{
+  width: 900px;
+  height: auto;
+  background-color: whitesmoke;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  overflow-x: auto;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-right: 2px;
+  text-align: center;
+  overflow-x: auto;
+  border: 1px solid #ddd;
+}
+
+tr {
+  /* width: 100%; */
+  overflow-x: auto;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+}
+
+th, td .Student_name{
+  width: 700px;
+  padding: 20px;
+  margin-right: 10px;
+}
+
+th#Student_id{
+  width: 200px;
+}
+td#Student_id{
+  width: 200px;
+}
+
+th#NO{
+  width: 100px;
+}
+td#NO{
+  width: 100px;
+}
+
+th#date_authenStudent{
+  width: 150px;
+}
+td#date_authenStudent{
+  width: 150px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }

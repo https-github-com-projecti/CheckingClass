@@ -1,19 +1,24 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/skip2/go-qrcode"
 	b64 "encoding/base64"
-	// "fmt"
+	"fmt"
+	"log"
 	"net/http"
 	_ "net/http"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
 	"github.com/narawichsaphimarn/backend/models"
-	"log"
+	"github.com/skip2/go-qrcode"
+
+	// "strconv"
+	"flag"
 )
 
 var newQrs []models.CreateQr
 
-func CreateBarcode(c *gin.Context){
+func CreateBarcode(c *gin.Context) {
 	var png []byte
 	var p models.Qrcode
 	defer c.Request.Body.Close()
@@ -24,33 +29,74 @@ func CreateBarcode(c *gin.Context){
 		log.Println(p.Pass)
 	}
 
-	png, _ = qrcode.Encode(p.Time + p.User + p.Pass, qrcode.Medium, 256)
-	sEnc := b64.StdEncoding.EncodeToString([]byte(png))
-	sp := models.CreateQr {
-		Id 		:	len(newQrs) + 1,
-		Qrcode 	: 	sEnc,
-		Time 	: 	p.Time,
-		User 	: 	p.User,
+	str := strconv.Itoa(p.Pass)
+	var copyMyQr []models.CreateQr
+	var timeAuthens int = 0
+
+	for _, sp := range newQrs {
+		if p.Pass == sp.Pass {
+			copyMyQr = append(copyMyQr, sp)
+		}
 	}
 
-	newQrs = append(newQrs , sp)
+	timeAuthens = len(copyMyQr) + 1
+	str2 := strconv.Itoa(timeAuthens)
+
+	png, _ = qrcode.Encode(p.Time+";"+p.User+";"+str+";"+str2, qrcode.Medium, 256)
+	sEnc := b64.StdEncoding.EncodeToString([]byte(png))
+	sp := models.CreateQr{
+		Id:         len(newQrs) + 1,
+		Qrcode:     sEnc,
+		Time:       p.Time,
+		Pass:       p.Pass,
+		TimeAuthen: timeAuthens,
+	}
+
+	fmt.Println(sp)
+	newQrs = append(newQrs, sp)
 	c.JSON(http.StatusOK, "Success")
 }
 
-func AllQr(c *gin.Context){
+func AllQr(c *gin.Context) {
 	defer c.Request.Body.Close()
 	c.JSON(http.StatusOK, newQrs)
 }
 
-func MyQr(c *gin.Context){
-	user := c.Param("user")
+func MyQr(c *gin.Context) {
+	flag.Parse()
+	defer c.Request.Body.Close()
+	pass := c.Param("pass")
+	i, _ := strconv.Atoi(pass)
 	var sp []models.CreateQr
 	for _, copy := range newQrs {
-		if (copy.User == user){
+		if copy.Pass == i {
 			sp = append(sp, copy)
 		}
 	}
 	c.JSON(http.StatusOK, sp)
 }
 
+func GetshowQrCode(c *gin.Context) {
+	pass := c.Param("passOfcouse")
+	defer c.Request.Body.Close()
+	flag.Parse()
+	i, _ := strconv.Atoi(pass)
+	var sp []models.CreateQr
+	for _, copy := range newQrs {
+		if copy.Pass == i {
+			sp = append(sp, copy)
+		}
+	}
 
+	len := len(sp)
+	fmt.Println(sp)
+	var sp2 []models.CreateQr
+	for _, copy := range sp {
+		if copy.TimeAuthen == len {
+			sp2 = append(sp2, copy)
+		}
+	}
+	c.JSON(http.StatusOK, sp2)
+	fmt.Println(len)
+	fmt.Println(sp2)
+}

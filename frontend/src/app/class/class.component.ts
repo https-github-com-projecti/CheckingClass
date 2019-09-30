@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export interface createQrcode {
   time : string;
   user : string;
-  passOfCouse : string;
+  passOfCouse : number;
 }
 
 @Component({
@@ -30,7 +30,10 @@ export class ClassComponent implements OnInit {
   private userdata = null;
   public getPic = null; 
   public check : any = null;
-
+  public length : any = null;
+  public ShowdDataQr : any = null ;
+  private Username : string = null;
+  private QrShow : any;
 
   newQr : createQrcode = {
     time : null,
@@ -57,14 +60,41 @@ export class ClassComponent implements OnInit {
       "add",
       this.domSanitizer.bypassSecurityTrustResourceUrl("../../assets/add24px.svg")
     );
+    this.matIconRegistry.addSvgIcon(
+      "aspectRatio",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../assets/aspect_ratio24px.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "delete",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../assets/delete24px.svg")
+    );
    }
 
   ngOnInit() {
+    var showQr = document.getElementById("showQr-contrainer");
+    var showQr2 = document.getElementById("showQr-contrainer2");
     this.loadData();
+    this.Username = localStorage.getItem('isLogin');
     this.classService.getmyClass().subscribe(data =>{
       this.myClass = data;
-      console.log(data);
+      this.classService.passofClass(this.myClass[0]["t_class_pass"]);
+      this.loadData();
     });
+
+    window.onclick = function(event) {
+      if (event.target == showQr || event.target == showQr2) {
+        // showQr.style.display = "none";
+        showQr.style.transition = "all ease-out 600ms";
+        showQr.style.transform = "rotateX(60deg)";
+        showQr.style.top = "-100%";
+      }
+      if (event.target == showQr2) {
+        // showQr.style.display = "none";
+        showQr2.style.transition = "all ease-out 600ms";
+        showQr2.style.transform = "rotateX(60deg)";
+        showQr2.style.top = "-100%";
+      }
+    }
   }
 
   createAuthenicate(){
@@ -74,12 +104,14 @@ export class ClassComponent implements OnInit {
     this.newQr.time = myFormattedDate;
     this.newQr.user = user;
     this.newQr.passOfCouse = this.myClass[0]["t_class_pass"];
+    console.log(this.newQr);
 
     this.classService.createQr(this.newQr).subscribe(
         data => {
           this.check = data;
           if (this.check  == "Success"){
             this.loadData();
+            this.showQrCode();
           }
         },
         error  => {
@@ -89,7 +121,11 @@ export class ClassComponent implements OnInit {
     );
   }
 
-  Qr(x){
+  dataAuthen(x){
+    var panel = document.getElementById("panelCard");
+    var btn_screen = document.getElementById("btnScreen");
+    var btn_delete = document.getElementById("btnDelete");
+    this.router.navigate(['/DataAuthen']);
     console.log(x);
   }
 
@@ -106,7 +142,7 @@ export class ClassComponent implements OnInit {
     });
     this.classService.getmyQr().subscribe(
       data =>{
-        console.log(data);
+        // console.log(data);
         this.Qrcode = data;
       }
     );
@@ -118,5 +154,29 @@ export class ClassComponent implements OnInit {
   logout(){
     localStorage.clear();
     this.router.navigate(['/Home']);
+  }
+
+  showQrCode(){
+    this.classService.getShowMyQr().subscribe(
+      data => {
+        this.ShowdDataQr = data;
+      }
+    )
+    var showQr = document.getElementById("showQr-contrainer");
+    showQr.style.display = "flex";
+    showQr.style.transition = "all ease-out 600ms";
+    showQr.style.top = "0";
+    showQr.style.transform = "rotateX(0deg)";
+  }
+
+  zoomScreen(x){
+    console.log(x);
+    this.QrShow = x.Qrcode;
+    console.log(this.QrShow);
+    var showQr = document.getElementById("showQr-contrainer2");
+    showQr.style.display = "flex";
+    showQr.style.transition = "all ease-out 600ms";
+    showQr.style.top = "0";
+    showQr.style.transform = "rotateX(0deg)";
   }
 }

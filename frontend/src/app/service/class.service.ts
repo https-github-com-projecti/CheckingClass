@@ -11,8 +11,11 @@ export class ClassService {
   public API = 'http://localhost:8080/';
   constructor(private httpClient: HttpClient) { }
 
+  passofClass(x){
+    localStorage.setItem('passOfCouse', x);
+  }
+
   classSelect(x) {
-    console.log(x);
     localStorage.setItem('classTeacheratSelectId' , x);
   }
 
@@ -39,7 +42,12 @@ export class ClassService {
   }
 
   getmyQr(){
-    var user = localStorage.getItem('isLogin');
-    return this.httpClient.get(this.API + 'qr/' + 'myQr/' + user);
+    var pass = localStorage.getItem('passOfCouse');
+    return this.httpClient.get(this.API + 'qr/' + 'myQr/' + pass);
+  }
+
+  getShowMyQr(){
+    var pass = localStorage.getItem('passOfCouse');
+    return this.httpClient.get(this.API + 'qr/' + 'getShowQrCode/' + pass);
   }
 }

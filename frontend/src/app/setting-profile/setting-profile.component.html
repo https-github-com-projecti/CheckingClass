@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css"></style>
+</head>
+<div class="wallpaper"></div>
+<body id="bodyId">
+    <div class="icon-site">
+        <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
+    </div>
+
+    <main id="mainId">
+        <form class="list">
+            <nav class="nav">
+                <li><a [routerLink]="['/Home']">Home</a></li>
+                <li class="active"><a  >Profile setting</a></li>
+                <li><a [routerLink]="['/Setting']">setting</a></li>
+            </nav>
+          </form>
+           
+          <form class="class_site">
+            <section style="width: 30%; baclground: green;float: left;">
+              <mat-card class="profileSite" >
+                <img mat-card-avatar  src="{{mypic}}" alt="image setting profile"/>
+                <div>
+                  <button mat-raised-button color="accent">Edit</button>
+                </div>
+              </mat-card>
+            </section>
+            <section style="width: 70%; baclground: green;float: right;">
+                <mat-card class="profileSite2">
+                    
+                </mat-card>
+            </section>
+            
+          </form>
+    </main>
+</body>

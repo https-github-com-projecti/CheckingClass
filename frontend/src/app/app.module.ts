@@ -43,6 +43,11 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatTreeModule} from '@angular/material/tree';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
+import {AuthenStudentService } from './service/authen-student.service'
+import { SocketService } from "./service/socket.service";
+import { DataAuthenComponent } from './data-authen/data-authen.component';
+import { WebsocketComponent } from './websocket/websocket.component';
+import { SettingProfileComponent } from './setting-profile/setting-profile.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/Home', pathMatch: 'full'},
@@ -53,6 +58,9 @@ const appRoutes: Routes = [
   {path: 'People', component: PeopleComponent},
   {path: 'Authen', component: AuthenicatStudentComponent},
   {path: 'Score', component: StudentScoreComponent},
+  {path: 'DataAuthen', component: DataAuthenComponent},
+  {path: 'ProfileSetting', component: SettingProfileComponent},
+  {path: 'Websocket', component: WebsocketComponent},
 ];
 
 @NgModule({
@@ -66,6 +74,9 @@ const appRoutes: Routes = [
     PeopleComponent,
     AuthenicatStudentComponent,
     StudentScoreComponent,
+    DataAuthenComponent,
+    WebsocketComponent,
+    SettingProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -134,7 +145,7 @@ const appRoutes: Routes = [
     MatTreeModule,
     NoopAnimationsModule,
   ],
-  providers: [HomeService, SingupService],
+  providers: [HomeService, SingupService, AuthenStudentService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

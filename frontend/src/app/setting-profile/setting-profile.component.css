@@ -22,7 +22,7 @@ html .wallpaper{
     width: 100%;
     height: 100%;
     background-attachment: fixed;
-    background-image: url('../../assets/wallpaper-n-41-min.jpg');
+    background-image: url('../../assets/butterfly-1127666_960_720.jpg');
     filter: blur(50%);
     opacity: 0.7;
     height: 100vh;
@@ -157,12 +157,31 @@ main .class_site{
 }
 
 .profileSite{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 80%;
   margin-left: calc((100% - 80%) / 2);
   margin-top: 5%;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.profileSite > img {
+    width: 200px;
+    height: 200px;
+}
+.profileSite > div{
+  position: absolute;
+  display: inline;
+  bottom: 0;
+  width: 100%;
+}
+.profileSite div > button {
+  border-radius: 10% 0 0 0;
+  width: 100%;
 }
 
-
-
-
-
+.profileSite2{
+  margin-top: 5%;
+}

@@ -3,33 +3,69 @@
 <head>
   <style type="text/css"></style>
 </head>
+<div class="wallpaper"></div>
 <body id="bodyId">
   <div class="icon-site">
     <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
   </div>
   <div class="profile-site">
-    <form>
-      <img id="blah" src="{{mypic}}" alt="your image" class="pic_set" />
+    <form class="dropdown">
+      <form class="img-dropdown" >
+          <mat-card >
+              <img mat-card-avatar id="blah" [routerLink]="['/Home']" src="{{mypic}}" alt="your image" />
+          </mat-card>
+        <div class="dropdown-content" >
+          <a >Sign in as : {{Username}} </a>
+          <mat-divider></mat-divider>
+          <a >Profile</a>
+          <a >Setting</a>
+          <mat-divider></mat-divider>
+          <a (click)="logout()">Log out</a>
+        </div>
+      </form>
     </form>
-    <!-- <form>
-      <button mat-fab>
-        <mat-icon svgIcon="add" aria-label="tool"></mat-icon>
-      </button>
-    </form> -->
   </div>
 
   <main id="mainId">
     <form class="list">
       <nav class="nav">
-          <li ><a>People</a></li>
+          <li [routerLink]="['/People']"><a>People</a></li>
           <li class="active"><a>student authenticate</a></li>
-          <li><a>Student score</a></li>
+          <li [routerLink]="['/Score']"><a>Student score</a></li>
+          <li [routerLink]="['/Class']"><a>My subject</a></li>
       </nav>
     </form>
-    <form class="class_site">
-      <div class="title_site">
 
-      </div>
+    <form class="class_site">
+        <div class="title_site" style="overflow: hidden;background-image: url('../../assets/abstract-polygonal-space-low-poly-dark-background-3d-rendering_7247-223-min.jpg');background-size: 100%;">
+          <div *ngFor="let class of myClass">
+            <div class="panelTextTitle">
+              <p> {{class.t_class_name}} </p>
+              <p> Subject ID : {{class.t_class_id}} </p>
+              <p> Join code : {{class.t_class_pass}}  </p>
+            </div>
+          </div>
+        </div>
+      <hr >
+      <mat-card class="studentTable-container">
+
+        <table>
+          <tr>
+            <th id="NO">No.</th>
+            <th id="Student_id">Student ID</th>
+            <th class="Student_name">Student name</th>
+            <th id="date_authenStudent" *ngFor="let item of tdauthenStudent;let i=index">{{item.date}}</th>
+          </tr>
+
+          <tr *ngFor="let item of dataAuthen;let i=index">
+            <td id="NO"> <label>{{item.id}}</label> </td>
+            <td id="Student_id"> <label>{{item.idStudent}}</label> </td>
+            <td class="Student_name"> <label>{{item.nameStudent}}</label> </td>
+            <td id="date_authenStudent" *ngFor="let item of item.authenStudent;let i=index"> <label>{{item.stateAuthen}}</label> </td>
+          </tr>
+          <tr> </tr>
+        </table>
+      </mat-card>
     </form>
   </main>
 </body>

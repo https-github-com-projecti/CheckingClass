@@ -23,7 +23,7 @@ html .wallpaper{
   height: 100%;
   background-attachment: fixed;
   background-image: url('../../assets/834588-top-learning-wallpapers-1920x1080-free-download_optimized.jpg');
-  opacity: 0.5;
+  opacity: 0.4;
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -111,6 +111,7 @@ body .icon-site:hover {
   justify-content: center;
   align-items: center;
   padding: 10px;
+  cursor: pointer;
 }
 .picture_site .image_site{
   /* width: 250px; */

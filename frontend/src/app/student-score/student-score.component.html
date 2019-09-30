@@ -3,33 +3,87 @@
 <head>
   <style type="text/css"></style>
 </head>
+
+<div class="wallpaper"></div>
+
 <body id="bodyId">
   <div class="icon-site">
     <img src="../../assets/Check_name_icon.png" alt="SuthenIcon">
   </div>
   <div class="profile-site">
-    <form>
-      <img id="blah" src="{{mypic}}" alt="your image" class="pic_set" />
+    <form class="dropdown">
+      <form class="img-dropdown" >
+          <mat-card >
+              <img mat-card-avatar id="blah" [routerLink]="['/Home']" src="{{mypic}}" alt="your image" />
+          </mat-card>
+        <div class="dropdown-content" >
+          <a >Sign in as : {{Username}} </a>
+          <mat-divider></mat-divider>
+          <a >Profile</a>
+          <a >Setting</a>
+          <mat-divider></mat-divider>
+          <a (click)="logout()">Log out</a>
+        </div>
+      </form>
     </form>
-    <!-- <form>
-      <button mat-fab>
-        <mat-icon svgIcon="add" aria-label="tool"></mat-icon>
-      </button>
-    </form> -->
   </div>
 
   <main id="mainId">
     <form class="list">
       <nav class="nav">
-          <li ><a>People</a></li>
-          <li ><a>student authenticate</a></li>
+          <li [routerLink]="['/People']"><a>People</a></li>
+          <li [routerLink]="['/Authen']"><a>student authenticate</a></li>
           <li class="active"><a>Student score</a></li>
+          <li [routerLink]="['/Class']"><a>My subject</a></li>
       </nav>
     </form>
     <form class="class_site">
-      <div class="title_site">
+        <div class="title_site" style="overflow: hidden;background-image: url('../../assets/abstract-polygonal-space-low-poly-dark-background-3d-rendering_7247-223-min.jpg');background-size: 100%;">
+          <div *ngFor="let class of myClass">
+            <div class="panelTextTitle">
+              <p> {{class.t_class_name}} </p>
+              <p> Subject ID : {{class.t_class_id}} </p>
+              <p> Join code : {{class.t_class_pass}}  </p>
+            </div>
+          </div>
+        </div>
+      <hr>
 
-      </div>
+      <div class="Score-Container">
+        <mat-accordion style="background-color: aquamarine;">
+          <mat-expansion-panel [expanded]="step === 0" >
+            <mat-expansion-panel-header style="font-size: 24px;">
+              <mat-panel-title >
+                นักเรียนที่โดนตัดสิทธิ์สอบ
+              </mat-panel-title>
+              <!-- <mat-panel-description>
+                Type your name and age
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <!-- <mat-divider></mat-divider> -->
+            <mat-card style="margin-top: 3%;"> 
+
+            </mat-card>
+          </mat-expansion-panel>
+
+
+          <mat-expansion-panel >
+            <mat-expansion-panel-header style="font-size: 24px;">
+              <mat-panel-title>
+                คะแนนรวมของนักเรียนทั้งหมด
+              </mat-panel-title>
+              <!-- <mat-panel-description>
+                Currently I am {{panelOpenState ? 'open' : 'closed'}}
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+            <!-- <mat-divider></mat-divider> -->
+            <mat-card style="margin-top: 3%;">
+
+            </mat-card>
+          </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
     </form>
   </main>
 </body>
