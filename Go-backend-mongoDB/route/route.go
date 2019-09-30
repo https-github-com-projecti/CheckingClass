@@ -17,11 +17,15 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	userAPI := api.UserAPI{
 		UserRepository: &userRepository,
 	}	
-	
+	route.POST("user/login", userAPI.LoginHandler)
 	route.GET("user/list", userAPI.UserListHandler)
 	route.POST("user/Add", userAPI.AddUserHandeler)
-	route.PUT("user/Edit/:user_id", userAPI.EditPasswordHandler)
-	route.DELETE("user/Delete/:user_id", userAPI.DeleteUserByIDHandler)
+	route.PUT("TESTuser/Edit", userAPI.EditPasswordHandler)
+	route.DELETE("user/Delete", userAPI.DeleteUserByIDHandler)
+	route.GET("user/GETONE",userAPI.GETONEUserHandeler)
+	route.GET("user/GETONE/:username",userAPI.GETONEnameHandeler)
+	route.GET("user/getMyPic/:id",userAPI.GETPictureUserHandeler)
+	
 	
 
 	
@@ -34,22 +38,13 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	}	
 	route.GET("Subject/list", subjectAPI.SubjectListHandler)
 	route.POST("Subject/Add", subjectAPI.AddSubjectHandeler)
-	route.PUT("Subject/Edit/:subject_id", subjectAPI.EditDescriptionHandler)
-	route.DELETE("Subject/Delete/:subject_id", subjectAPI.DeleteSubjectByIDHandler)
+	route.PUT("Subject/Edit", subjectAPI.EditDescriptionHandler)
+	route.DELETE("Subject/Delete", subjectAPI.DeleteSubjectHandler)
+	route.GET("Subject/GetOneSubject/:id",subjectAPI.GETONESubjectHandeler)
+	route.GET("Subject/GetMySubject/:id",subjectAPI.GETMySubjectHandeler)
+	route.POST("Subject/join",subjectAPI.JoinClassHandeler)
 
-	route.GET("Subject/list/:subject_id",subjectAPI.GETONESubjectHandeler)
 
-	route.PUT("Tester/:subject_id/:student_id",subjectAPI.JoinClassHandeler)
-
-	//QRCode
-	// qrcodeRepository := repository.QRCodeRepositoryMongo{
-	// 	ConnectionDB: connectionDB,
-	// }
-	// qrcodeAPI := api.QRCodeAPI{
-	// 	QRCodeRepository: &sqrcodeRepository,
-	// }	
-	// route.POST("QRCODE/create", QRcodeAPI.AddSubjectHandeler)
-	
 
 	//Attendance	
 	attendanceRepository := repository.AttendanceRepositoryMongo{
@@ -60,7 +55,9 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	}	
 	route.GET("Attendance/alllist", attendanceAPI.AllAttendanceListHandler)
 	route.POST("Attendance/new", attendanceAPI.CreateAttendanceHandeler)
-	route.GET("Attendance/list/:AName", attendanceAPI.FindbyANameAttendanceHandler)
+	route.GET("Attendance/GETONE", attendanceAPI.GETONEAttendanceHandeler)
+	route.PUT("Attendance/Checkname",attendanceAPI.ChecknameHandeler)
+	
 
 	//Student
 	studentRepository := repository.StudentRepositoryMongo{
@@ -74,6 +71,14 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	route.GET("Student/subjectlist:ID", studentAPI.ShowsubjectlistStudentHandeler)
 
 
+	//QRCode
+	// qrcodeRepository := repository.QRCodeRepositoryMongo{
+	// 	ConnectionDB: connectionDB,
+	// }
+	// qrcodeAPI := api.QRCodeAPI{
+	// 	QRCodeRepository: &sqrcodeRepository,
+	// }	
+	// route.POST("QRCODE/create", QRcodeAPI.AddSubjectHandeler)
 	
 
 }

@@ -10,11 +10,11 @@ import (
 type SubjectRepository interface {
 	GetAllSubject() ([]model.Subject, error)
 	AddSubject(subject model.Subject) error
-	EditDescription(ID string, subject model.Subject) error
-	DeleteSubjectByID(subjectID string) error
-	Editaddstudent(ID string, subject model.Subject) error
-	GetSubject(subjectsInfo model.SubjectInfo, ID string)  ([]model.Subject, error)
-	JoinClass(ID string ,Sid string)   error 
+	EditDescription(tsid string, subject model.Subject) error
+	DeleteSubject(tsid string) error
+	GetSubject(tsid string)  ([]model.Subject, error)
+	JoinClass(tspassword int, sid string)    error 
+	GetOneSubject(id string)  ([]model.Subject, error)
 }
 
 type SubjectRepositoryMongo struct {
@@ -31,35 +31,31 @@ func (SubjectMongo SubjectRepositoryMongo) AddSubject(subject model.Subject) err
 	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Insert(subject)
 }
 
-func (SubjectMongo SubjectRepositoryMongo) EditDescription(ID string, subject model.Subject) error {
-	objectID := bson.ObjectIdHex(ID)
+func (SubjectMongo SubjectRepositoryMongo) EditDescription(tsid string, subject model.Subject) error {
+	name := bson.M{"TSID" : tsid ,}
 	newDescription := bson.M{"$set": bson.M{"TSDescription": subject.TSDescription, }}
-	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).UpdateId(objectID, newDescription)
+	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Update(name, newDescription)
 }
-func (SubjectMongo SubjectRepositoryMongo) DeleteSubjectByID(subjectID string) error {
-	objectID := bson.ObjectIdHex(subjectID)
-	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).RemoveId(objectID)
-}
-func (SubjectMongo SubjectRepositoryMongo) Editaddstudent(ID string, subject model.Subject) error {
-	objectID := bson.ObjectIdHex(ID)
-	newDescription := bson.M{"$set": bson.M{"TSDescription": subject.TSDescription, }}
-	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).UpdateId(objectID, newDescription)
-
+func (SubjectMongo SubjectRepositoryMongo) 	DeleteSubject(tsid string) error{
+	name := bson.M{"TSID" : tsid ,}
+	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Remove(name)
 }
 
-func (SubjectMongo SubjectRepositoryMongo) GetSubject(subjectsInfo model.SubjectInfo, ID string)  ([]model.Subject, error){
+func (SubjectMongo SubjectRepositoryMongo) GetSubject(id string)  ([]model.Subject, error){
 	var subjects []model.Subject
-	objectID := bson.ObjectIdHex(ID)
+	name := bson.M{"TSTeacher" : id ,}
+	err:= SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Find(name).All(&subjects)
+	return subjects, err
+}
+func (SubjectMongo SubjectRepositoryMongo) GetOneSubject(id string)  ([]model.Subject, error){
+	var subjects []model.Subject
+	objectID := bson.ObjectIdHex(id)
 	err:= SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).FindId(objectID).All(&subjects)
-	// err := SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Find(nil).All(&subjects)
 	return subjects, err
 }
 
-
-
-func (SubjectMongo SubjectRepositoryMongo) JoinClass(ID string ,Sid string)   error {
-
-	objectID := bson.ObjectIdHex(ID)
-	newData := bson.M{"$push": bson.M{"TstudentInfo":bson.M{"StudentID": Sid}}}
-	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).UpdateId(objectID, newData)
+func (SubjectMongo SubjectRepositoryMongo) JoinClass(tspassword int, sid string)   error {
+	name := bson.M{"TSpassword" : tspassword,}
+	newData := bson.M{"$push": bson.M{"TstudentInfo":bson.M{"StudentID": sid}}}
+	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Update(name, newData)
 }

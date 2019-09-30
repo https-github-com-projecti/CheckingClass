@@ -9,8 +9,13 @@ import (
 type UserRepository interface {
 	GetAllUser() ([]model.User, error)
 	AddUser(user model.User) error
-	EditPassword(ID string, user model.User) error
-	DeleteUserByID(UserID string) error
+	DeleteUser(username string) error
+	EditPassword(username string, password string) error
+	GetUser(username string)  ([]model.User, error)
+	CheckLogin(username string,password string) ([]model.User, error)
+	Getbyid(id string)  ([]model.User, error)
+	
+
 }
 
 type UserRepositoryMongo struct {
@@ -35,18 +40,35 @@ func (UserMongo UserRepositoryMongo) AddUser(user model.User) error {
 	return UserMongo.ConnectionDB.DB(DBName).C(collectionUser).Insert(user)
 }
 
-func (UserMongo UserRepositoryMongo) EditPassword(ID string, user model.User) error {
-	objectID := bson.ObjectIdHex(ID)
-	newPassword := bson.M{"$set": bson.M{"TPassword": user.TPassword, }}
-	return UserMongo.ConnectionDB.DB(DBName).C(collectionUser).UpdateId(objectID, newPassword)
+func (UserMongo UserRepositoryMongo) EditPassword(username string, password string) error {
+	name := bson.M{"UserName" : username ,}
+	newPassword := bson.M{"$set": bson.M{"TPassword": password, }}
+	return UserMongo.ConnectionDB.DB(DBName).C(collectionUser).Update(name, newPassword)
 }
 
-func (UserMongo UserRepositoryMongo) DeleteUserByID(ID string) error {
-	objectID := bson.ObjectIdHex(ID)
-	return UserMongo.ConnectionDB.DB(DBName).C(collectionUser).RemoveId(objectID)
+func (UserMongo UserRepositoryMongo) DeleteUser(username string) error {
+	objectID := bson.M{"UserName" : username ,}
+	return UserMongo.ConnectionDB.DB(DBName).C(collectionUser).Remove(objectID)
 }
-
-
+func (UserMongo UserRepositoryMongo) GetUser(username string)  ([]model.User, error){
+	var users []model.User
+	name := bson.M{"UserName" : username ,}
+	err:= UserMongo.ConnectionDB.DB(DBName).C(collectionUser).Find(name).All(&users)
+	return users, err
+}
+func (UserMongo UserRepositoryMongo) CheckLogin(username string,password string) ([]model.User, error) {
+	var users []model.User
+	checker := bson.M{"UserName" : username ,"TPassword" : password,} 
+	err := UserMongo.ConnectionDB.DB(DBName).C(collectionUser).Find(checker).All(&users)
+	return users, err
+	
+}
+func (UserMongo UserRepositoryMongo) Getbyid(id string)  ([]model.User, error){
+	var users []model.User
+	objectID := bson.ObjectIdHex(id)
+	err:= UserMongo.ConnectionDB.DB(DBName).C(collectionUser).FindId(objectID).All(&users)
+	return users, err
+}
 
 
 

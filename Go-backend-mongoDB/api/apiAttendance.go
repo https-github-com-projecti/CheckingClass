@@ -7,7 +7,7 @@ import (
 	"net/http"
 	// b64 "encoding/base64"
 	// "github.com/skip2/go-qrcode"
-
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 //Attendance
@@ -42,21 +42,38 @@ func (api AttendanceAPI) CreateAttendanceHandeler(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{"status": "susess"})
 
 }
-
-func (api AttendanceAPI) FindbyANameAttendanceHandler(context *gin.Context) {
-	var attendanceInfo model.AttendanceInfo
-	attendanceName := context.Param("AName")
-	err := context.ShouldBindJSON(&attendanceInfo)
+func (api AttendanceAPI) GETONEAttendanceHandeler(context *gin.Context) {
+	var attendance model.Attendance
+	err := context.ShouldBindJSON(&attendance)
 	if err != nil {
-		log.Println("error1 FindbyANameAttendanceHandler", err.Error())
+		log.Println("error GETONEAttendanceHandeler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
-	err = api.AttendanceRepository.FindbyAName(attendanceName, attendanceInfo)
+	fmt.Println(attendance)
+	oneattendance, err2:= api.AttendanceRepository.GetAttendance(attendance.ASpassword)
 	if err != nil {
-		log.Println("error2 FindbyANameAttendanceHandler", err.Error())
-		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		log.Println("error GetAttendance", err2.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err2.Error()})
 		return
 	}
+	context.JSON(http.StatusOK, oneattendance)
+}
+func (api AttendanceAPI) ChecknameHandeler(context *gin.Context) {
+	// var subject model.JoinSubject
+	// err := context.ShouldBindJSON(&subject)
+	// fmt.Println(subject)
+	// if err != nil {
+	// 	log.Println("error ChecknameHandeler", err.Error())
+	// 	context.JSON(http.StatusInternalServerError, gin.H{"message1": err.Error()})
+	// 	return
+	// }
+	// err = api.AttendanceRepository.JoinClass(subject.JTSID, subject.Jpassword, subject.JSID)
+	// if err != nil {
+	// 	log.Println("error JoinClassHandeler", err.Error())
+	// 	context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+	// 	return
+	// }
 	context.JSON(http.StatusOK, gin.H{"status": "susess"})
 }
+
