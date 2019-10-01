@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"strconv"
 	"math/rand"
+    "time"
 	
 )
 //Subject
@@ -131,7 +132,13 @@ func (api SubjectAPI) GETONESubjectHandeler(context *gin.Context) {
 
 ///TEST
 func (api SubjectAPI) RandPassClass() (i int){
+	// Uses default seed of 1, result will be 81:
+	fmt.Println(rand.Intn(10000))
+	rand.Intn(10000)
+	rand.Seed(time.Now().UnixNano())
 	classnum := rand.Intn(10000)
+	
+	fmt.Println(classnum)
 	var subjectsInfo model.SubjectInfo
 	subjects, err := api.SubjectRepository.GetAllSubject()
 	if err != nil {
@@ -139,13 +146,35 @@ func (api SubjectAPI) RandPassClass() (i int){
 		
 		return
 	}
-	subjectsInfo.Subject = subjects
-	for _, copy := range subjects {
-		if (classnum == copy.TSpassword) {
-			api.RandPassClass()
-		}
+	fmt.Println("subjects = ",subjects)
+	var num1 = classnum
+	var num int
+	for num1 > 0 {
+		num1 = num1/10
+		num = num+1
 	}
-	i = classnum
-	return 
+	subjectsInfo.Subject = subjects
+	// var state int = 0
+	for _, copy := range subjects{
+		
+		fmt.Println(copy.TSpassword)
+		
+		if (copy.TSpassword != classnum){
+			i = classnum
+			return i
+		}else{
+			api.RandPassClass()
+		
+		// if (copy.TSpassword == classnum){
+		// 	state = 1
+		// }
+	}
+}
+	
+	// if state == 1{
+	// 	api.RandPassClass()
+	// }
+	// i = classnum
+	return
 }
 

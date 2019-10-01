@@ -1,7 +1,7 @@
 package model
 
 import (
-	"time"
+
 	"github.com/globalsign/mgo/bson"
 )
 //USERTeacher
@@ -63,15 +63,7 @@ type AttendanceInfo struct {
 	Attendance []Attendance `json:"attendances"`
 }
 
-type Attendance struct {
-	AttendanceID       bson.ObjectId 	`json:"attendance_id" bson:"_id,omitempty"`
-	AID				string             	`json:"AID" bson:"AID"`
-	AName      		string             	`json:"AName" bson:"AName"`
-	ASpassword		string				`json:"ASpassword" bson:"ASpassword"`
-	ATime			time.Time			`json:"ATime" bson:"ATime"`
-	Astudent		[]TstudentInfos		`json:"Astudent" bson:"Astudent"`
-	
-}
+
 
 
 //Student
@@ -82,8 +74,8 @@ type StudentInfo struct {
 type Student struct {
 	ObjectID       bson.ObjectId 	`json:"student_id" bson:"_id,omitempty"`
 	StudentID		string          `json:"SID" bson:"SID"`
-	SfirstName      string          `json:"SfirstName" bson:"SfirstName"`
-	SlastName      string          `json:"SlastName" bson:"SlastName"`
+	SfirstName     	string          `json:"SfirstName" bson:"SfirstName"`
+	SlastName      	string          `json:"SlastName" bson:"SlastName"`
 	Susername		string          `json:"Susername" bson:"Susername"`
 	Spassword		string          `json:"Spassword" bson:"Spassword"`
 	Sphone			string          `json:"Sphone" bson:"Sphone"`
@@ -92,11 +84,11 @@ type Student struct {
 }
 
 
-// type Qrcode struct {
-// 	Time 	string `json:"time"`
-// 	User 	string `json:"user"`
-// 	Pass 	int    `json:"passOfCouse"`
-// }
+type Qrcode struct {
+	Time 	string `json:"time"`
+	User 	string `json:"user"`
+	Pass 	int    `json:"passOfCouse"`
+}
 
 type CreateQr struct {
 	ObjectID       bson.ObjectId 	`json:"qrcode_id" bson:"_id,omitempty"`
@@ -104,4 +96,16 @@ type CreateQr struct {
 	Time 			string 			`json:"time" bson:"time"`
 	Pass 			int    			`json:"passOfCouse" bson:"passOfCouse"`
 	TimeAuthen 		int 			`json:"time_authen" bson:"time_authen"`
+}
+type Attendance struct {
+	AttendanceID       bson.ObjectId 	`json:"attendance_id" bson:"_id,omitempty"`
+	Date			string             	`json:"ADate" bson:"ADate"`
+	// AName      	string         		`json:"AName" bson:"AName"`
+	// AUser   		string             	`json:"AUser" bson:"AUser"`
+	ASpassword		string				`json:"ASpassword" bson:"ASpassword"`
+	AQRcode			string				`json:"AQRcode" bson:"AQRcode"`
+	ATimeAuthen		int 				`json:"ATimeAuthen" bson:"ATimeAuthen"`
+	Astudent		[]TstudentInfos		`json:"Astudent" bson:"Astudent"`
+	
+	
 }

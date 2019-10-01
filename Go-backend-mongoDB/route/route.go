@@ -55,8 +55,10 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	}	
 	route.GET("Attendance/alllist", attendanceAPI.AllAttendanceListHandler)
 	route.POST("Attendance/new", attendanceAPI.CreateAttendanceHandeler)
+	route.POST("Attendance/Create", attendanceAPI.CreateQrcodeAndAttendanceHandeler)
 	route.GET("Attendance/GETONE", attendanceAPI.GETONEAttendanceHandeler)
 	route.PUT("Attendance/Checkname",attendanceAPI.ChecknameHandeler)
+	route.GET("Attendance/getQRcode/:pass",attendanceAPI.GETQRcoderHandeler)
 	
 
 	//Student

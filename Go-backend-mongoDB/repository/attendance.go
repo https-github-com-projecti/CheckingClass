@@ -10,6 +10,7 @@ type AttendanceRepository interface {
 	GetAllAttendance() ([]model.Attendance, error)
 	CreateAttendance(attendance model.Attendance) error
 	GetAttendance(password string)  ([]model.Attendance, error)
+	GetONEAllAttendance(password string) ([]model.Attendance, error)
 }
 
 type AttendanceRepositoryMongo struct {
@@ -27,4 +28,11 @@ func (AttendanceMongo AttendanceRepositoryMongo) GetAttendance(password string) 
 	var attendances []model.Attendance
 	name := bson.M{"ASpassword" : password ,}
 	err:= AttendanceMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Find(name).All(&attendances)
-	return attendances, err}
+	return attendances, err
+}
+func (AttendanceMongo AttendanceRepositoryMongo) GetONEAllAttendance(password string) ([]model.Attendance, error) {
+	var attendance []model.Attendance
+	name := bson.M{"ASpassword" : password ,}
+	err := AttendanceMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Find(name).All(&attendance)
+	return attendance, err
+}
