@@ -23,7 +23,7 @@ html .wallpaper{
   height: 100%;
   background-attachment: fixed;
   background-image: url('../../assets/wp3191291-min.jpg');
-  opacity: 0.4;
+  opacity: 0.7;
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -165,7 +165,7 @@ section{
   z-index: 600; 
 }
 main .login_container{
-  position: relative;
+  position: relative; 
   display: block;
   flex-direction: column;
   width: 700px;
@@ -358,17 +358,18 @@ main .login_container .login_site .input_login{
   display: inline-flex;
   text-align: left;
   overflow: hidden;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7),rgba(176, 231, 250, 0.7));
+  /* background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7),rgba(176, 231, 250, 0.7)); */
   border-radius: 20px 20px 20px 20px;
+  background-color: rgba(199, 199, 202, 0.445);
   border: 3px solid linear-gradient(to bottom, rgba(255, 255, 255, 0.7),rgba(255, 0, 0, 0.925));
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
   transition: all ease-out 400ms;
   border-bottom: 50px solid rgb(255, 255, 255);
-  background-image: url("../../assets//wallpaper-n-40-min.jpg");
+  background-image: url("../../assets/wallpaper-n-40-min.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background-size: 100%;
+  /* background-position: center; */
   /* align-items: center; */
   justify-content: center;
 }
@@ -425,7 +426,7 @@ main .login_container .login_site .input_login{
   font-family: Arial;
   font-size: 28px;
   font-weight: 600;
-  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  text-shadow: 1px 1px 2px black, 0 0 10px blue, 0 0 5px darkblue;
   margin-bottom: 15px;
   color: white;
 }
@@ -464,10 +465,11 @@ main .login_container .login_site .input_login{
   font-size: 18px;
 }
 .textDescPanel{
-  color: white; 
+  color: black; 
   text-overflow: ellipsis;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   word-wrap: break-word;
+  margin-top: 55px;
 }
 
 body .joinContainer{

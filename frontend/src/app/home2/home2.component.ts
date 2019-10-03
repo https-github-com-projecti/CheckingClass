@@ -15,11 +15,11 @@ export interface userLogin {
 }
 
 export interface classOrder {
-  id : number;
-  t_class_name : string;
-  t_class_description : string;
-  t_class_id : string;
-  user : string;
+  subject_id : number;
+  TSName : string;
+  TSDescription : string;
+  TSID : string;
+  TSTeacher : string;
 }
 
 @Component({
@@ -60,33 +60,33 @@ export class Home2Component implements OnInit {
   };
 
   newclass : classOrder = {
-    id : null,
-    t_class_name: null,
-    t_class_description: null,
-    t_class_id: null,
-    user: null,
+    subject_id : null,
+    TSName: null,
+    TSDescription: null,
+    TSID: null,
+    TSTeacher: null,
   };
 
   select_class : classOrder = {
-    id : null,
-    t_class_name: null,
-    t_class_description: null,
-    t_class_id: null,
-    user: null,
+    subject_id : null,
+    TSName: null,
+    TSDescription: null,
+    TSID: null,
+    TSTeacher: null,
   };
 
   ngOnInit() {
-    // this.homeService.getStatus().subscribe(
-    //   data => {
-    //     var statusBackend = data;
-    //     if (statusBackend == "online"){
-    //       this.homeService.status(statusBackend);
-    //     }
-    //   } ,
-    //   error => {
-    //     this.logout();
-    //   }
-    // );
+    this.homeService.getStatus().subscribe(
+      data => {
+        var statusBackend = data;
+        if (statusBackend == "online"){
+          this.homeService.status(statusBackend);
+        }
+      } ,
+      error => {
+        this.logout();
+      }
+    );
     this.loadData();
     var show_ui = document.getElementById("mainId");
     var stat_login = localStorage.getItem('stateLogin');
@@ -116,8 +116,6 @@ export class Home2Component implements OnInit {
       if (event.target == panel_create) {
         panel_create.style.display = "none";
       }
-    }
-    window.onclick = function(event) {
       if (event.target == panelJoinClass) {
         panelJoinClass.style.display = "none";
       }
@@ -152,7 +150,8 @@ export class Home2Component implements OnInit {
       },
       error => {
         console.log('Error', error);
-        window.location.reload();
+        alert("server ERROR")
+        // window.location.reload();
     }
     );
   }
@@ -164,18 +163,26 @@ export class Home2Component implements OnInit {
   }
 
   checkClassOrder(){
-    if(this.newclass.t_class_name == null){
+    // var inputName = document.getElementById('clear_class1');
+    // var inputDescription = document.getElementById('clear_class2');
+    // var inputSubjectID = document.getElementById('clear_class3');
+    // var btnCreateClass = document.getElementById('bt_saveClass');
+    if(this.newclass.TSName == null){
       alert('กรุณาป้อนชื่อคลาสเรียนด้วยครับ')
-    }else if(this.newclass.t_class_id == null){
+    }else if(this.newclass.TSID == null){
       alert('กรุณาระบุคลาสไอดีด้วยครับ')
     }else{
+      (<HTMLInputElement>document.getElementById('clear_class1')).disabled = true;
+      (<HTMLInputElement>document.getElementById('clear_class2')).disabled = true;
+      (<HTMLInputElement>document.getElementById('clear_class3')).disabled = true;
+      (<HTMLInputElement>document.getElementById('bt_saveClass')).disabled = true;
       this.setUser();
       this.classSave();
     }
   }
   setUser(){
-    this.newclass.user = localStorage.getItem('isLogin');
-    if(this.newclass.user == null){
+    this.newclass.TSTeacher = localStorage.getItem('id');
+    if(this.newclass.TSTeacher == null){
       console.log('no User');
     }
   }
@@ -191,6 +198,10 @@ export class Home2Component implements OnInit {
         (<HTMLInputElement>document.getElementById('clear_class1')).value = ' ';
         (<HTMLInputElement>document.getElementById('clear_class2')).value = ' ';
         (<HTMLInputElement>document.getElementById('clear_class3')).value = ' ';
+        (<HTMLInputElement>document.getElementById('clear_class1')).disabled = false;
+        (<HTMLInputElement>document.getElementById('clear_class2')).disabled = false;
+        (<HTMLInputElement>document.getElementById('clear_class3')).disabled = false;
+        (<HTMLInputElement>document.getElementById('bt_saveClass')).disabled = false;
         this.loadData();
       }
       else{
@@ -205,25 +216,27 @@ export class Home2Component implements OnInit {
   }
 
   loadData() {
-    this.homeService.getClass().subscribe(data =>{
-      this.teacherClass = data;
-    });
-    this.homeService.getUserdata().subscribe(data =>{
-      this.userdata = data;
-      console.log(this.userdata);
-      this.homeService.setID(this.userdata);
-      this.homeService.getGetPic().subscribe(data =>{
+    this.homeService.getUserdata().subscribe(data =>{  //get ID
+      this.userdata = data; //มาแค่ID
+      // console.log(this.userdata);
+      this.homeService.setID(this.userdata); //สำหรับserver Test
+      // this.homeService.setID(this.userdata[0]['user_id']); //สำหรับserver DB
+      this.homeService.getGetPic().subscribe(data =>{ //get Picture
         this.getPic = data;
-        console.log(this.isEmptyOrSpaces(this.getPic));
+        console.log(this.getPic);
         if (this.getPic.trim() === ''){}
         else {  this.mypic = this.getPic }
+      });
+      this.homeService.getClass().subscribe(data =>{ //get My class
+        this.teacherClass = data;
+        console.log(this.teacherClass);
       });
     });
     this.Username = localStorage.getItem('isLogin');
   }
 
   selectClass(x){
-    this.classservice.classSelect(x.id);
+    this.classservice.classSelect(x.subject_id);
     this.router.navigate(['/Class']);
   }  
 

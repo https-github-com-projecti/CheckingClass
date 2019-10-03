@@ -397,9 +397,9 @@ main .class_site{
   width: 90%;
   height: 90%;
   top: 0;
-  background-color: rgba(127, 255, 255, 0.425);
-  border-radius: 20px;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 22px 0 rgba(0, 0, 0, 0.19);
+  /* background-color: rgba(127, 255, 255, 0.425); */
+  /* border-radius: 20px; */
+  /* box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 22px 0 rgba(0, 0, 0, 0.19); */
 }
 .showQr-contrainer .ShowQrPanel-container .qrCode_Container{
   width: 70%;
@@ -424,7 +424,7 @@ main .class_site{
 }
 .showQr-contrainer .ShowQrPanel-container .qrCode_Container .QrCode_panel > img {
   border-radius: 10%;
-  box-shadow: 1px 1px 2px black, 0 0 5px blue, 0 0 2px darkblue;
+  box-shadow: 1px 1px 2px black, 0 0 5px blue, 0 0 10px darkblue;
 }
 .showQr-contrainer .ShowQrPanel-container .peple_Container{
   width: 30%;

@@ -19,7 +19,7 @@
           </form>
            
           <form class="class_site">
-            <section style="width: 30%; baclground: green;float: left;">
+            <section>
               <mat-card class="profileSite" >
                 <img mat-card-avatar  src="{{mypic}}" alt="image setting profile"/>
                 <div>
@@ -27,9 +27,47 @@
                 </div>
               </mat-card>
             </section>
-            <section style="width: 70%; baclground: green;float: right;">
+            <section >
                 <mat-card class="profileSite2">
-                    
+                  <p>
+                      <label>Name</label>
+                  </p>
+                    <mat-form-field appearance="outline" style="width: 50%;">
+                      <mat-label>Username</mat-label>
+                      <input matInput placeholder="You enter username">
+                      <mat-icon matSuffix>assignment_ind</mat-icon>
+                      <mat-hint>You can remove it any time.</mat-hint>
+                    </mat-form-field>
+
+                    <p>
+                        <label>E-mail</label>
+                    </p>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>E-mail</mat-label>
+                        <input matInput placeholder="You enter e-mail">
+                        <mat-icon matSuffix>email</mat-icon>
+                        <mat-hint>You can remove it any time.</mat-hint>
+                      </mat-form-field>
+
+                      <p>
+                          <label>Work place</label>
+                      </p>
+                      <mat-form-field appearance="outline" style="width: 100%;">
+                          <mat-label>Work place</mat-label>
+                          <input matInput placeholder="You enter work place">
+                          <mat-icon matSuffix>navigation</mat-icon>
+                          <mat-hint>You can remove it any time.</mat-hint>
+                        </mat-form-field>
+
+                        <p>
+                            <label>Teacher ID</label>
+                        </p>
+                        <mat-form-field appearance="outline" style="width: 50%;">
+                            <mat-label>ID</mat-label>
+                            <input matInput placeholder="You enter ID">
+                            <mat-icon matSuffix>perm_identity</mat-icon> 
+                            <mat-hint>You can remove it any time.</mat-hint>
+                          </mat-form-field>
                 </mat-card>
             </section>
             

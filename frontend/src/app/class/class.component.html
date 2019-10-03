@@ -47,9 +47,9 @@
       <div class="title_site" style="overflow: hidden;background-image: url('../../assets/abstract-polygonal-space-low-poly-dark-background-3d-rendering_7247-223-min.jpg');background-size: 100%;">
         <div *ngFor="let class of myClass">
           <div class="panelTextTitle">
-            <p> {{class.t_class_name}} </p>
-            <p> Subject ID : {{class.t_class_id}} </p>
-            <p> Join code : {{class.t_class_pass}}  </p>
+            <p> {{class.TSName}} </p>
+            <p> Subject ID : {{class.TSID}} </p>
+            <p> Join code : {{class.TSpassword}}  </p>
           </div>
         </div>
       </div>
@@ -59,9 +59,9 @@
         <div *ngFor="let x of Qrcode" class="panel">
         <div id="panelCard" class="card_grid_site">
           <mat-icon id="btnScreen" svgIcon="aspectRatio" id="btn_screen" aria-label="tool" (click)="zoomScreen(x)"></mat-icon>
-          <mat-icon id="btnDelete" svgIcon="delete" id="btn_screen" aria-label="tool"></mat-icon>
-          <img src="data:image/gif;base64,{{x.Qrcode}}" style="width: 60%;margin-left: 75px;" (click)="dataAuthen(x)"/>
-          <p>Date : {{x.time}}     เช็คครั้งที่ : {{x.time_authen}}</p>
+          <mat-icon id="btnDelete" svgIcon="delete" id="btn_delete" aria-label="tool"></mat-icon>
+          <img src="data:image/gif;base64,{{x.AQRcode}}" style="width: 60%;margin-left: 75px;" (click)="dataAuthen(x)"/>
+          <p>Date : {{x.ADate}}     เช็คครั้งที่ : {{x.ATimeAuthen}}</p>
         </div>
       </div>
     </div>
@@ -71,9 +71,9 @@
 
   <div class="showQr-contrainer" id="showQr-contrainer">
     <div class="ShowQrPanel-container"> 
-      <section class="qrCode_Container">
-        <div class="QrCode_panel" *ngFor="let item of ShowdDataQr">
-          <img src="data:image/gif;base64,{{item.Qrcode}}" style="width: 600px;" />
+      <section class="qrCode_Container" id="qrCode_Container">
+        <div class="QrCode_panel" >
+          <img src="data:image/gif;base64,{{ShowdDataQr}}" style="width: 600px;" />
         </div>
       </section>
 
@@ -84,20 +84,4 @@
       </section>
     </div>
   </div>
-
-  <div class="showQr-contrainer" id="showQr-contrainer2">
-      <div class="ShowQrPanel-container"> 
-        <section class="qrCode_Container">
-          <div class="QrCode_panel">
-            <img src="data:image/gif;base64,{{QrShow}}" style="width: 600px;" />
-          </div>
-        </section>
-  
-        <section class="peple_Container">
-          <header class="peple_Container_header">
-  
-          </header>
-        </section>
-      </div>
-    </div>
 </body>

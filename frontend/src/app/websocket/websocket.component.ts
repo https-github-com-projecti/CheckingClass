@@ -17,11 +17,12 @@ export class WebsocketComponent implements OnInit {
 
   ngOnInit() {
     this.socket.getEventListener().subscribe(event => {
-      console.log("event type : " + event.type);
-      console.log("event data : " + event.data.content);
+      console.log("event type : " + event.type );
+      console.log("event data : " + event.data.content + "event data type : " + typeof event.data.content);
       console.log("event data sender : " + event.data.sender);
       if(event.type == "message") {
         console.log("event message : " + event);
+        console.log(event);
           let data = event.data.content;
           if(event.data.sender) {
               data = event.data.sender + ": " + data;
@@ -41,6 +42,10 @@ export class WebsocketComponent implements OnInit {
       }
   });
   }
+public clickOpenSocket(){
+  this.socket.newSocket()
+  this.loadData();
+}
 
   public ngOnDestroy() {
     this.socket.close();
@@ -59,4 +64,12 @@ public isSystemMessage(message: string) {
   console.log("message : " + message);
   return message.startsWith("/") ? "<strong>" + message.substring(1) + "</strong>" : message;
 }
+
+public loadData(){
+  this.socket.getClientID().subscribe(data =>{
+    console.log(data);
+  });
+}
+
+
 }

@@ -42,7 +42,7 @@ func CreateBarcode(c *gin.Context) {
 	timeAuthens = len(copyMyQr) + 1
 	str2 := strconv.Itoa(timeAuthens)
 
-	png, _ = qrcode.Encode(p.Time+";"+p.User+";"+str+";"+str2, qrcode.Medium, 256)
+	png, _ = qrcode.Encode(p.Time+";"+p.User+";"+str+";"+str2, qrcode.Medium, 512)
 	sEnc := b64.StdEncoding.EncodeToString([]byte(png))
 	sp := models.CreateQr{
 		Id:         len(newQrs) + 1,
@@ -73,7 +73,19 @@ func MyQr(c *gin.Context) {
 			sp = append(sp, copy)
 		}
 	}
-	c.JSON(http.StatusOK, sp)
+
+	var sp2 []models.CreateQr
+	index := len(sp)
+	for i := index; i >= 0; i-- {
+		for _, copy := range sp {
+			if index == copy.TimeAuthen {
+				sp2 = append(sp2, copy)
+				index = index-1
+			}
+		}
+	}
+
+	c.JSON(http.StatusOK, sp2)
 }
 
 func GetshowQrCode(c *gin.Context) {

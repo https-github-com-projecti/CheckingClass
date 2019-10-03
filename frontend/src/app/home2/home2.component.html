@@ -17,8 +17,8 @@
         <div class="dropdown-content" >
           <a >Sign in as : {{Username}} </a>
           <mat-divider></mat-divider>
-          <a >Profile</a>
-          <a >Setting</a>
+          <a [routerLink]="['/ProfileSetting']">Profile</a>
+          <a [routerLink]="['/Setting']">Setting</a>
           <mat-divider></mat-divider>
           <a (click)="logout()">Log out</a>
         </div>
@@ -79,26 +79,26 @@
         <form class="input-form-sit">
           <mat-form-field class="example-full-width" color="primary">
             <input matInput placeholder="Class name" id="clear_class1" value=" " class="color_text" 
-            name="className" [(ngModel)]="newclass.t_class_name">
+            name="className" [(ngModel)]="newclass.TSName">
           </mat-form-field>
         </form>
 
         <form class="input-form-sit">
           <mat-form-field class="example-full-width" color="primary">
               <textarea matInput placeholder="Description" id="clear_class2" value=" " name="description"
-              [(ngModel)]="newclass.t_class_description"></textarea>
+              [(ngModel)]="newclass.TSDescription"></textarea>
           </mat-form-field>
         </form> 
 
         <form class="input-form-sit">
           <mat-form-field class="example-full-width" color="primary">
             <input matInput placeholder="Class ID" id="clear_class3" value=" " class="color_text" 
-            name="class_id" [(ngModel)]="newclass.t_class_id">
+            name="class_id" [(ngModel)]="newclass.TSID">
           </mat-form-field>
         </form>
 
-        <form class="f_b_site" id="bt_saveClass">
-            <button mat-raised-button (click)="checkClassOrder()">Create class</button>
+        <form class="f_b_site" >
+            <button id="bt_saveClass" mat-raised-button (click)="checkClassOrder()">Create class</button>
         </form>
       </div>
   </div>
@@ -107,10 +107,10 @@
         <div class="card_grid_site">
           <div style="width: 270px; height: 200px;position: relative;margin-left: 10px;">
             <div>
-              <p class="textPanel" name="className">{{x.t_class_name}}</p>
+              <p class="textPanel" name="className">{{x.TSName}}</p>
             </div>
-            <p class="textIDpanel" name="classId">{{x.t_class_id}}</p>
-            <p class="textDescPanel" name="classDesc">Description : {{x.t_class_description}}</p>
+            <p class="textIDpanel" name="classId">{{x.TSID}}</p>
+            <p class="textDescPanel" name="classDesc">Description : {{x.TSDescription}}</p>
           </div>
           <mat-icon svgIcon="delete" id="btn_screen" aria-label="tool"></mat-icon>
         </div>

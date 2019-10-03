@@ -9,7 +9,7 @@ import {Observable, throwError} from 'rxjs';
 })
 export class HomeService {
   public API = 'http://localhost:8080/';
-  public APING = 'http://b894c639.ap.ngrok.io/';
+  public APING = 'http://1b3606bf.ap.ngrok.io/';
   public data : any;
   constructor(private httpClient: HttpClient) { }
 
@@ -29,22 +29,22 @@ export class HomeService {
     return this.httpClient.get(this.API + 'home/' + 'ping');
   }
 
-  // public LoginUser(login : userLogin): Observable<userLogin> {
-  //   const headers = new HttpHeaders();
-  //   headers.append('Access-Control-Allow-Origin', this.API);
-  //   headers.append('Access-Control-Allow-Credentials', 'true');
-  //   headers.append('Content-Type', 'application/json');
-  //   console.log(JSON.stringify(login));
-  //   return this.httpClient.post<userLogin>(this.API + 'user/' + 'loginUser', JSON.stringify(login), {headers});
-  // }
   public LoginUser(login : userLogin): Observable<userLogin> {
     const headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Origin', this.API);
     headers.append('Access-Control-Allow-Credentials', 'true');
     headers.append('Content-Type', 'application/json');
     console.log(JSON.stringify(login));
-    return this.httpClient.post<userLogin>(this.APING + 'user/' + 'login', JSON.stringify(login), {headers});
+    return this.httpClient.post<userLogin>(this.API + 'user/' + 'login', JSON.stringify(login), {headers});
   }
+  // public LoginUser(login : userLogin): Observable<userLogin> {
+  //   const headers = new HttpHeaders();
+  //   headers.append('Access-Control-Allow-Origin', this.API);
+  //   headers.append('Access-Control-Allow-Credentials', 'true');
+  //   headers.append('Content-Type', 'application/json');
+  //   console.log(JSON.stringify(login));
+  //   return this.httpClient.post<userLogin>(this.APING + 'user/' + 'login', JSON.stringify(login), {headers});
+  // }
 
   public CreateClass(newClass : classOrder): Observable<classOrder> {
     const headers = new HttpHeaders();
@@ -52,25 +52,47 @@ export class HomeService {
     headers.append('Access-Control-Allow-Credentials', 'true');
     headers.append('Content-Type', 'application/json');
     console.log(JSON.stringify(newClass));
-    return this.httpClient.post<classOrder>(this.API + 'class/' + 'newClass', JSON.stringify(newClass), {headers});
+    return this.httpClient.post<classOrder>(this.API + 'Subject/' + 'Add', JSON.stringify(newClass), {headers});
   }
+  // public CreateClass(newClass : classOrder): Observable<classOrder> {
+  //   const headers = new HttpHeaders();
+  //   headers.append('Access-Control-Allow-Origin', this.API);
+  //   headers.append('Access-Control-Allow-Credentials', 'true');
+  //   headers.append('Content-Type', 'application/json');
+  //   console.log(JSON.stringify(newClass));
+  //   return this.httpClient.post<classOrder>(this.APING + 'Subject/' + 'Add', JSON.stringify(newClass), {headers});
+  // }
 
+  // public getClass(){
+  //   var id = localStorage.getItem('id');
+  //   return this.httpClient.get(this.APING + 'Subject/' + 'GetMySubject/' + id);
+  // }
   public getClass(){
-    var us = localStorage.getItem('isLogin');
-    return this.httpClient.get(this.APING + 'class/' + 'myClass/' + us);
+    var id = localStorage.getItem('id');
+    return this.httpClient.get(this.API + 'Subject/' + 'GetMySubject/' + id);
   }
 
   getAllClass() {
-    return this.httpClient.get(this.API + 'class/' + 'allClass');
+    return this.httpClient.get(this.API + 'Subject/' + 'allClass');
   }
 
+  // getUserdata(){
+  //   var us = localStorage.getItem('isLogin');
+  //   return this.httpClient.get(this.APING + 'user/' + 'GETONE/' + us );
+  // }
   getUserdata(){
     var us = localStorage.getItem('isLogin');
-    return this.httpClient.get(this.APING + 'user/' + 'GETONE/' + us );
+    return this.httpClient.get(this.API + 'user/' + 'GETONE/' + us );
   }
 
+  // getGetPic(){
+  //   var id = localStorage.getItem('id');
+  //   console.log(id);
+  //   return this.httpClient.get(this.APING + 'user/' + 'getMyPic/' + id);
+  // }
   getGetPic(){
-    var us = localStorage.getItem('isLogin');
-    return this.httpClient.get(this.API + 'user/' + 'getMyPic/' + us);
+    var id = localStorage.getItem('id');
+    console.log(id);
+    return this.httpClient.get(this.API + 'user/' + 'getMyPic/' + id);
   }
 }

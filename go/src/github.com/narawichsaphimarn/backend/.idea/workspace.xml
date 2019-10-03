@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3191cc10-ad2e-474a-9552-7bac4794c002" name="Default Changelist" comment="" />
+    <list default="true" id="3191cc10-ad2e-474a-9552-7bac4794c002" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Go-backend-mongoDB/.idea/Go-backend-mongoDB.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/class/class.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/class/class.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/class/class.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/class/class.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/home2/home2.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/home2/home2.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/home2/home2.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/home2/home2.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/home2/home2.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/home2/home2.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/service/class.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/service/class.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/service/home.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/service/home.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/service/singup.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/service/singup.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/service/socket.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/service/socket.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/setting-profile/setting-profile.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/setting-profile/setting-profile.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/setting-profile/setting-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/setting-profile/setting-profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/setting/setting.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/setting/setting.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/websocket/websocket.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/websocket/websocket.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend/src/app/websocket/websocket.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend/src/app/websocket/websocket.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/gin-contrib/sse" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/gin-contrib/sse" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/golang/protobuf" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/golang/protobuf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/json-iterator/go" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/json-iterator/go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/mattn/go-isatty" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/mattn/go-isatty" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/ugorji/go" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.cache/govendor/github.com/ugorji/go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.cache/govendor/gopkg.in/yaml.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.cache/govendor/gopkg.in/yaml.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gin-contrib/cors" beforeDir="false" afterPath="$PROJECT_DIR$/../../gin-contrib/cors" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gin-contrib/sse" beforeDir="false" afterPath="$PROJECT_DIR$/../../gin-contrib/sse" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gin-gonic/gin" beforeDir="false" afterPath="$PROJECT_DIR$/../../gin-gonic/gin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../go-delve/delve" beforeDir="false" afterPath="$PROJECT_DIR$/../../go-delve/delve" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../golang/protobuf" beforeDir="false" afterPath="$PROJECT_DIR$/../../golang/protobuf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gorilla/handlers" beforeDir="false" afterPath="$PROJECT_DIR$/../../gorilla/handlers" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gorilla/mux" beforeDir="false" afterPath="$PROJECT_DIR$/../../gorilla/mux" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../jinzhu/gorm" beforeDir="false" afterPath="$PROJECT_DIR$/../../jinzhu/gorm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../jinzhu/inflection" beforeDir="false" afterPath="$PROJECT_DIR$/../../jinzhu/inflection" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../karrick/godirwalk" beforeDir="false" afterPath="$PROJECT_DIR$/../../karrick/godirwalk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mattn/go-isatty" beforeDir="false" afterPath="$PROJECT_DIR$/../../mattn/go-isatty" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/ClassTeacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/ClassTeacher.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rogpeppe/godef" beforeDir="false" afterPath="$PROJECT_DIR$/../../rogpeppe/godef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../rs/xid" beforeDir="false" afterPath="$PROJECT_DIR$/../../rs/xid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ugorji/go" beforeDir="false" afterPath="$PROJECT_DIR$/../../ugorji/go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../uudashr/gopkgs" beforeDir="false" afterPath="$PROJECT_DIR$/../../uudashr/gopkgs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../golang.org/x/lint" beforeDir="false" afterPath="$PROJECT_DIR$/../../../golang.org/x/lint" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../gopkg.in/yaml.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../../../gopkg.in/yaml.v2" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,11 +52,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="GOROOT" path="C:\Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
   <component name="ProjectId" id="1PuSFQ1TkwIEs5DbCr4Q68lcU6v" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="go.import.settings.migrated" value="true" />
@@ -51,11 +99,23 @@
       <option name="presentableId" value="Default" />
       <updated>1566722383617</updated>
       <workItem from="1566722389332" duration="1819000" />
+      <workItem from="1570026801121" duration="128000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
