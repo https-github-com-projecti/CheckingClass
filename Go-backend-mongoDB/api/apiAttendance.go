@@ -8,14 +8,15 @@ import (
 	b64 "encoding/base64"
 	"github.com/skip2/go-qrcode"
 	"fmt"
-	// "flag"
+	"flag"
 	"strconv"
 	"github.com/gin-gonic/gin"
 )
-//Attendance
+//AttendanceAPI is ... 
 type AttendanceAPI struct {
 	AttendanceRepository repository.AttendanceRepository
 }
+//AllAttendanceListHandler is ... 
 func (api AttendanceAPI) AllAttendanceListHandler(context *gin.Context) {
 	var attendancesInfo model.AttendanceInfo
 	attendances, err := api.AttendanceRepository.GetAllAttendance()
@@ -27,6 +28,7 @@ func (api AttendanceAPI) AllAttendanceListHandler(context *gin.Context) {
 	attendancesInfo.Attendance = attendances
 	context.JSON(http.StatusOK, attendancesInfo)
 }
+//CreateAttendanceHandeler is ... 
 func (api AttendanceAPI) CreateAttendanceHandeler(context *gin.Context) {
 	var attendance model.Attendance
 	defer context.Request.Body.Close()
@@ -46,6 +48,7 @@ func (api AttendanceAPI) CreateAttendanceHandeler(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{"status": "susess"})
 
 }
+//GETONEAttendanceHandeler is ... 
 func (api AttendanceAPI) GETONEAttendanceHandeler(context *gin.Context) {
 	var attendance model.Attendance
 	defer context.Request.Body.Close()
@@ -64,12 +67,12 @@ func (api AttendanceAPI) GETONEAttendanceHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, oneattendance)
 }
+//ChecknameHandeler is ... 
 func (api AttendanceAPI) ChecknameHandeler(context *gin.Context) {
 	
 	context.JSON(http.StatusOK, gin.H{"status": "susess"})
 }
-
-
+//CreateQrcodeAndAttendanceHandeler is ... 
 func (api AttendanceAPI) CreateQrcodeAndAttendanceHandeler(context *gin.Context) {
 	var png []byte
 	var qr model.Qrcode
@@ -115,6 +118,7 @@ func (api AttendanceAPI) CreateQrcodeAndAttendanceHandeler(context *gin.Context)
 
 
 }
+//GETQRcoderHandeler is ... 
 func (api AttendanceAPI) GETQRcoderHandeler(context *gin.Context) {
 	var attendancesInfo model.AttendanceInfo
 	pass:= context.Param("pass")
@@ -131,4 +135,29 @@ func (api AttendanceAPI) GETQRcoderHandeler(context *gin.Context) {
 	
 	
 }
+//GetshowQrCode is ...
+func (api AttendanceAPI) GetshowQrCode(context *gin.Context) {
+	pass := context.Param("passOfcouse")
+	defer context.Request.Body.Close()
+	flag.Parse()
+	i, _ := strconv.Atoi(pass)
+	var sp []model.CreateQr
+	
+	for _, copy := range newQrs {
+		if copy.Pass == i {
+			sp = append(sp, copy)
+		}
+	}
 
+	len := len(sp)
+	fmt.Println(sp)
+	var sp2 []model.CreateQr
+	for _, copy := range sp {
+		if copy.TimeAuthen == len {
+			sp2 = append(sp2, copy)
+		}
+	}
+	context.JSON(http.StatusOK, sp2)
+	fmt.Println(len)
+	fmt.Println(sp2)
+}

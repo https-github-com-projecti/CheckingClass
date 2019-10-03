@@ -24,7 +24,7 @@ type User struct {
 }
 type Login struct {
 	UserName   string             `json:"username" bson:"username"`
-	TPassword  string             `json:"password" bson:"password"`
+	Password  string             `json:"password" bson:"password"`
 }
 
 
@@ -105,7 +105,5 @@ type Attendance struct {
 	ASpassword		string				`json:"ASpassword" bson:"ASpassword"`
 	AQRcode			string				`json:"AQRcode" bson:"AQRcode"`
 	ATimeAuthen		int 				`json:"ATimeAuthen" bson:"ATimeAuthen"`
-	Astudent		[]TstudentInfos		`json:"Astudent" bson:"Astudent"`
-	
-	
+	Astudent		[]TstudentInfos		`json:"Astudent" bson:"Astudent"`	
 }

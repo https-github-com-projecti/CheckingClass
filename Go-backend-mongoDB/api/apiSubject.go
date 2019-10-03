@@ -17,10 +17,11 @@ import (
     "time"
 	
 )
-//Subject
+//SubjectAPI is ...
 type SubjectAPI struct {
 	SubjectRepository repository.SubjectRepository
 }
+//SubjectListHandler is ...
 func (api SubjectAPI) SubjectListHandler(context *gin.Context) {
 	var subjectsInfo model.SubjectInfo
 	subjects, err := api.SubjectRepository.GetAllSubject()
@@ -32,6 +33,7 @@ func (api SubjectAPI) SubjectListHandler(context *gin.Context) {
 	subjectsInfo.Subject = subjects
 	context.JSON(http.StatusOK, subjectsInfo)
 }
+//AddSubjectHandeler is ...
 func (api SubjectAPI) AddSubjectHandeler(context *gin.Context) {
 	var subject model.Subject
 	err := context.ShouldBindJSON(&subject)
@@ -51,6 +53,7 @@ func (api SubjectAPI) AddSubjectHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusCreated, "Success")
 }
+//EditDescriptionHandler is ...
 func (api SubjectAPI) EditDescriptionHandler(context *gin.Context) {
 	var subject model.Subject
 	err := context.ShouldBindJSON(&subject)
@@ -67,6 +70,7 @@ func (api SubjectAPI) EditDescriptionHandler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, gin.H{"status": "susess"})
 }
+//DeleteSubjectHandler is ...
 func (api SubjectAPI) DeleteSubjectHandler(context *gin.Context) {
 	var subject model.Subject
 	err := context.ShouldBindJSON(&subject)
@@ -83,7 +87,7 @@ func (api SubjectAPI) DeleteSubjectHandler(context *gin.Context) {
 	}
 	context.JSON(http.StatusNoContent, gin.H{"message": "susess"})
 }
-
+//GETMySubjectHandeler is ...
 func (api SubjectAPI) GETMySubjectHandeler(context *gin.Context) {
 	id:= context.Param("id")
 	fmt.Println(id)
@@ -95,6 +99,7 @@ func (api SubjectAPI) GETMySubjectHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, onesubject)
 }
+//JoinClassHandeler is ...
 func (api SubjectAPI) JoinClassHandeler(context *gin.Context) {
 	var subject model.JoinSubject
 	err := context.ShouldBindJSON(&subject)
@@ -117,6 +122,7 @@ func (api SubjectAPI) JoinClassHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, "WTF!")
 }
+//GETONESubjectHandeler is ...
 func (api SubjectAPI) GETONESubjectHandeler(context *gin.Context) {
 	id:= context.Param("id")
 	fmt.Println(id)
@@ -128,9 +134,7 @@ func (api SubjectAPI) GETONESubjectHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, onesubject)
 }
-
-
-///TEST
+//RandPassClass is ...
 func (api SubjectAPI) RandPassClass() (i int){
 	// Uses default seed of 1, result will be 81:
 	fmt.Println(rand.Intn(10000))
@@ -147,34 +151,23 @@ func (api SubjectAPI) RandPassClass() (i int){
 		return
 	}
 	fmt.Println("subjects = ",subjects)
-	var num1 = classnum
-	var num int
-	for num1 > 0 {
-		num1 = num1/10
-		num = num+1
+	num1 := classnum
+	if(num1 < 1000){
+		api.RandPassClass()
 	}
+
 	subjectsInfo.Subject = subjects
 	// var state int = 0
 	for _, copy := range subjects{
 		
 		fmt.Println(copy.TSpassword)
-		
-		if (copy.TSpassword != classnum){
-			i = classnum
-			return i
-		}else{
+		if (copy.TSpassword == classnum){
 			api.RandPassClass()
-		
-		// if (copy.TSpassword == classnum){
-		// 	state = 1
-		// }
+		}else{
+			return i
+		}
 	}
-}
 	
-	// if state == 1{
-	// 	api.RandPassClass()
-	// }
-	// i = classnum
-	return
+	return 
 }
 

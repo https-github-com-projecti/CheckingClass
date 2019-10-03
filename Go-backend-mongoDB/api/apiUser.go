@@ -10,11 +10,11 @@ import (
 	 "fmt"
 	"github.com/gin-gonic/gin"
 )
-//USER
+//UserAPI is ...
 type UserAPI struct {
 	UserRepository repository.UserRepository
 }
-
+//UserListHandler is ...
 func (api UserAPI) UserListHandler(context *gin.Context) {
 	var usersInfo model.UserInfo
 	users, err := api.UserRepository.GetAllUser()
@@ -26,7 +26,7 @@ func (api UserAPI) UserListHandler(context *gin.Context) {
 	usersInfo.User = users
 	context.JSON(http.StatusOK, usersInfo)
 }
-
+//AddUserHandeler is ...
 func (api UserAPI) AddUserHandeler(context *gin.Context) {
 	var user model.User
 	err := context.ShouldBindJSON(&user)
@@ -43,7 +43,7 @@ func (api UserAPI) AddUserHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusCreated, "susess")
 }
-
+//EditPasswordHandler is ...
 func (api UserAPI) EditPasswordHandler(context *gin.Context) {
 	var user model.User
 	err := context.ShouldBindJSON(&user)
@@ -61,6 +61,7 @@ func (api UserAPI) EditPasswordHandler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, gin.H{"status": "susess"})
 }
+//DeleteUserByIDHandler is ...
 func (api UserAPI) DeleteUserByIDHandler(context *gin.Context) {
 	var user model.User
 	err := context.ShouldBindJSON(&user)
@@ -76,6 +77,7 @@ func (api UserAPI) DeleteUserByIDHandler(context *gin.Context) {
 	}
 	context.JSON(http.StatusNoContent, gin.H{"message": "susess"})
 }
+//GETONEUserHandeler is ...
 func (api UserAPI) GETONEUserHandeler(context *gin.Context) {
 	var user model.User
 	err := context.ShouldBindJSON(&user)
@@ -88,6 +90,7 @@ func (api UserAPI) GETONEUserHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, onesubject)
 }
+//LoginHandler is ...
 func (api UserAPI) LoginHandler(context *gin.Context) {
 	var user model.Login
 	err := context.ShouldBindJSON(&user)	
@@ -98,13 +101,14 @@ func (api UserAPI) LoginHandler(context *gin.Context) {
 		return
 	}
 	for _, copy := range onesubject {
-		if copy.UserName == user.UserName && copy.TPassword == user.TPassword {
+		if copy.UserName == user.UserName && copy.TPassword == user.Password {
 			context.JSON(http.StatusOK, "Success")
 		}
 	}
 	
 	
 }
+//GETONEnameHandeler is ...
 func (api UserAPI) GETONEnameHandeler(context *gin.Context) {
 	var user model.User
 	username:= context.Param("username")
@@ -119,7 +123,7 @@ func (api UserAPI) GETONEnameHandeler(context *gin.Context) {
 	context.JSON(http.StatusOK, oneuser)
 }
 
-
+//GETPictureUserHandeler is ...
 func (api UserAPI) GETPictureUserHandeler(context *gin.Context) {
 	var user model.User
 	id:= context.Param("id")
@@ -141,37 +145,6 @@ func (api UserAPI) GETPictureUserHandeler(context *gin.Context) {
 
 
 
-//QRCODE
-// type QRCodeAPI struct {
-// 	//QRCodeRepository repository.QRCodeRepository
-// }
-// var newQrs []models.CreateQr
-// func CreateBarcode(c *gin.Context){
-// 	var png []byte
-// 	var p models.Qrcode
-// 	defer c.Request.Body.Close()
-// 	if err := c.ShouldBindJSON(&p); err != nil {
-// 		c.JSON(http.StatusOK, "Can't creat class")
-// 	}
 
-// 	newQr := models.Qrcode{
-// 		Time: p.Time,
-// 		User: p.User,
-// 		Pass: p.Pass,
-// 	}
-
-// 	fmt.Println(newQr)
-// 	png, _ = qrcode.Encode(p.Time + p.User + p.Pass, qrcode.Medium, 256)
-// 	sEnc := b64.StdEncoding.EncodeToString([]byte(png))
-// 	fmt.Println("test = " + sEnc)
-// 	sp := models.CreateQr{
-// 		Id:     len(newQrs)+1,
-// 		Qrcode: sEnc,
-// 		Time: p.Time,
-// 	}
-
-// 	newQrs = append(newQrs , sp)
-// 	c.JSON(http.StatusOK, newQrs)
-// }
 
 
