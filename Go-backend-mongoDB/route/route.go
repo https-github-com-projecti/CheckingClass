@@ -19,7 +19,7 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	route.POST("user/login", userAPI.LoginHandler)
 	route.GET("user/list", userAPI.UserListHandler)
 	route.POST("user/Add", userAPI.AddUserHandeler)
-	route.PUT("TESTuser/Edit", userAPI.EditPasswordHandler)
+	route.PUT("user/Edit", userAPI.EditPasswordHandler)
 	route.DELETE("user/Delete", userAPI.DeleteUserByIDHandler)
 	route.GET("user/GETONE", userAPI.GETONEUserHandeler)
 	route.GET("user/GETONE/:username", userAPI.GETONEnameHandeler)
@@ -51,8 +51,16 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	route.POST("Attendance/new", attendanceAPI.CreateAttendanceHandeler)
 	route.POST("Attendance/Create", attendanceAPI.CreateQrcodeAndAttendanceHandeler)
 	route.GET("Attendance/GETONE", attendanceAPI.GETONEAttendanceHandeler)
-	route.PUT("Attendance/Checkname", attendanceAPI.ChecknameHandeler)
+	route.POST("Attendance/CheckQR", attendanceAPI.CheckQRcodeHandeler)
 	route.GET("Attendance/getQRcode/:pass", attendanceAPI.GETQRcoderHandeler)
+	route.POST("Attendance/Checkname", attendanceAPI.CheckNameClassHandeler)
+	route.GET("Attendance/time", attendanceAPI.TimelimitHandeler)
+	route.GET("Attendance/selfie/:pass/:date/:timeauthens", attendanceAPI.GETSelfieHandeler)
+	route.GET("Attendance/clientid/:clientid", attendanceAPI.GETClientHandeler)
+	route.POST("Attendance/Checknamewithsocket", attendanceAPI.CheckwithSocketHandeler)
+	route.GET("Attendance/info/:pass/:date/:timeauthens", attendanceAPI.GETinfoStudentHandeler)
+	// route.GET("Attendance/Checking/:cilentId", attendanceAPI.ShowCheckingHandeler)
+
 
 	//Student
 	studentRepository := repository.StudentRepositoryMongo{
@@ -64,20 +72,16 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	route.GET("Student/alllist", studentAPI.AllStudentListHandler)
 	route.POST("Student/new", studentAPI.CreateStudentHandeler)
 	route.GET("Student/subjectlist:ID", studentAPI.ShowsubjectlistStudentHandeler)
-	route.GET("Student/login", studentAPI.StudentLoginHandler)
-
+	route.POST("Student/login", studentAPI.StudentLoginHandler)
+	route.GET("Student/info/:id", studentAPI.StudentinfoListHandler)
+	route.GET("Student/subject/:sid", studentAPI.StudenSubjectListHandler)
+	
+	
 	//WS
 	route.GET("Websocket/ws", websocket.Websockethandler)
 	go websocket.Manager.Start()
-	//QRCode
-	// qrcodeRepository := repository.QRCodeRepositoryMongo{
-	// 	ConnectionDB: connectionDB,
-	// }
-	// qrcodeAPI := api.QRCodeAPI{
-	// 	QRCodeRepository: &sqrcodeRepository,
-	// }
-	// route.POST("QRCODE/create", QRcodeAPI.AddSubjectHandeler)
-
+	
+	
 }
 
 

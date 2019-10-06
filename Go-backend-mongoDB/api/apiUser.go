@@ -5,15 +5,19 @@ import (
 	"Go-backend-mongoDB/repository"
 	"log"
 	"net/http"
+
 	// b64 "encoding/base64"
 	// "github.com/skip2/go-qrcode"
-	 "fmt"
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
+
 //UserAPI is ...
 type UserAPI struct {
 	UserRepository repository.UserRepository
 }
+
 //UserListHandler is ...
 func (api UserAPI) UserListHandler(context *gin.Context) {
 	var usersInfo model.UserInfo
@@ -26,6 +30,7 @@ func (api UserAPI) UserListHandler(context *gin.Context) {
 	usersInfo.User = users
 	context.JSON(http.StatusOK, usersInfo)
 }
+
 //AddUserHandeler is ...
 func (api UserAPI) AddUserHandeler(context *gin.Context) {
 	var user model.User
@@ -43,6 +48,7 @@ func (api UserAPI) AddUserHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusCreated, "susess")
 }
+
 //EditPasswordHandler is ...
 func (api UserAPI) EditPasswordHandler(context *gin.Context) {
 	var user model.User
@@ -61,6 +67,7 @@ func (api UserAPI) EditPasswordHandler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, gin.H{"status": "susess"})
 }
+
 //DeleteUserByIDHandler is ...
 func (api UserAPI) DeleteUserByIDHandler(context *gin.Context) {
 	var user model.User
@@ -77,12 +84,13 @@ func (api UserAPI) DeleteUserByIDHandler(context *gin.Context) {
 	}
 	context.JSON(http.StatusNoContent, gin.H{"message": "susess"})
 }
+
 //GETONEUserHandeler is ...
 func (api UserAPI) GETONEUserHandeler(context *gin.Context) {
 	var user model.User
 	err := context.ShouldBindJSON(&user)
 	fmt.Println(user)
-	onesubject, err:= api.UserRepository.GetUser(user.UserName)
+	onesubject, err := api.UserRepository.GetUser(user.UserName)
 	if err != nil {
 		log.Println("error GETONEUserHandeler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
@@ -90,11 +98,12 @@ func (api UserAPI) GETONEUserHandeler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, onesubject)
 }
+
 //LoginHandler is ...
 func (api UserAPI) LoginHandler(context *gin.Context) {
 	var user model.Login
-	err := context.ShouldBindJSON(&user)	
-	onesubject, err:= api.UserRepository.GetUser(user.UserName)
+	err := context.ShouldBindJSON(&user)
+	onesubject, err := api.UserRepository.GetUser(user.UserName)
 	if err != nil {
 		log.Println("error LoginHandler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
@@ -105,16 +114,16 @@ func (api UserAPI) LoginHandler(context *gin.Context) {
 			context.JSON(http.StatusOK, "Success")
 		}
 	}
-	
-	
+
 }
+
 //GETONEnameHandeler is ...
 func (api UserAPI) GETONEnameHandeler(context *gin.Context) {
 	var user model.User
-	username:= context.Param("username")
+	username := context.Param("username")
 	fmt.Println(user)
 	fmt.Println(username)
-	oneuser, err2:= api.UserRepository.GetUser(username)
+	oneuser, err2 := api.UserRepository.GetUser(username)
 	if err2 != nil {
 		log.Println("error GetUser", err2.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err2.Error()})
@@ -126,9 +135,9 @@ func (api UserAPI) GETONEnameHandeler(context *gin.Context) {
 //GETPictureUserHandeler is ...
 func (api UserAPI) GETPictureUserHandeler(context *gin.Context) {
 	var user model.User
-	id:= context.Param("id")
+	id := context.Param("id")
 	fmt.Println(id)
-	pic, err:= api.UserRepository.Getbyid(id)
+	pic, err := api.UserRepository.Getbyid(id)
 	fmt.Println(user.TPicture)
 	if err != nil {
 		log.Println("error GetUser", err.Error())
@@ -136,15 +145,9 @@ func (api UserAPI) GETPictureUserHandeler(context *gin.Context) {
 		return
 	}
 	for _, copy := range pic {
-		
-			context.JSON(http.StatusOK, copy.TPicture)
-		
+
+		context.JSON(http.StatusOK, copy.TPicture)
+
 	}
-	
+
 }
-
-
-
-
-
-

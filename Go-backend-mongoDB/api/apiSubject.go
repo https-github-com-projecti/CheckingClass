@@ -164,10 +164,10 @@ func (api SubjectAPI) RandPassClass() (i int){
 		if (copy.TSpassword == classnum){
 			api.RandPassClass()
 		}else{
-			return i
+			return classnum
 		}
 	}
 	
-	return 
+	return classnum
 }
 
