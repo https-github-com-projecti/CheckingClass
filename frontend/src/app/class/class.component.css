@@ -366,7 +366,7 @@ main .class_site{
   font-size: 17px;
   font-family: Serif;
   text-transform: uppercase;
-  text-shadow: 1px 1px 2px black, 2px 2px 25px rgb(255, 0, 0), 0 0 10px rgb(139, 0, 0);
+  text-shadow: 1px 1px 2px black, 2px 2px 25px blue, 0 0 10px darkblue;
   color: aliceblue;
 }
 .class_site .title_site .panelTextTitle > p:nth-child(3){
@@ -397,8 +397,9 @@ main .class_site{
   width: 90%;
   height: 90%;
   top: 0;
-  /* background-color: rgba(127, 255, 255, 0.425); */
-  /* border-radius: 20px; */
+  /* background-color: rgba(241, 45, 19, 0.425); */
+  background-color: none;
+  border-radius: 20px;
   /* box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 22px 0 rgba(0, 0, 0, 0.19); */
 }
 .showQr-contrainer .ShowQrPanel-container .qrCode_Container{
@@ -429,7 +430,7 @@ main .class_site{
 .showQr-contrainer .ShowQrPanel-container .peple_Container{
   width: 30%;
   height: 100%;
-  background-color: black;
+  /* background-color: whitesmoke; */
   top:0;
   float: right;
   border: 2px red solid;
@@ -437,9 +438,23 @@ main .class_site{
   overflow: hidden;
 }
 .showQr-contrainer .ShowQrPanel-container .peple_Container .peple_Container_header{
+  /* box-shadow: 0px 2px 3px rgb(250, 249, 249); */
+  display: flex;
   width: 100%;
   height: 20%;
-  background-color: aquamarine;
+  background-color: white;
+  z-index: 300;
+  background: linear-gradient(to bottom,rgba(255, 255, 255),rgba(255, 255, 255),rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.5),rgba(255, 255, 255, 0.4), rgba(0, 0, 255, 0.3) 100px );
+  border-bottom: 1px solid rgba(255, 0, 0, 0.65);
+  /* align-items: center; */
+  justify-content: center;
+}
+.showQr-contrainer .ShowQrPanel-container .peple_Container .peple_Container_header > p{
+  font-family: Serif; 
+  font-size: 32px;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px black, 2px 2px 15px blue, 0 0 10px darkblue;
+  color: whitesmoke;
 }
 .card_grid_site mat-icon {
   color: #aaaaaa;
@@ -455,4 +470,25 @@ main .class_site{
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.peple_Container .gardContainer{
+  display: block;
+  width: calc(100% - 6px);
+  height: 50px;
+  /* background-color: whitesmoke; */
+  border-radius: 20px;
+  margin-top: 3px;
+  margin-left: 3px;
+  border: 1px solid gainsboro;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.peple_Container .studentListPanel{
+  width: 100%;
+  height: 80%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 250;
+  background-color: rgba(255, 255, 255, 0.55);
 }

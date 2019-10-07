@@ -1,18 +1,18 @@
 import { ClassService } from './../service/class.service';
-import { classOrder} from './../home2/home2.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy,} from '@angular/core';
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { DatePipe } from '@angular/common';
 import {HomeService} from '../service/home.service';
-import { stringify } from '@angular/compiler/src/util';
 import { Router } from '@angular/router';
 import { SocketService } from "../service/socket.service";
+import { DataAuthenService } from '../service/data-authen.service';
 
 export interface createQrcode {
   time : string;
   user : string;
   passOfCouse : number;
+  clientId : string;
 }
 
 @Component({
@@ -38,12 +38,21 @@ export class ClassComponent implements OnInit {
   private oneQrcode : any = null;
   private messages: Array<any>;
   private chatBox: string;
-  
+  private StudentNow : any = null;  
+  public colors = ['#ff0000', '#00ff00', '#0000ff','#ff0000', '#00ff00', '#0000ff','#ff0000', '#00ff00', '#0000ff','#ff0000', '#00ff00', '#0000ff'];
+  public colors2 = [];
+  public random_color = this.colors[Math.floor(Math.random() * this.colors.length)];
+  private times;
+  today: number = Date.now();
+  TypeObject : object;
+  public state = false
+  private stateClickCreate = 0;
 
   newQr : createQrcode = {
     time : null,
     user : null,
     passOfCouse : null,
+    clientId : null,
   }
 
   select_Class: any = {
@@ -60,7 +69,8 @@ export class ClassComponent implements OnInit {
     private homeService : HomeService,
     private classService : ClassService,
     private router : Router,
-    private socket: SocketService,
+    private sockets: SocketService,
+    private dataAuthenService: DataAuthenService,
   ) {
     this.matIconRegistry.addSvgIcon(
       "add",
@@ -76,9 +86,12 @@ export class ClassComponent implements OnInit {
     );
     this.messages = [];
     this.chatBox = "";
+    
    }
 
   ngOnInit() {
+    console.log("state : " + this.state);
+    this.ShowTime()
     var showQr = document.getElementById("showQr-contrainer");
     // var showQr2 = document.getElementById("showQr-contrainer2");
     var showQr3 = document.getElementById("qrCode_Container");
@@ -88,33 +101,8 @@ export class ClassComponent implements OnInit {
       this.myClass = data;
       console.log( this.myClass);
       this.classService.passofClass(this.myClass[0]["TSpassword"]);
+      console.log("this.classService.passofClass = " + typeof this.myClass[0]["TSpassword"]);
       this.loadData();
-    });
-
-    this.socket.getEventListener().subscribe(event => {
-      console.log("event type : " + event.type );
-      console.log("event data : " + event.data.content + "event data type : " + typeof event.data.content);
-      console.log("event data sender : " + event.data.sender);
-      if(event.type == "message") {
-        console.log("event message : " + event);
-        console.log(event);
-          let data = event.data.content;
-          if(event.data.sender) {
-              data = event.data.sender + ": " + data;
-              console.log("Data sender : " + data);
-          }
-          console.log("Data : " + data);
-          this.messages.push(data);
-          console.log("this.messages.push(data) : " + this.messages);
-      }
-      if(event.type == "close") {
-        console.log("event close : " + event);
-          this.messages.push("/The socket connection has been closed");
-      }
-      if(event.type == "open") {
-        console.log("event open : " + event);
-          this.messages.push("/The socket connection has been established");
-      }
     });
 
     window.onclick = function(event) {
@@ -131,6 +119,63 @@ export class ClassComponent implements OnInit {
         showQr.style.top = "-100%";
       }
     }
+    this.sockets.getEventListener().subscribe(event => {
+      console.log("event type : " + event.type );
+      console.log("event data : " + event.data.content + "event data type : " + typeof event.data.content);
+      console.log("event data sender : " + event.data.sender);
+      if(event.type == "message") {
+        console.log("event message : " + event);
+        console.log(event);
+          let data = event.data.content;
+          if(event.data.sender) {
+              data = event.data.sender + ": " + data;
+              console.log("Data sender : " + data);
+              if(event.data.content == "Success"){
+                this.state = true;
+                if(this.stateClickCreate == 1){
+                  this.newQr.clientId = event.data.sender;
+                  this.classService.ClientID(event.data.sender);
+                  this.createAuthenicate()
+                }
+              } 
+              else if ((typeof event.data.content) == "object") {
+                var Id = localStorage.getItem('clientID');
+                console.log("Id = localStorage.getItem('clientID') " + Id);
+                if (Id == event.data.sender){
+                  this.StudentNow = event.data.content[0]["Astudent"];
+                  console.log(this.StudentNow);
+                }
+              }
+              else {
+                console.log("--------------" + typeof event.data.content + "-----------------");
+                alert("Error กรุณาลองใหม่อีกครั้ง");
+              }
+              
+          }
+          console.log("Data : " + data);
+          this.messages.push(data);
+          console.log("this.messages.push(data) : " + this.messages);
+      }
+      if(event.type == "close") {
+        console.log("event close : " + event);
+          this.messages.push("/The socket connection has been closed");
+      }
+      if(event.type == "open") {
+        console.log("event open : " + event);
+          this.messages.push("/The socket connection has been established");
+      }
+    });
+  }
+
+  // public ngOnDestroy(): void {
+  //   //Called once, before the instance is destroyed.
+  //   //Add 'implements OnDestroy' to the class.
+  //   this.sockets.close();
+  // }
+
+  startWebsocket(){
+    this.sockets.newSocket();
+    this.stateClickCreate = 1;
   }
 
   createAuthenicate(){
@@ -158,18 +203,22 @@ export class ClassComponent implements OnInit {
   }
 
   dataAuthen(x){
-    var panel = document.getElementById("panelCard");
-    var btn_screen = document.getElementById("btnScreen");
-    var btn_delete = document.getElementById("btnDelete");
+    // var panel = document.getElementById("panelCard");
+    // var btn_screen = document.getElementById("btnScreen");
+    // var btn_delete = document.getElementById("btnDelete");
+    var pass = x.ASpassword;
+    var date = x.ADate;
+    var time = x.ATimeAuthen;
+    this.dataAuthenService.getDataClassAndQrcode(pass,date,time);
     this.router.navigate(['/DataAuthen']);
-    console.log(x);
+    // console.log(x);
   }
 
   loadData() {
     this.homeService.getUserdata().subscribe(data =>{
       this.userdata = data;
-      this.homeService.setID(this.userdata); //สำหรับserver Test
-      // this.homeService.setID(this.userdata[0]['user_id']); //สำหรับserver DB
+      // this.homeService.setID(this.userdata); //สำหรับserver Test
+      this.homeService.setID(this.userdata[0]['user_id']); //สำหรับserver DB
       this.homeService.getGetPic().subscribe(data =>{
         this.getPic = data;
         // console.log(this.isEmptyOrSpaces(this.getPic));
@@ -183,6 +232,7 @@ export class ClassComponent implements OnInit {
         console.log(this.Qrcode);
       }
     );
+    this.StudentNow = null;
   }
   isEmptyOrSpaces(str){
     return str === null || str.match(/^ *$/) !== null;
@@ -199,7 +249,7 @@ export class ClassComponent implements OnInit {
         this.oneQrcode = data;
         console.log(this.oneQrcode);
         var numQrcode = this.oneQrcode.length - 1;
-        this.ShowdDataQr = this.oneQrcode[numQrcode]["AQRcode"];
+        this.ShowdDataQr = this.oneQrcode[numQrcode]["PicQRcode"];
         console.log(this.ShowdDataQr);
       }
     )
@@ -211,31 +261,77 @@ export class ClassComponent implements OnInit {
   }
 
   zoomScreen(x){
+    if(this.state == false){
+      this.sockets.newSocket();
+    }
     console.log(x);
-    this.ShowdDataQr = x.AQRcode;
+    this.ShowdDataQr = x.PicQRcode;
+    console.log("x.AClientid " + x.AClientid);
+    this.classService.ClientID(x.AClientid);
     console.log(this.QrShow);
     var showQr = document.getElementById("showQr-contrainer");
     showQr.style.display = "flex";
     showQr.style.transition = "all ease-out 600ms";
     showQr.style.top = "0";
     showQr.style.transform = "rotateX(0deg)";
+    var pass = x.ASpassword;
+    var date = x.ADate;
+    var time = x.ATimeAuthen;
+    this.loadDataJoinStudent(pass, date, time);
   }
-
-  public ngOnDestroy() {
-    this.socket.close();
+  public loadDataJoinStudent(x,y,z){
+    this.classService.getClientData(x,y,z).subscribe(data => {
+      console.log("data clientData = ");
+      console.log(data);
+      this.StudentNow = data;
+    });
+    this.loadData();
   }
 
   public send() {
     if(this.chatBox) {
       console.log("Data chatbox : " + this.chatBox);
-        this.socket.send(this.chatBox);
+        this.sockets.send(this.chatBox);
         this.chatBox = "";
     }
   }
 
   public isSystemMessage(message: string) {
-    console.log("message : " + message.substring(1));
-    console.log("message : " + message);
-    return message.startsWith("/") ? "<strong>" + message.substring(1) + "</strong>" : message;
+  console.log("message : " + message.substring(1));
+  console.log("message : " + message);
+  return message.startsWith("/") ? "<strong>" + message.substring(1) + "</strong>" : message;
+  }
+
+  getRandomColor() {
+    var color = Math.floor(0x1000000 * Math.random()).toString(16);
+    return '#' + ('000000' + color).slice(-6);
+  }
+
+  ShowTime(){
+    var time = new Date();
+    var H = time.getHours();
+    var M = time.getMinutes();
+    var S = time.getSeconds();
+
+    if(H == 0){
+      H = 12;
+    }
+    if (H > 12){
+      H = H - 12;
+    }
+    var h = (H < 10) ? "0" + H:H;
+    var m = (M < 10) ? "0" + M:M;
+    var s = (S < 10) ? "0" + S:S;
+    var realTime = h + ":" + + m + ":" + s;
+    document.getElementById('timeShow').innerText = realTime;
+    document.getElementById('timeShow').textContent = realTime;
+    var qrCodepanel = document.getElementById('showQr-contrainer');
+    // qrCodepanel.style.backgroundColor = "red";
+    // setInterval(this.offBackgroundColor, 500);
+    setInterval(this.ShowTime, 1000)
+  }
+  offBackgroundColor(){
+    var qrCodepanel = document.getElementById('showQr-contrainer');
+    qrCodepanel.style.backgroundColor = "white";
   }
 }

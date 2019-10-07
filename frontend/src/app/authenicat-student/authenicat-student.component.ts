@@ -63,7 +63,7 @@ export class AuthenicatStudentComponent implements OnInit {
     this.Username = localStorage.getItem('isLogin');
     this.classService.getmyClass().subscribe(data =>{
       this.myClass = data;
-      this.classService.passofClass(this.myClass[0]["t_class_pass"]);
+      this.classService.passofClass(this.myClass[0]["TSpassword"]);
       this.loadData();
     });
      this.authenService.getAuthenData().subscribe(
@@ -85,7 +85,8 @@ export class AuthenicatStudentComponent implements OnInit {
   loadData() {
     this.homeService.getUserdata().subscribe(data =>{
       this.userdata = data;
-      this.homeService.setID(this.userdata);
+      // this.homeService.setID(this.userdata);
+      this.homeService.setID(this.userdata[0]['user_id']); //สำหรับserver DB
       this.homeService.getGetPic().subscribe(data =>{
         this.getPic = data;
         console.log(this.isEmptyOrSpaces(this.getPic));

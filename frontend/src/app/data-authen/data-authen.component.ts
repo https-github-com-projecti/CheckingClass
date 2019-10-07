@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClassService } from './../service/class.service';
 import {HomeService} from '../service/home.service';
 import { Router } from '@angular/router';
+import { DataAuthenService } from '../service/data-authen.service';
 
 @Component({
   selector: 'app-data-authen',
@@ -14,10 +15,12 @@ export class DataAuthenComponent implements OnInit {
   public getPic = null; 
   private userdata = null;
   private Username : string = null;
+  public dataStudentforJoin : object;
   
   constructor(
     private classService : ClassService,
     private homeService : HomeService,
+    private dataAuthenService : DataAuthenService,
     private router : Router,) { }
 
   ngOnInit() {
@@ -33,12 +36,17 @@ export class DataAuthenComponent implements OnInit {
   loadData() {
     this.homeService.getUserdata().subscribe(data =>{
       this.userdata = data;
-      this.homeService.setID(this.userdata);
+      this.homeService.setID(this.userdata[0]['user_id']);
       this.homeService.getGetPic().subscribe(data =>{
         this.getPic = data;
         if (this.getPic.trim() === ''){}
         else {  this.mypic = this.getPic }
       });
+    })
+    this.dataAuthenService.getDataStudent().subscribe(data => {
+      this.dataStudentforJoin = data;
+      console.log("this.dataStudentforJoin = ");
+      console.log(this.dataStudentforJoin);
     });
   }
   isEmptyOrSpaces(str){

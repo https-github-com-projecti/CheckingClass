@@ -29,7 +29,7 @@
     </form>
     <form class="dropdown2">
       <button mat-fab >
-        <mat-icon svgIcon="add" id="btn_create" aria-label="tool" style="margin-top:-20px;" (click)="createAuthenicate()"></mat-icon>
+        <mat-icon svgIcon="add" id="btn_create" aria-label="tool" style="margin-top:-20px;" (click)="startWebsocket()"></mat-icon>
       </button>
     </form>
   </div>
@@ -60,7 +60,7 @@
         <div id="panelCard" class="card_grid_site">
           <mat-icon id="btnScreen" svgIcon="aspectRatio" id="btn_screen" aria-label="tool" (click)="zoomScreen(x)"></mat-icon>
           <mat-icon id="btnDelete" svgIcon="delete" id="btn_delete" aria-label="tool"></mat-icon>
-          <img src="data:image/gif;base64,{{x.AQRcode}}" style="width: 60%;margin-left: 75px;" (click)="dataAuthen(x)"/>
+          <img src="data:image/gif;base64,{{x.PicQRcode}}" style="width: 60%;margin-left: 75px;" (click)="dataAuthen(x)"/>
           <p>Date : {{x.ADate}}     เช็คครั้งที่ : {{x.ATimeAuthen}}</p>
         </div>
       </div>
@@ -79,8 +79,15 @@
 
       <section class="peple_Container">
         <header class="peple_Container_header">
-
+            <p id="timeShow"></p>
         </header>
+        <section class="studentListPanel">
+          <div *ngFor="let item of StudentNow">
+            <div class="gardContainer" id="gardContainer" [ngStyle]="{'background-color': random_color}">
+              <label>{{item.StudentID + "  " + item.SfirstName + " " + item.SlastName}}</label>
+            </div>
+          </div>
+        </section>
       </section>
     </div>
   </div>

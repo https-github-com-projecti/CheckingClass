@@ -10,9 +10,15 @@ import {PeriodicElement} from '../authenicat-student/authenicat-student.componen
 })
 export class AuthenStudentService {
   public API = 'http://localhost:8080/';
+  private APING = "http://d23b31df.ap.ngrok.io/";
   constructor(private httpClient: HttpClient) { }
 
   getAuthenData():Observable<PeriodicElement[]> {
     return this.httpClient.get<PeriodicElement[]>(this.API + 'authen/' + 'authenData');
   }
+
+  // getAuthenData():Observable<PeriodicElement[]> {
+  //   var pass = localStorage.getItem('passOfCouse');
+  //   return this.httpClient.get<PeriodicElement[]>(this.APING + 'Attendance /' + 'getAttendance/' + pass);
+  // }
 }

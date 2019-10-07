@@ -48,6 +48,9 @@ import { SocketService } from "./service/socket.service";
 import { DataAuthenComponent } from './data-authen/data-authen.component';
 import { WebsocketComponent } from './websocket/websocket.component';
 import { SettingProfileComponent } from './setting-profile/setting-profile.component';
+import { SimpleTimer } from 'ng2-simple-timer';
+import { DataAuthenService } from './service/data-authen.service';
+import { PepleService } from './service/peple.service';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/Home', pathMatch: 'full'},
@@ -145,7 +148,7 @@ const appRoutes: Routes = [
     MatTreeModule,
     NoopAnimationsModule,
   ],
-  providers: [HomeService, SingupService, AuthenStudentService, SocketService],
+  providers: [HomeService, SingupService, AuthenStudentService, SocketService, SimpleTimer, DataAuthenService, PepleService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

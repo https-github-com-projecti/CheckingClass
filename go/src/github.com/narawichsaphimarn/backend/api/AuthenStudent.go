@@ -7,47 +7,79 @@ import (
 	"net/http"
 )
 
+type data1 struct{
+	Date string
+	state bool
+}
+
+type data2 struct{
+	Id  string
+	Name string
+	Data	[]data1
+}
+
 var dataAuthen []models.AuthenData
 var newdataAuthen []models.AuthenData
 
 func GetAuthenData(c *gin.Context){
-	e := models.AuthenData {
-		Id : 1,
-		NameStudent : "นาย นราวิชญ์  สาพิมาน",
-		IdStudent : "B5909711",
-		AuthenStudent : []models.AuthenStudent {
-			models.AuthenStudent{
-				Date : "09/21/2019",
-				StateAuthen : true,
-			},
-			models.AuthenStudent{
-				Date : "09/22/2019",
-				StateAuthen : false,
-			},
-			models.AuthenStudent{
-				Date : "09/23/2019",
-				StateAuthen : false,
-			},
-			models.AuthenStudent{
-				Date : "09/23/2019",
-				StateAuthen : false,
-			},
-			models.AuthenStudent{
-				Date : "09/21/2019",
-				StateAuthen : false,
-			},
-			models.AuthenStudent{
-				Date : "09/22/2019",
-				StateAuthen : true,
-			},
-			models.AuthenStudent{
-				Date : "09/23/2019",
-				StateAuthen : false,
-			},
-		},
-	}
+	// e := models.AuthenData {
+	// 	Id : 1,
+	// 	NameStudent : "นาย นราวิชญ์  สาพิมาน",
+	// 	IdStudent : "B5909711",
+	// 	AuthenStudent : []models.AuthenStudent {
+	// 		models.AuthenStudent{
+	// 			Date : "09/21/2019",
+	// 			StateAuthen : true,
+	// 		},
+	// 		models.AuthenStudent{
+	// 			Date : "09/22/2019",
+	// 			StateAuthen : false,
+	// 		},
+	// 		models.AuthenStudent{
+	// 			Date : "09/23/2019",
+	// 			StateAuthen : false,
+	// 		},
+	// 		models.AuthenStudent{
+	// 			Date : "09/23/2019",
+	// 			StateAuthen : false,
+	// 		},
+	// 		models.AuthenStudent{
+	// 			Date : "09/21/2019",
+	// 			StateAuthen : false,
+	// 		},
+	// 		models.AuthenStudent{
+	// 			Date : "09/22/2019",
+	// 			StateAuthen : true,
+	// 		},
+	// 		models.AuthenStudent{
+	// 			Date : "09/23/2019",
+	// 			StateAuthen : false,
+	// 		},
+	// 	},
+	// }
 
-	dataAuthen = append(dataAuthen, e)
+	var xxx1 data1
+	var xxx2 []data1
+
+	xxx1.Date = "xxxxxxx"
+	xxx1.state = true
+	xxx2 = append(xxx2, xxx1)
+
+	xxx1.Date = "xxxxxxx2"
+	xxx1.state = false
+	xxx2 = append(xxx2, xxx1)
+
+	var yyy1 data2
+	var yyy2 []data2
+	
+	yyy1.Id = "xxxxx"
+	yyy1.Name = "xxxxxx"
+	yyy1.Data = xxx2
+
+	yyy2 = append(yyy2, yyy1)
+
+
+	// dataAuthen = append(dataAuthen, e)
 	defer c.Request.Body.Close()
 
 	// for _, copy := range dataAuthen {
@@ -62,5 +94,5 @@ func GetAuthenData(c *gin.Context){
 	// 	newdataAuthen = append(newdataAuthen, copy)
 	// }
 	// fmt.Println(newdataAuthen)
-	c.JSON(http.StatusOK, dataAuthen)
+	c.JSON(http.StatusOK, yyy2)
 }

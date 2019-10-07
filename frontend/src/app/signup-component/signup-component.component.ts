@@ -77,6 +77,7 @@ export class SignupComponentComponent implements OnInit {
       this.reader.onload = (_event) => { 
         this.img = this.reader.result;
         this.newData.tPicture = this.img;
+        console.log("this.newData.tPicture = " + this.newData.tPicture);
         this.imgURL = this.img;
       }
     }

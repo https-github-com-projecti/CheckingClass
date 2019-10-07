@@ -12,7 +12,8 @@ export class SocketService {
   constructor(private httpClient: HttpClient) { }
 
   public newSocket(){
-    this.socket = new WebSocket("ws://localhost:8080/websocket/ws");
+    // this.socket = new WebSocket("ws://localhost:8080/websocket/ws");
+    this.socket = new WebSocket("ws://d23b31df.ap.ngrok.io/Websocket/ws");
         this.socket.onopen = event => {
           console.log("this.socket.onopen : " + event);
             this.listener.emit({"type": "open", "data": event});
@@ -40,9 +41,5 @@ export class SocketService {
 
   public getEventListener() {
     return this.listener;
-  }
-
-  getClientID() {
-    return this.httpClient.get(this.API + "Attendance/" + "getClientId")
   }
 }

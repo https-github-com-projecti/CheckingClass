@@ -44,12 +44,12 @@ export class WebsocketComponent implements OnInit {
   }
 public clickOpenSocket(){
   this.socket.newSocket()
-  this.loadData();
+  // this.loadData();
 }
 
-  public ngOnDestroy() {
-    this.socket.close();
-}
+//   public ngOnDestroy() {
+//     this.socket.close();
+// }
 
 public send() {
     if(this.chatBox) {
@@ -65,11 +65,11 @@ public isSystemMessage(message: string) {
   return message.startsWith("/") ? "<strong>" + message.substring(1) + "</strong>" : message;
 }
 
-public loadData(){
-  this.socket.getClientID().subscribe(data =>{
-    console.log(data);
-  });
-}
+// public loadData(){
+//   this.socket.getClientID().subscribe(data =>{
+//     console.log(data);
+//   });
+// }
 
 
 }
