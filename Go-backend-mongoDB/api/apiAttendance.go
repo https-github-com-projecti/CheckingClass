@@ -22,6 +22,7 @@ var clientid string
 //AttendanceAPI is ...
 type AttendanceAPI struct {
 	AttendanceRepository repository.AttendanceRepository
+	SubjectRepository    repository.SubjectRepository
 }
 
 //AllAttendanceListHandler is ...
@@ -290,12 +291,11 @@ func (api AttendanceAPI) GETinfoStudentHandeler(context *gin.Context) {
 
 	attendancesInfo.Attendance = attendances
 	for _, copy := range attendances {
-
 		context.JSON(http.StatusOK, copy.Astudent)
-
 	}
 
 }
+
 //GETClientHandeler is ...
 func (api AttendanceAPI) GETClientHandeler(context *gin.Context) {
 	var attendancesInfo model.AttendanceInfo
@@ -315,7 +315,6 @@ func (api AttendanceAPI) GETClientHandeler(context *gin.Context) {
 
 	}
 }
-
 
 type newDataSocket struct {
 	// Clientid string               `json:"clientId"`
@@ -364,3 +363,125 @@ func (api AttendanceAPI) CheckwithSocketHandeler(context *gin.Context) {
 	websocket.Manager.Broadcast <- jsonMessage
 	// context.JSON(http.StatusOK, data2)
 }
+
+//TimeScoreHandeler is ...
+func (api AttendanceAPI) TimeScoreHandeler(context *gin.Context) {
+	var attendancesInfo model.AttendanceInfo
+	attendances, err := api.AttendanceRepository.GetAllAttendance()
+	if err != nil {
+		log.Println("error AttendanceListHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	attendancesInfo.Attendance = attendances
+	context.JSON(http.StatusOK, attendancesInfo)
+
+}
+
+
+
+// GetAttendanceCheck is ...
+func (api AttendanceAPI) GetAttendanceCheck(context *gin.Context) {
+	var attendancesInfo model.AttendanceInfo
+	pass := context.Param("pass")
+	defer context.Request.Body.Close()
+	attendances, err := api.AttendanceRepository.GetAttendance(pass)
+	if err != nil {
+		log.Println("error GetAttendance", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	i, err := strconv.Atoi(pass)
+	if err != nil {
+		log.Println("error Atoi", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	studentinclass, err := api.AttendanceRepository.GETStudenClass(i)
+	if err != nil {
+		log.Println("error GETStudentinClass", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	var NewDataAttendancebyPassIn model.NewDataAttendancebyPass
+	var NewDataAttendancebyPassOut []model.NewDataAttendancebyPass
+
+	var AuthenStudentIn model.AuthenStudent
+	var AuthenStudentOut []model.AuthenStudent
+
+	attendancesInfo.Attendance = attendances
+	for _, copy := range attendances {
+		fmt.Println(copy.Date)
+		AuthenStudentIn.Date = copy.Date
+		AuthenStudentOut = append(AuthenStudentOut, AuthenStudentIn)
+	}
+	NewDataAttendancebyPassIn.AuthenStudents = AuthenStudentOut
+
+	for _, copy := range studentinclass {
+		for _, copy2 := range copy.TstudentInfo {
+			// fmt.Println(j)
+			// fmt.Println(copy2.SfirstName+"  "+copy2.SlastName)
+			// NameStudent := copy2.SfirstName+"  "+copy2.SlastName
+			// IDStudent := copy2.StudentID
+			
+			NewDataAttendancebyPassIn.IDStudent = copy2.StudentID
+			NewDataAttendancebyPassIn.NameStudent = copy2.SfirstName + "  " + copy2.SlastName
+			NewDataAttendancebyPassOut = append(NewDataAttendancebyPassOut, NewDataAttendancebyPassIn)
+		}
+	}
+
+	// AuthenStudentIn2 := AuthenStudentIn
+	var AuthenStudentOut2 []model.AuthenStudent
+	for j := 0; j < len(NewDataAttendancebyPassOut); j++ {
+		fmt.Println("NewDataAttendancebyPassOut")
+		len := len(NewDataAttendancebyPassOut[j].AuthenStudents)
+		for i := 0; i < len; i++ {
+			dataStudent := NewDataAttendancebyPassOut[j].AuthenStudents[i]
+			data := attendances
+			dataCheck := data[i]
+
+			// fmt.Println("dataStudent = ", dataStudent)
+			// fmt.Println("dataCheck = ", dataCheck.Date)
+			data2 := data[i].Astudent
+
+			state := 0
+			if dataCheck.Date == dataStudent.Date {
+				for _, copyAstudent := range data2 {
+					NameStudent := copyAstudent.SfirstName + "  " + copyAstudent.SlastName
+					if (NameStudent == NewDataAttendancebyPassOut[j].NameStudent) && (copyAstudent.StudentID == NewDataAttendancebyPassOut[j].IDStudent) {
+						state = 1
+					}
+				}
+			}
+			if state == 1 {
+				dataStudent.StateAuthen = true
+			}
+			fmt.Println(dataStudent)
+			// AuthenStudentIn2 = dataStudent
+			AuthenStudentOut2 = append(AuthenStudentOut2, dataStudent)
+			
+		}
+		// AuthenStudentOut2 = append(AuthenStudentOut2, AuthenStudentIn2)
+		// fmt.Println("AuthenStudentOut2 = ", AuthenStudentOut2)
+		NewDataAttendancebyPassOut[j].No = j+1
+		NewDataAttendancebyPassOut[j].AuthenStudents = AuthenStudentOut2
+		AuthenStudentOut2 = nil
+		fmt.Println("AuthenStudentOut2 = ", AuthenStudentOut2)
+	}
+
+	// attendancesInfo.Attendance = attendances
+	fmt.Println("NewDataAttendancebyPassOut = ", NewDataAttendancebyPassOut)
+	context.JSON(http.StatusOK, NewDataAttendancebyPassOut)
+}
+//DeleteAttendanceHandler is ...
+func (api AttendanceAPI) DeleteAttendanceHandler(context *gin.Context) {
+	id := context.Param("id")
+	err := api.AttendanceRepository.DeleteAttendance(id)
+	if err != nil {
+		log.Println("error DeleteAttendanceHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+	}
+	context.JSON(http.StatusNoContent, gin.H{"message": "Success"})
+}
+

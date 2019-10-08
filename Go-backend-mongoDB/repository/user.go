@@ -47,9 +47,9 @@ func (UserMongo UserRepositoryMongo) EditPassword(username string, password stri
 	return UserMongo.ConnectionDB.DB(DBName).C(collectionUser).Update(name, newPassword)
 }
 //DeleteUser is ...
-func (UserMongo UserRepositoryMongo) DeleteUser(username string) error {
-	objectID := bson.M{"UserName" : username ,}
-	return UserMongo.ConnectionDB.DB(DBName).C(collectionUser).Remove(objectID)
+func (UserMongo UserRepositoryMongo) DeleteUser(id string) error {
+	objectID := bson.ObjectIdHex(id)
+	return UserMongo.ConnectionDB.DB(DBName).C(collectionUser).RemoveId(objectID)
 }
 //GetUser is ...
 func (UserMongo UserRepositoryMongo) GetUser(username string)  ([]model.User, error){

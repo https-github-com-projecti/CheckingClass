@@ -3,6 +3,7 @@ package model
 import (
 
 	"github.com/globalsign/mgo/bson"
+	"time"
 )
 //UserInfo is ...
 type UserInfo struct {
@@ -42,19 +43,24 @@ type Subject struct {
 	TSName      	string             	`json:"TSName" bson:"TSName"`
 	TSDescription 	string				`json:"TSDescription" bson:"TSDescription"`
 	TSTeacher	  	string          	`json:"TSTeacher" bson:"TSTeacher"`
-	TSpassword		int				`json:"TSpassword" bson:"TSpassword"`
+	TSpassword		int					`json:"TSpassword" bson:"TSpassword"`
 	TstudentInfo	[]TstudentInfos     `json:"TstudentInfo" bson:"TstudentInfo"`
 
 }
 //TstudentInfos is ...
 type TstudentInfos struct {
 	StudentID		string             	`json:"StudentID" bson:"StudentID"`
+	SfirstName     	string          	`json:"SfirstName" bson:"SfirstName"`
+	SlastName      	string          	`json:"SlastName" bson:"SlastName"`
+	
 }
 //JoinSubject is ...
 type JoinSubject struct {
-	Jpassword		string				`json:"Jpassword" bson:"Jpassword"`
-	JSID			string         		 `json:"JSID" bson:"JSID"`
-	ID				int        		 	`json:"id" bson:"id"`
+	Password		string				`json:"Password" bson:"Password"`
+	StudentID		string         		`json:"StudentID" bson:"StudentID"`
+	ID				int        		 	`json:"ID" bson:"ID"`
+	SfirstName     	string          	`json:"SfirstName" bson:"SfirstName"`
+	SlastName      	string          	`json:"SlastName" bson:"SlastName"`
 }
 
 
@@ -74,7 +80,7 @@ type StudentInfo struct {
 }
 //Student is ...
 type Student struct {
-	ObjectID       bson.ObjectId 	`json:"student_id" bson:"_id,omitempty"`
+	ObjectID       bson.ObjectId 	`json:"student_id" bson:"_id,omitempty"` 
 	StudentID		string          `json:"SID" bson:"SID"`
 	SfirstName     	string          `json:"SfirstName" bson:"SfirstName"`
 	SlastName      	string          `json:"SlastName" bson:"SlastName"`
@@ -118,6 +124,8 @@ type CheckStudent struct{
 	AQRcode			string				`json:"AQRcode" bson:"AQRcode"`
 	SfirstName     	string         		`json:"SfirstName" bson:"SfirstName"`
 	SlastName      	string          	`json:"SlastName" bson:"SlastName"`
+	Checktime		time.Time			`json:"Checktime" bson:"Checktime"`
+
 }
 //CheckQRcode is ...	
 type CheckQRcode struct{
@@ -130,8 +138,27 @@ type SubjectOnly struct{
 //NewSubjectName is ...	
 type NewSubjectName struct{
 	TSNames      	string             	`json:"TSName" bson:"TSName"`
+	TSpassword		int					`json:"TSpassword" bson:"TSpassword"`
 }
 //TimeLimit is ...	
 type TimeLimit struct{
 	Date			string             	`json:"ADate" bson:"ADate"`
+}
+// AuthenStudent is ...
+type AuthenStudent struct {
+	Date        string `json:"date"`
+	StateAuthen bool   `json:"stateAuthen"`
+}
+
+// NewDataAttendancebyPass is ...
+type NewDataAttendancebyPass struct {
+	No				int			   `json:"id"`
+	IDStudent      string          `json:"idStudent"`
+	NameStudent    string          `json:"nameStudent"`
+	AuthenStudents []AuthenStudent `json:"authenStudents"`
+}
+// JoinUser is ...
+type JoinUser struct {
+	Pass        int 	 `json:"JoinPass"`
+	User 		string   `json:"JoinUser"`
 }

@@ -14,8 +14,10 @@ type SubjectRepository interface {
 	EditDescription(tsid string, subject model.Subject) error
 	DeleteSubject(tsid string) error
 	GetSubject(tsid string)  ([]model.Subject, error)
-	JoinClass(tspassword int, sid string)    error 
+	JoinClass(tspassword int, join model.JoinSubject)   error
 	GetOneSubject(id string)  ([]model.Subject, error)
+	GETStudentinClass(id int)  ([]model.Subject, error)
+	UserJoin(user model.JoinUser) error
 }
 //SubjectRepositoryMongo is ...
 type SubjectRepositoryMongo struct {
@@ -38,9 +40,9 @@ func (SubjectMongo SubjectRepositoryMongo) EditDescription(tsid string, subject 
 	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Update(name, newDescription)
 }
 //DeleteSubject is ...
-func (SubjectMongo SubjectRepositoryMongo) 	DeleteSubject(tsid string) error{
-	name := bson.M{"TSID" : tsid ,}
-	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Remove(name)
+func (SubjectMongo SubjectRepositoryMongo) 	DeleteSubject(id string) error{
+	objectID := bson.ObjectIdHex(id)
+	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).RemoveId(objectID)
 }
 //GetSubject is ...
 func (SubjectMongo SubjectRepositoryMongo) GetSubject(id string)  ([]model.Subject, error){
@@ -57,9 +59,21 @@ func (SubjectMongo SubjectRepositoryMongo) GetOneSubject(id string)  ([]model.Su
 	return subjects, err
 }
 //JoinClass is ...
-func (SubjectMongo SubjectRepositoryMongo) JoinClass(tspassword int, sid string)   error {
+func (SubjectMongo SubjectRepositoryMongo) JoinClass(tspassword int, join model.JoinSubject)   error {
 	name := bson.M{"TSpassword" : tspassword,}
-	newData := bson.M{"$push": bson.M{"TstudentInfo":bson.M{"StudentID": sid}}}
+	newData := bson.M{"$push": bson.M{"TstudentInfo":bson.M{"StudentID": join.StudentID,"SfirstName" : join.SfirstName,"SlastName" : join.SlastName,}}}
 	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Update(name, newData)
 }
-
+//GETStudentinClass is ...
+func (SubjectMongo SubjectRepositoryMongo) GETStudentinClass(id int)  ([]model.Subject, error){
+	var subjects []model.Subject
+	name := bson.M{"TSpassword" : id ,}
+	err:= SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Find(name).All(&subjects)
+	return subjects, err
+}
+//UserJoin is ...
+func (SubjectMongo SubjectRepositoryMongo) UserJoin(user model.JoinUser) error{
+	name := bson.M{"TSpassword" : user.Pass ,}
+	newPassword := bson.M{"$push": bson.M{"TSTeacher": user.User, }}
+	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Update(name, newPassword)
+}

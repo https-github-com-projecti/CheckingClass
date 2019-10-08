@@ -13,6 +13,9 @@ type StudentRepository interface {
 	GetStudent(username string)  ([]model.Student, error)
 	Getbyid(id string)  ([]model.Student, error)
 	GetsubjectbySid(sid string)  ([]model.Subject, error)
+	GetStudentAttendance(password string)  ([]model.Attendance, error)
+	GETStudenClasses(id int)  ([]model.Subject, error)
+	DeleteStudent(id string) error
 }
 //StudentRepositoryMongo is ...
 type StudentRepositoryMongo struct {
@@ -53,7 +56,26 @@ func (StudentMongo StudentRepositoryMongo) Getbyid(id string)  ([]model.Student,
 //GetsubjectbySid is ...
 func (StudentMongo StudentRepositoryMongo) GetsubjectbySid(sid string)  ([]model.Subject, error){
 	var users []model.Subject
-	name := bson.M{"TstudentInfo" :bson.M{"StudentID" : sid,}}
+	name := bson.M{"TstudentInfo.StudentID" : sid,}
 	err:= StudentMongo.ConnectionDB.DB(DBName).C(collectionSubject).Find(name).All(&users)
 	return users, err
+}
+//GetStudentAttendance is ...
+func (StudentMongo StudentRepositoryMongo) GetStudentAttendance(password string)  ([]model.Attendance, error) {
+	var attendances []model.Attendance
+	name := bson.M{"ASpassword" : password ,}
+	err:= StudentMongo.ConnectionDB.DB(DBName).C(collectionAttendance).Find(name).All(&attendances)
+	return attendances, err
+}
+//GETStudenClasses is ...
+func (StudentMongo StudentRepositoryMongo) GETStudenClasses(id int)  ([]model.Subject, error){
+	var subjects []model.Subject
+	name := bson.M{"TSpassword" : id ,}
+	err:= StudentMongo.ConnectionDB.DB(DBName).C(collectionSubject).Find(name).All(&subjects)
+	return subjects, err
+}
+//DeleteStudent is ...
+func (StudentMongo StudentRepositoryMongo) DeleteStudent(id string) error{
+	objectID := bson.ObjectIdHex(id)
+	return StudentMongo.ConnectionDB.DB(DBName).C(collectionStudent).RemoveId(objectID)
 }

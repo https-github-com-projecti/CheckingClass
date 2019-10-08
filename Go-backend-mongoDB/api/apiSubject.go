@@ -5,12 +5,12 @@ import (
 	"Go-backend-mongoDB/repository"
 	"log"
 	"net/http"
-	"encoding/json"
+	// "encoding/json"
 	// b64 "encoding/base64"
 	// "github.com/skip2/go-qrcode"
 	"github.com/gin-gonic/gin"
 	// "github.com/globalsign/mgo/bson"
-	// "encoding/json"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"math/rand"
@@ -72,20 +72,13 @@ func (api SubjectAPI) EditDescriptionHandler(context *gin.Context) {
 }
 //DeleteSubjectHandler is ...
 func (api SubjectAPI) DeleteSubjectHandler(context *gin.Context) {
-	var subject model.Subject
-	err := context.ShouldBindJSON(&subject)
-	fmt.Println(subject)
-	if err != nil {
-		log.Println("error DeleteSubjectHandler", err.Error())
-		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
-		return
-	}
-	err = api.SubjectRepository.DeleteSubject(subject.TSID)
+	id := context.Param("id")
+	err := api.SubjectRepository.DeleteSubject(id)
 	if err != nil {
 		log.Println("error DeleteSubjectHandler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 	}
-	context.JSON(http.StatusNoContent, gin.H{"message": "susess"})
+	context.JSON(http.StatusNoContent, gin.H{"message": "Success"})
 }
 //GETMySubjectHandeler is ...
 func (api SubjectAPI) GETMySubjectHandeler(context *gin.Context) {
@@ -101,22 +94,23 @@ func (api SubjectAPI) GETMySubjectHandeler(context *gin.Context) {
 }
 //JoinClassHandeler is ...
 func (api SubjectAPI) JoinClassHandeler(context *gin.Context) {
-	var subject model.JoinSubject
-	err := context.ShouldBindJSON(&subject)
-	fmt.Println(subject)
-	subjectUN, err := json.Marshal(subject)
-	// fmt.Println(subjectUN)
+	var join model.JoinSubject
+	err := context.ShouldBindJSON(&join)
+	fmt.Println(join)
+	subjectUN, err := json.Marshal(join)
+	fmt.Println(subjectUN)
 	str := string(subjectUN)
 	fmt.Println(str)
 	if err != nil {
-		log.Println("error DeleteSubjectHandler1", err.Error())
+		log.Println("error JoinClassHandeler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message1": err.Error()})
 		return
 	}
-	i, _  := strconv.Atoi(subject.Jpassword)
-	err = api.SubjectRepository.JoinClass(i, subject.JSID)
+	i, _  := strconv.Atoi(join.Password)
+	fmt.Println(i)
+	err = api.SubjectRepository.JoinClass(i, join)
 	if err != nil {
-		log.Println("error JoinClassHandeler", err.Error())
+		log.Println("error JoinClass", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
@@ -169,5 +163,55 @@ func (api SubjectAPI) RandPassClass() (i int){
 	}
 	
 	return classnum
+}
+//GETStudentinClassHandeler is ...
+func (api SubjectAPI) GETStudentinClassHandeler(context *gin.Context) {
+	id:= context.Param("pass")
+	fmt.Println(id)
+	i, err := strconv.Atoi(id)
+	studentinclass, err:= api.SubjectRepository.GETStudentinClass(i)
+	if err != nil {
+		log.Println("error GETStudentinClassHandeler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	fmt.Println(studentinclass)
+	for _, copy := range studentinclass {
+		context.JSON(http.StatusOK, copy.TstudentInfo)
+	}
+}
+//GETStudentinfoClassHandeler is ...
+func (api SubjectAPI) GETStudentinfoClassHandeler(context *gin.Context) {
+	id:= context.Param("pass")
+	fmt.Println(id)
+	i, err := strconv.Atoi(id)
+	studentinclass, err:= api.SubjectRepository.GETStudentinClass(i)
+	if err != nil {
+		log.Println("error GETStudentinClassHandeler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	fmt.Println(studentinclass)
+	for _, copy := range studentinclass {
+		context.JSON(http.StatusOK, copy.TstudentInfo)
+	}
+}
+// UserJoinHandler is ...
+func (api SubjectAPI) UserJoinHandler(context *gin.Context) {
+	var user model.JoinUser
+	err := context.ShouldBindJSON(&user)
+	fmt.Println(user)
+	if err != nil {
+		log.Println("error UserJoinHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	err = api.SubjectRepository.UserJoin(user)
+	if err != nil {
+		log.Println("error UserJoin", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, "Success")
 }
 

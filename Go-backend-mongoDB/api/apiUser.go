@@ -5,11 +5,9 @@ import (
 	"Go-backend-mongoDB/repository"
 	"log"
 	"net/http"
-
 	// b64 "encoding/base64"
 	// "github.com/skip2/go-qrcode"
 	"fmt"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -70,19 +68,13 @@ func (api UserAPI) EditPasswordHandler(context *gin.Context) {
 
 //DeleteUserByIDHandler is ...
 func (api UserAPI) DeleteUserByIDHandler(context *gin.Context) {
-	var user model.User
-	err := context.ShouldBindJSON(&user)
+	id := context.Param("id")
+	err := api.UserRepository.DeleteUser(id)
 	if err != nil {
-		log.Println("error EditPasswordHandler", err.Error())
-		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
-		return
-	}
-	err = api.UserRepository.DeleteUser(user.UserName)
-	if err != nil {
-		log.Println("error DeleteUserHandler", err.Error())
+		log.Println("error DeleteUserByIDHandler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 	}
-	context.JSON(http.StatusNoContent, gin.H{"message": "susess"})
+	context.JSON(http.StatusNoContent, gin.H{"message": "Success"})
 }
 
 //GETONEUserHandeler is ...
@@ -151,3 +143,4 @@ func (api UserAPI) GETPictureUserHandeler(context *gin.Context) {
 	}
 
 }
+
