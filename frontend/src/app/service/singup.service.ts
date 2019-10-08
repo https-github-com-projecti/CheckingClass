@@ -3,13 +3,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import {Observable, throwError} from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SingupService {
   public API = 'http://localhost:8080/';
-  public APING = 'http://d23b31df.ap.ngrok.io/';
+  public APING = environment.baseUrl;
   constructor(private httpClient: HttpClient) {}
 
   // public registerUsers (user:User) : Observable<User> {

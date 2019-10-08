@@ -1,8 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <style type="text/css"></style>
-</head> -->
 <ul id="messages">
     <li *ngFor="let message of messages">
         <span [innerHTML]="isSystemMessage(message)"></span>
@@ -11,28 +6,4 @@
 <form action="">
     <input [(ngModel)]="chatBox" [ngModelOptions]="{standalone: true}" autocomplete="off" />
     <button (click)="clickOpenSocket()">Send</button>
-</form>
-
-<!-- <body>
-        <script>
-                var ws = new WebSocket("ws://localhost:2303/websocket/ping");  
-                
-                ws.onopen = function(evt) {  
-                    console.log("Connection open ...");  
-                    ws.send("Hello WebSockets!");  
-                };  
-                 
-                ws.onmessage = function(evt) {  
-                    console.log("Received Message: " + evt.data);  
-                };  
-                
-                ws.onclose = function(evt) {  
-                    console.log("Connection closed.");  
-                };  
-                
-        </script>
-</body> -->
-
-        
-      
-     
+</form>  

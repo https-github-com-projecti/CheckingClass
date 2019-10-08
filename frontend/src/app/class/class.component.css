@@ -110,10 +110,9 @@ body .profile-site{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .img-dropdown mat-card img{
-  display: inline;
+  display: flex;
   width: 90px;
   height: 90px;
-  margin-top: 4px;
   background-color: rgb(255, 255, 255);
   transition: all ease-out 300ms;
   justify-content: center;
@@ -130,7 +129,7 @@ body .profile-site{
   /* padding: 2px; */
 }
 .img-dropdown:hover >  mat-card img{
-  display: inline;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -444,10 +443,11 @@ main .class_site{
   height: 20%;
   background-color: white;
   z-index: 300;
-  background: linear-gradient(to bottom,rgba(255, 255, 255),rgba(255, 255, 255),rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.5),rgba(255, 255, 255, 0.4), rgba(0, 0, 255, 0.3) 100px );
+  background: linear-gradient(to bottom,rgba(0, 0, 255, 0.3) 10px,rgba(255, 255, 255),rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.5),rgba(255, 255, 255, 0.4), rgba(0, 0, 255, 0.3) 90px );
   border-bottom: 1px solid rgba(255, 0, 0, 0.65);
-  /* align-items: center; */
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
 }
 .showQr-contrainer .ShowQrPanel-container .peple_Container .peple_Container_header > p{
   font-family: Serif; 
@@ -455,6 +455,14 @@ main .class_site{
   font-weight: 600;
   text-shadow: 1px 1px 2px black, 2px 2px 15px blue, 0 0 10px darkblue;
   color: whitesmoke;
+}
+.showQr-contrainer .ShowQrPanel-container .peple_Container .peple_Container_header > label{
+  font-family: Serif; 
+  font-size: 16px;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgb(0, 0, 0), 2px 2px 15px blue, 0 0 10px rgb(20, 65, 189);
+  color: rgb(255, 255, 255);
+  margin-top: -25px;
 }
 .card_grid_site mat-icon {
   color: #aaaaaa;
@@ -473,15 +481,22 @@ main .class_site{
 }
 
 .peple_Container .gardContainer{
-  display: block;
+  display: flex;
   width: calc(100% - 6px);
   height: 50px;
   /* background-color: whitesmoke; */
+  justify-content: center;
+  align-items: center;
   border-radius: 20px;
   margin-top: 3px;
   margin-left: 3px;
   border: 1px solid gainsboro;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.peple_Container .gardContainer > label {
+  font-size: 20px;
+  color: whitesmoke;
+  text-shadow: 1px 1px 2px black, 2px 2px 15px blue, 0 0 10px darkblue;
 }
 
 .peple_Container .studentListPanel{

@@ -39,7 +39,7 @@ export class AuthenicatStudentComponent implements OnInit {
   mypic: string = '../../assets/fbb2978e127f2920ab9774076ade2a36.png';
   displayedColumns: string[] = ['id','idStudent', 'nameStudent','date'];
   dataSource = new RoomdataSource(this.authenService);
-  dataAuthen : any = null;
+  private dataAuthen : any = null;
   tdId : any = null;
   tdIdStudent : any = null;
   tdauthenStudent : any = null;
@@ -56,7 +56,16 @@ export class AuthenicatStudentComponent implements OnInit {
     private classService : ClassService,
     private homeService : HomeService,
     private router : Router,
-  ) {   }
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      "done",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../assets/done-24px.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "delete",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../assets/close-24px.svg")
+    );
+  }
    
    ngOnInit() {
     this.loadData();
@@ -71,7 +80,7 @@ export class AuthenicatStudentComponent implements OnInit {
         this.dataAuthen = data;
         this.tdId = this.dataAuthen[0].id;
         this.tdIdStudent = this.dataAuthen[0].idStudent;
-        this.tdauthenStudent = this.dataAuthen[0].authenStudent;
+        this.tdauthenStudent = this.dataAuthen[0].authenStudents;
          console.log(this.dataAuthen);
          console.log(this.tdId);
          console.log(this.tdIdStudent);

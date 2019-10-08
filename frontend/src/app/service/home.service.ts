@@ -3,13 +3,14 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import {Observable, throwError} from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
   public API = 'http://localhost:8080/';
-  public APING = 'http://d23b31df.ap.ngrok.io/';
+  public APING = environment.baseUrl;
   public data : any;
   constructor(private httpClient: HttpClient) { }
 

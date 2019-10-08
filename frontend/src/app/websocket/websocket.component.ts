@@ -64,12 +64,4 @@ public isSystemMessage(message: string) {
   console.log("message : " + message);
   return message.startsWith("/") ? "<strong>" + message.substring(1) + "</strong>" : message;
 }
-
-// public loadData(){
-//   this.socket.getClientID().subscribe(data =>{
-//     console.log(data);
-//   });
-// }
-
-
 }

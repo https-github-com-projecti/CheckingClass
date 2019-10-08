@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter  } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class SocketService {
 
   public newSocket(){
     // this.socket = new WebSocket("ws://localhost:8080/websocket/ws");
-    this.socket = new WebSocket("ws://d23b31df.ap.ngrok.io/Websocket/ws");
+    this.socket = new WebSocket("ws://db9982c1.ap.ngrok.io/Websocket/ws");
         this.socket.onopen = event => {
           console.log("this.socket.onopen : " + event);
             this.listener.emit({"type": "open", "data": event});

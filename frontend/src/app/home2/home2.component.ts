@@ -39,27 +39,8 @@ export class Home2Component implements OnInit {
   hide = false;
   private joinName : string = null;
   private Username : string = null;
-  // private testClass : classOrder;
-  // public backgroungImg = ['../../assets/almond-blossom-5378_1920-min.jpg', 
-  //   '../../assets/books-1245690_1920-min.jpg', 
-  //   '../../assets/cereals-100263_1920-min.jpg', 
-  //   '../../assets/cherry-blossom-1209577_1920-min.jpg', 
-  //   '../../assets/cherry-tree-1225186_1920-min.jpg',
-  //   '../../assets/evening-567840_1920-min.jpg', 
-  //   '../../assets/insects-4489864_1920-min.jpg',
-  //   '../../assets/japanese-cherry-trees-324175_1920-min.jpg', 
-  //   '../../assets/knowledge-1052011_1920-min.jpg',
-  //   '../../assets/macbook-336704_1920-min.jpg', 
-  //   '../../assets/melons-4507974_1920-min.jpg', 
-  //   '../../assets/notebook-336634_1920-min.jpg',
-  //   '../../assets/old-books-436498_1920-min.jpg', 
-  //   '../../assets/spring-bird-2295434_1920-min.jpg', 
-  //   '../../assets/sunset-174276_1920-min.jpg',
-  //   '../../assets/sunset-1373171_1920-min.jpg', 
-  //   '../../assets/tree-736881_1280-min.jpg', 
-  //   '../../assets/tree-838667_1280-min.jpg',
-  //   '../../assets/typewriter-801921_1920-min.jpg']
-  //   public random_img : string = this.backgroungImg[Math.floor(Math.random() * this.backgroungImg.length)];
+  private arr : any = [];
+  private arrdata : any = [];
 
   constructor(
     private homeService : HomeService,private matIconRegistry: MatIconRegistry,
@@ -100,22 +81,29 @@ export class Home2Component implements OnInit {
     TSTeacher: null,
   };
 
-  // testClass = [
-  //   {
-  //     subject_id : 1,
-  //     TSName : "Test1",
-  //     TSDescription : " ",
-  //     TSID : "564856",
-  //     TSTeacher : "test1",
-  //   },
-  //   {
-  //     subject_id : 2,
-  //     TSName : "Test2",
-  //     TSDescription : " ",
-  //     TSID : "516156",
-  //     TSTeacher : "test2",
-  //   },
-  // ]
+  testClass = [
+    {
+      subject_id : 1,
+      TSName : "Test1",
+      TSDescription : " ",
+      TSID : "564856",
+      TSTeacher : "test1",
+    },
+    {
+      subject_id : 2,
+      TSName : "Test2",
+      TSDescription : " ",
+      TSID : "516156",
+      TSTeacher : "test2",
+    },
+    {
+      subject_id : 3,
+      TSName : "Test3",
+      TSDescription : " ",
+      TSID : "161655",
+      TSTeacher : "test3",
+    },
+  ]
 
   ngOnInit() {
     // this.homeService.getStatus().subscribe(
@@ -193,7 +181,6 @@ export class Home2Component implements OnInit {
       error => {
         console.log('Error', error);
         alert("server ERROR")
-        // window.location.reload();
     }
     );
   }
@@ -242,13 +229,10 @@ export class Home2Component implements OnInit {
         (<HTMLInputElement>document.getElementById('bt_saveClass')).disabled = false;
         this.loadData();
       }
-      else{
-        console.log('Error', error);
-      }
     },
     error => {
-      console.log('Error', error);
-      alert('Error กรุณาป้อนข้อมูลใหม่อีกครั้งครับ');
+      // console.log('Error', error);
+      alert('Error กรุณาป้อนข้อมูลใหม่อีกครั้งครับ' + error);
     }
     );
   }
@@ -261,13 +245,13 @@ export class Home2Component implements OnInit {
       this.homeService.setID(this.userdata[0]['user_id']); //สำหรับserver DB
       this.homeService.getGetPic().subscribe(data =>{ //get Picture
         this.getPic = data;
-        console.log(this.getPic);
+        // console.log(this.getPic);
         if (this.getPic.trim() === ''){}
         else {  this.mypic = this.getPic }
       });
       this.homeService.getClass().subscribe(data =>{ //get My class
         this.teacherClass = data;
-        console.log(this.teacherClass);
+        // console.log(this.teacherClass);
       });
     });
     this.Username = localStorage.getItem('isLogin');
@@ -287,10 +271,10 @@ export class Home2Component implements OnInit {
     var x = this.joinName;
     panel.style.display = "none";
     (<HTMLInputElement>document.getElementById('inputJoinClass')).value = ' ';
-    console.log(x);
+    // console.log(x);
   }
 
-  randomImg(){
+  randomImg(index,i){
     var backgroungImg = ['../../assets/almond-blossom-5378_1920-min.jpg', 
     '../../assets/books-1245690_1920-min.jpg', 
     '../../assets/cereals-100263_1920-min.jpg', 
@@ -310,8 +294,17 @@ export class Home2Component implements OnInit {
     '../../assets/tree-736881_1280-min.jpg', 
     '../../assets/tree-838667_1280-min.jpg',
     '../../assets/typewriter-801921_1920-min.jpg']
-    var random_img : string = backgroungImg[Math.floor(Math.random() * backgroungImg.length)];
-    return random_img
+    var ranImg = backgroungImg[Math.floor(Math.random()*backgroungImg.length)];
+    if (this.arrdata.length < 1 || this.arrdata == undefined){
+      this.arrdata.push(index.TSName);
+    }
+    if (this.arrdata[i] != index.TSName){
+      this.arrdata.push(index.TSName);
+    }
+    if (this.arr.length < this.arrdata.length){
+      this.arr.push(ranImg);
+    }
+    return this.arr
   }
 }
 

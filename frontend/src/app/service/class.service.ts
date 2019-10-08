@@ -4,12 +4,14 @@ import 'rxjs/add/operator/map';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { classOrder } from './../home2/home2.component'
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ClassService {
   public API = 'http://localhost:8080/';
-  public APING = 'http://d23b31df.ap.ngrok.io/';
+  public APING = environment.baseUrl;
   constructor(private httpClient: HttpClient) { }
 
   passofClass(x){

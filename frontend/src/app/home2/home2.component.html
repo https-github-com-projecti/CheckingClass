@@ -103,14 +103,14 @@
       </div>
   </div>
   <div class="grid-container">
-      <div *ngFor="let x of teacherClass" class="panel" (click)="selectClass(x)">
-        <div class="card_grid_site" [ngStyle]="{'background-image': 'url(' + randomImg() + ')'}" id="card_grid_site">
+      <div *ngFor="let item of teacherClass; let i=index" class="panel" (click)="selectClass(item)">
+        <div class="card_grid_site" [ngStyle]="{'background-image': 'url('+ randomImg(item,i)[i] +')'}" id="card_grid_site">
           <div style="width: 270px; height: 200px;position: relative;margin-left: 10px;">
             <div>
-              <p class="textPanel" name="className">{{x.TSName}}</p>
+              <p class="textPanel" name="className">{{item.TSName}}</p>
             </div>
-            <p class="textIDpanel" name="classId">{{x.TSID}}</p>
-            <p class="textDescPanel" name="classDesc">Description : {{x.TSDescription}}</p>
+            <p class="textIDpanel" name="classId">{{item.TSID}}</p>
+            <p class="textDescPanel" name="classDesc">Description : {{item.TSDescription}}</p>
           </div>
           <mat-icon svgIcon="delete" id="btn_screen" aria-label="tool"></mat-icon>
           <mat-icon svgIcon="edit" id="btn_screen" aria-label="edit"></mat-icon>

@@ -80,11 +80,12 @@
       <section class="peple_Container">
         <header class="peple_Container_header">
             <p id="timeShow"></p>
+            <label>ของวันที่ : {{ADate}} เช็คครั้งที่ : {{ATimeAuthen}}</label>
         </header>
         <section class="studentListPanel">
-          <div *ngFor="let item of StudentNow">
-            <div class="gardContainer" id="gardContainer" [ngStyle]="{'background-color': random_color}">
-              <label>{{item.StudentID + "  " + item.SfirstName + " " + item.SlastName}}</label>
+          <div *ngFor="let item of StudentNow; let i=index">
+            <div class="gardContainer" id="gardContainer" [ngStyle]="{'background-color': getRandomColor(item,i)[i]}">
+              <label >{{item.StudentID + "  " + item.SfirstName + " " + item.SlastName}}</label>
             </div>
           </div>
         </section>

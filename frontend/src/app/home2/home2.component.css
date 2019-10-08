@@ -101,10 +101,9 @@ body .profile-site{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .img-dropdown mat-card img{
-  display: inline;
+  display: flex;
   width: 90px;
   height: 90px;
-  margin-top: 4px;
   background-color: rgb(255, 255, 255);
   transition: all ease-out 300ms;
   justify-content: center;
@@ -129,7 +128,7 @@ body .profile-site button{
   /* padding: 2px; */
 }
 .img-dropdown:hover >  mat-card img{
-  display: inline;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -158,7 +157,7 @@ section{
   position:fixed;
   top: 0;
   left: 0;
-  display: block; /* เป็นตัวตั้งค่าหน้าล็อคอินให้แสดงหน้าต่าง */
+  display: flex; /* เป็นตัวตั้งค่าหน้าล็อคอินให้แสดงหน้าต่าง */
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.2);
@@ -322,7 +321,6 @@ main .login_container .login_site .input_login{
 .grid-container {
   position: absolute;
   display: grid;
-  /* grid-template-columns: auto; */
   grid-template-columns: 320px 320px 320px 320px;
   grid-template-rows: auto auto;
   grid-auto-flow: row;
@@ -476,7 +474,7 @@ main .login_container .login_site .input_login{
 
 body .joinContainer{
   position: fixed;
-  display: none;
+  display: none; /* แสดงPanel join */
   z-index: 1500;
   background-color: #382ce638;
   width: 100%;
@@ -493,7 +491,7 @@ body .joinContainer{
   display: inline-flex;
   width: 300px;
   height: 300px;
-  background-color: rgba(176, 216, 248, 0.664);
+  background-color: rgb(176, 216, 248);
   border-radius: 10px;
   align-items: center;
   justify-content: center;
@@ -505,6 +503,7 @@ body .joinContainer{
 }
 .joinContainer .joinPanel .input-form-sit .example-full-width{
   width: 100%;
+  font-size: 19px;
 }
 .bottomJoinSite{
   width: 100%;
@@ -516,7 +515,7 @@ body .joinContainer{
   border-radius: 20px;
   background-color: tomato;
   font-size: 17px;
-  font-weight: 500;color: thistle;
+  font-weight: 500;color: rgb(253, 253, 253);
 }
 
 .card_grid_site mat-icon {

@@ -47,6 +47,10 @@ export class ClassComponent implements OnInit {
   TypeObject : object;
   public state = false
   private stateClickCreate = 0;
+  public ADate : string;
+  public ATimeAuthen : string;
+  private arr : any = [];
+  private arrdata : any = [];
 
   newQr : createQrcode = {
     time : null,
@@ -192,6 +196,8 @@ export class ClassComponent implements OnInit {
           this.check = data;
           if (this.check  == "Success"){
             this.loadData();
+            this.ADate = null;
+            this.ATimeAuthen = null;
             this.showQrCode();
           }
         },
@@ -250,7 +256,8 @@ export class ClassComponent implements OnInit {
         console.log(this.oneQrcode);
         var numQrcode = this.oneQrcode.length - 1;
         this.ShowdDataQr = this.oneQrcode[numQrcode]["PicQRcode"];
-        console.log(this.ShowdDataQr);
+        this.ADate = this.oneQrcode[numQrcode]["ADate"];
+        this.ATimeAuthen = this.oneQrcode[numQrcode]["ATimeAuthen"];
       }
     )
     var showQr = document.getElementById("showQr-contrainer");
@@ -269,6 +276,8 @@ export class ClassComponent implements OnInit {
     console.log("x.AClientid " + x.AClientid);
     this.classService.ClientID(x.AClientid);
     console.log(this.QrShow);
+    this.ADate = x.ADate;
+    this.ATimeAuthen = x.ATimeAuthen;
     var showQr = document.getElementById("showQr-contrainer");
     showQr.style.display = "flex";
     showQr.style.transition = "all ease-out 600ms";
@@ -302,9 +311,21 @@ export class ClassComponent implements OnInit {
   return message.startsWith("/") ? "<strong>" + message.substring(1) + "</strong>" : message;
   }
 
-  getRandomColor() {
+  getRandomColor(index, i) {
     var color = Math.floor(0x1000000 * Math.random()).toString(16);
-    return '#' + ('000000' + color).slice(-6);
+    var trueColor = '#' + ('000000' + color).slice(-6);
+    if (this.arrdata.length < 1 || this.arrdata == undefined){
+      this.arrdata.push(index.StudentID);
+    }
+    if (this.arrdata[i] != index.StudentID){
+      this.arrdata.push(index.StudentID);
+    }
+    if (this.arr.length < this.arrdata.length){
+      this.arr.push(trueColor);
+    }
+    console.log("arr = " + this.arr);
+    console.log("arrdata = " + this.arrdata);
+    return this.arr
   }
 
   ShowTime(){

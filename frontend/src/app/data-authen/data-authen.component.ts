@@ -28,7 +28,7 @@ export class DataAuthenComponent implements OnInit {
     this.Username = localStorage.getItem('isLogin');
     this.classService.getmyClass().subscribe(data =>{
       this.myClass = data;
-      this.classService.passofClass(this.myClass[0]["t_class_pass"]);
+      this.classService.passofClass(this.myClass[0]["TSpassword"]);
       this.loadData();
     });
   }

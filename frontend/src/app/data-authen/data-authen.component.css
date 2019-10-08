@@ -103,10 +103,9 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .img-dropdown mat-card img{
-    display: inline;
+    display: flex;
     width: 90px;
     height: 90px;
-    margin-top: 4px;
     background-color: rgb(255, 255, 255);
     transition: all ease-out 300ms;
     justify-content: center;
@@ -123,7 +122,7 @@ body {
     /* padding: 2px; */
   }
   .img-dropdown:hover >  mat-card img{
-    display: inline;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -7,7 +8,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class PepleService {
 
-  private APING = "http://d23b31df.ap.ngrok.io/";
+  private APING = environment.baseUrl;
   constructor(private httpClient : HttpClient,) {}
   
     getDataStudentOfCouse(){

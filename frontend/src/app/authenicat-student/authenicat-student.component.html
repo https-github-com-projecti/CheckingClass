@@ -51,17 +51,20 @@
 
         <table>
           <tr>
-            <th id="NO">No.</th>
-            <th id="Student_id">Student ID</th>
-            <th class="Student_name">Student name</th>
-            <th id="date_authenStudent" *ngFor="let item of tdauthenStudent;let i=index">{{item.date}}</th>
+            <th id="NO" style="width: 100px;">No.</th>
+            <th id="Student_id" style="width: 200px;">Student ID</th>
+            <th class="Student_name" style="width: 900px;">Student name</th>
+            <th id="date_authenStudent" *ngFor="let item of tdauthenStudent;let i=index" style="font-size: 12px;">{{item.date}}</th>
           </tr>
 
           <tr *ngFor="let item of dataAuthen;let i=index">
-            <td id="NO"> <label>{{item.id}}</label> </td>
-            <td id="Student_id"> <label>{{item.idStudent}}</label> </td>
-            <td class="Student_name"> <label>{{item.nameStudent}}</label> </td>
-            <td id="date_authenStudent" *ngFor="let item of item.authenStudent;let i=index"> <label>{{item.stateAuthen}}</label> </td>
+            <td id="NO" style="width: 100px;"> <label>{{item.id}}</label> </td>
+            <td id="Student_id" style="width: 200px;"> <label>{{item.idStudent}}</label> </td>
+            <td class="Student_name" style="width: 900px;"> <label>{{item.nameStudent}}</label> </td>
+            <td id="date_authenStudent" *ngFor="let item of item.authenStudents;let i=index"> 
+              <mat-icon *ngIf="item.stateAuthen == true" svgIcon="done" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+              <mat-icon *ngIf="item.stateAuthen == false" svgIcon="delete" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+            </td>
           </tr>
           <tr> </tr>
         </table>
