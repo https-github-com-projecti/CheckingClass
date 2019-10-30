@@ -7,11 +7,7 @@ import '../main.dart';
 
 class ClassListView {
 
-
-
-  
-  
-  Card getStructuredGridCell(name,image,BuildContext context,User user,int x){
+  Card getStructuredGridCell(name,image,BuildContext context,User user,int tspassword){
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     
     return Card( 
@@ -23,7 +19,7 @@ class ClassListView {
         onTap: () {
           print("tapped");
           // Navigator.of(context).pushNamed("/" + subject);
-          Navigator.push(context,MaterialPageRoute(builder: (context) => Subject(user: user,xx: x,)));
+          Navigator.push(context,MaterialPageRoute(builder: (context) => Subject(user: user,tspassword: tspassword,)));
         },
         child: Column(
           children: <Widget>[
@@ -44,12 +40,16 @@ class ClassListView {
          
     );   
   }
+  
 
- GridView build(BuildContext context, User user) {
+ GridView build(BuildContext context, User user, {BuildContext itemBuilder}) {
    
+  //  ScrollController controller;
     print(subjectName.length);
     // print(subjectName[0].sName);r
     return GridView.count(
+      // physics: ScrollPhysics(parent: ),
+      // controller: controller,
       primary: true,
       padding: const EdgeInsets.all(2.0),
       crossAxisCount: 2,
@@ -58,11 +58,18 @@ class ClassListView {
       crossAxisSpacing: 0.5,
       
       children: <Widget>[
-           for (int i = 0; i < subjectName.length; i++) 
+        // RefreshIndicator( 
+        //   child:  getStructuredGridCell(subjectName[0].sName, "",context,user,subjectName[0].tspassword), 
+        //   onRefresh: () {},
+        //   color: Colors.red,
+
+        // ),
+        for (int i = 0; i < subjectName.length; i++) 
         getStructuredGridCell(subjectName[i].sName, "",context,user,subjectName[i].tspassword)
       ],
     );
   }
+
 
  
  

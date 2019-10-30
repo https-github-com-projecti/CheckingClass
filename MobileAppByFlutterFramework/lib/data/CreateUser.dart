@@ -62,7 +62,10 @@ class CreateUser {
  
     return map;
   }
+  
+
 }
+
 
 Future<CreateUser> createUsers(String url, {Map body}) async {
   print(body);
@@ -79,3 +82,20 @@ Future<CreateUser> createUsers(String url, {Map body}) async {
        //ลองเปลี่ยนดู
   });
 }
+
+Future<CreateUser> editPhoneAndEmail(String url, {Map body}) async {
+  print(body);
+  return http.put(url, body: json.encode(body))
+  .then((http.Response response) {
+    final int statusCode = response.statusCode;
+ 
+    if (statusCode < 200 || statusCode > 400 || json == null) {
+      throw new Exception("Error while fetching data");
+    }  
+    print(json.decode(response.body));
+    print("Put ลอง ดูนะจ๊ะ");
+    
+  });
+}
+
+

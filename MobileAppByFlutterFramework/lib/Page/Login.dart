@@ -7,7 +7,6 @@ import 'package:project1/data/CreateUserLogin.dart';
 import 'package:flutter/services.dart';
 import 'package:project1/data/Subjects.dart';
 import 'package:project1/data/User.dart';
-// import 'package:project1/meterial/MyDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../main.dart';
@@ -37,6 +36,9 @@ class LoginState extends State<Login>{
     if(_usernameController.text!=null && digest.toString() != null){
       CreateUserLogin newCreateLogin = new CreateUserLogin(/*id: 0,*/ username: _usernameController.text, password: digest.toString());
       CreateUserLogin c = await createuserLogine(urlLogin,body: newCreateLogin.toMap());
+      if (c != null){
+        print("--------------NULL-------------");
+      }
     }
 
             
@@ -49,14 +51,15 @@ class LoginState extends State<Login>{
             API.getUsersLogin(users[0].id).then((response) {   
             Iterable list = json.decode(response.body);
             users = list.map((model) => User.fromJson(model)).toList();
-            print(users[0].idstudent);
+            // print(users[0].idstudent);
 
             API.getSubject(users[0].idstudent).then((response) {   
               Iterable list = json.decode(response.body);
+              print(response.body);
               print(json.decode(response.body));
-              print(subjectName[0].sName);
-              subjectName = list.map((model) => Subjects.fromJson(model)).toList();
               
+              subjectName = list.map((model) => Subjects.fromJson(model)).toList();
+              // print(subjectName[0].sName);
               
             });
             Future.delayed(const Duration(milliseconds: 300), () {
@@ -283,11 +286,8 @@ class FormLogin extends StatelessWidget {
                   //     },
                   controller: _usernameController,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                    borderSide: BorderSide(color: Colors.amber,),),
-                    focusedBorder:OutlineInputBorder(
-                       borderSide: const BorderSide(color: Colors.teal, width: 2.0),
-                       borderRadius: BorderRadius.circular(20.0),),
+                    border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)),borderSide: BorderSide(color: Colors.amber,),),
+                    focusedBorder:OutlineInputBorder(borderSide: const BorderSide(color: Colors.teal, width: 2.0),borderRadius: BorderRadius.circular(20.0),),
                     hintText: "username",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
                      
@@ -305,19 +305,15 @@ class FormLogin extends StatelessWidget {
                 ),
                 TextField(
                   obscureText: true,
-                
                   controller: _passwordController,
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0))
-                                                        , borderSide: BorderSide(color: Colors.amber,),
-                            ),
-                    focusedBorder:OutlineInputBorder(
-                                            borderSide: const BorderSide(color: Colors.teal, width: 2.0),
-                                            borderRadius: BorderRadius.circular(20.0),
-                              ),
-                      hintText: "Password",
-                      hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                    border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)), borderSide: BorderSide(color: Colors.amber,),),
+                    focusedBorder:OutlineInputBorder(borderSide: const BorderSide(color: Colors.teal, width: 2.0),borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    hintText: "Password",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)
+                  ),
                 ),
                 SizedBox(height: ScreenUtil.getInstance().setHeight(20),),
                 Row(
@@ -337,21 +333,16 @@ class FormLogin extends StatelessWidget {
                     },
                 ),
                 FlatButton(  
-                      
-                    
                     child: Text("Forgot Password?",
                       style: TextStyle( 
                         color: Colors.blue,
                         fontFamily: "Poppins-Medium",
-                        
                       ),  
                     ),
                     onPressed:(){
                       Navigator.of(context).pushNamed("/"+ forgetpw);
                     },
                 ),
-                
-               
               ],
             )
           ],
