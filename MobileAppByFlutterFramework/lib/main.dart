@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
     // List<CameraDescription> cameras;
 
     return MaterialApp(
-      
+      title: 'SUT Attendances',
       home: SplashScreen(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{

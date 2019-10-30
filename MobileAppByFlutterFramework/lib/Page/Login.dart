@@ -57,7 +57,6 @@ class LoginState extends State<Login>{
               Iterable list = json.decode(response.body);
               print(response.body);
               print(json.decode(response.body));
-              
               subjectName = list.map((model) => Subjects.fromJson(model)).toList();
               // print(subjectName[0].sName);
               

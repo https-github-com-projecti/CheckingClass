@@ -27,15 +27,15 @@ class _HomeClassState extends State<HomeClass> {
   final ClassListView classListView =  ClassListView();
   ScrollController controller;
   Timer timer;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+  // final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
     super.initState();
-    // getDataSubjectAllTime();
+    getDataSubjectAllTime();
     // timer = Timer.periodic(Duration(seconds: 15), (Timer t) => getDataSubjectAllTime());
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    // WidgetsBinding.instance
+        // .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     
   }
 
@@ -48,6 +48,7 @@ class _HomeClassState extends State<HomeClass> {
   }
 
   Future<void> getDataSubjectAllTime() async {
+    print("Home: "+ widget.user.idstudent);
      API.getSubject(widget.user.idstudent).then((response) {   
         Iterable list = json.decode(response.body);
         setState(() {
@@ -188,12 +189,17 @@ class _HomeClassState extends State<HomeClass> {
                 title: Text('LogOut'),
                 onTap: () async {  
                   SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.remove('User');
-                  print(prefs.getInt('User'));
-                  xUser= null;
-                  loginState=null;
+                  setState(() {
+                    prefs.remove('User');
+                    print(prefs.getInt('User'));
+                    xUser= null;
+                    loginState=null;
+                    // subjectName = null ;
+                    users[0]=null;
+                  });
+                
                   Navigator.of(context).pushNamed("/" + login);
-                  users[0]=null;
+                  
                    }
               ),
               ListTile( 

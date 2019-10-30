@@ -8,12 +8,15 @@ class DataCheck{
   // final int id;
   String dataCheck;
   int tspassword;
+  String idstudent;
  
 
   DataCheck({
     // this.id,
     this.dataCheck,
-    this.tspassword
+    this.tspassword,
+    this.idstudent,
+
     
   });
 
@@ -22,6 +25,7 @@ class DataCheck{
       // id : json['id'],
       dataCheck: json['AQRcode'],
       tspassword: json['TSpassword'],
+      idstudent: json['StudentID'],
       
     );
   }
@@ -30,6 +34,7 @@ class DataCheck{
     var map = new Map<String, dynamic>();
     map['AQRcode'] = dataCheck;
     map['TSpassword'] = tspassword;
+    map['StudentID'] = idstudent;
     
     return map;
   }
@@ -50,7 +55,9 @@ Future<DataCheck> send(String url, {Map body}) async {
     }
      print("response: >>> \\|/");
      print(response.body);
-    scanState = response.body;
+     scanState = json.decode(response.body);
+     print('Decode: '+scanState);
+    // scanState.toString().split();
     // return JoinClass.fromJson(json.decode(response.body));
   });
 }

@@ -44,7 +44,7 @@ class ClassListView {
 
  GridView build(BuildContext context, User user, {BuildContext itemBuilder}) {
    
-  //  ScrollController controller;
+    print("จำนวนวิชา \||/");
     print(subjectName.length);
     // print(subjectName[0].sName);r
     return GridView.count(

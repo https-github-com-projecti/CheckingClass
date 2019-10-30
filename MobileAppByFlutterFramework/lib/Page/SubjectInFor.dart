@@ -32,13 +32,13 @@ class SubjectInFor extends StatefulWidget {
  
 class Episode5State extends State<SubjectInFor> {
   var status;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+  // final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
     @override
   void initState() {
     super.initState();
-   
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+  //  getDataSubjectData();
+    // WidgetsBinding.instance
+    //     .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     
   }
 

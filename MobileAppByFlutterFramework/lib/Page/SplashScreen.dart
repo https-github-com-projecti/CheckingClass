@@ -80,17 +80,6 @@ class _SplashScreenState extends State<SplashScreen>  {
      };
 
     return  Scaffold(
-      // theme: ThemeData(
-      //    primarySwatch: Colors.blue,
-      //    primaryColor: Colors.white,
-      //  ),
-    //   builder: (BuildContext context, Widget widget) {
-    //      ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
-    //        return getErrorWidget(context, errorDetails);
-    //      };
-
-    //      return widget;
-    //  },
      body: new Center(
         
         child:Container(
@@ -129,19 +118,6 @@ class _SplashScreenState extends State<SplashScreen>  {
 
 // ทดสอบ error page
  Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
-  // void goToLoginPage(){
-  //   Navigator.of(context).pushNamed("/" + login);
-  // }
-  // startTime() async {
-  //   var _duration = new Duration(seconds: 5);
-  //   return new Timer(_duration,goToLoginPage );
-  // }
-  
-  // void initState() {
-  //   startTime();
-  // }
-
-
    return Container(
      color: Colors.white,
      child: Center(
@@ -153,7 +129,7 @@ class _SplashScreenState extends State<SplashScreen>  {
                mainAxisAlignment: MainAxisAlignment.center,
                children: <Widget>[
                  Text(
-                   "Can't connect to server. ",
+                   "Can't connect to server .",
                    style: Theme.of(context).textTheme.title.copyWith(color: Colors.black),
                    textAlign: TextAlign.center,
                  ),
@@ -162,7 +138,13 @@ class _SplashScreenState extends State<SplashScreen>  {
                ],
              ),
            ),
-          // Text("")
+          Padding(
+            padding: const EdgeInsets.only(top:20.0),
+            child: Text("Please clear App.",
+            style: Theme.of(context).textTheme.title.copyWith(color: Colors.black),
+                   textAlign: TextAlign.center,
+            ),
+          )
 
          ],
        ),

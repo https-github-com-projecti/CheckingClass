@@ -10,6 +10,7 @@ import 'package:project1/data/API.dart';
 import 'package:project1/data/Attendance.dart';
 import 'package:project1/data/DataCheck.dart';
 import 'package:project1/data/Selfie.dart';
+import 'package:project1/data/Subjects.dart';
 import 'package:project1/data/User.dart';
 import 'package:project1/main.dart';
 import 'SubjectInFor.dart';
@@ -53,11 +54,11 @@ class _SubjectState extends State<Subject> {
                   onTap: () {
                     print("Card 1");
                     // print(widget.user.idstudent);
-                    print(atten.idStudent);
+                    print(attendance[0].authenStudent);
 
                     // getAttendance();
-                    print(atten.nameStudent);
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => SubjectInFor(attendance: atten,idstudent: widget.user.idstudent,tspassword: widget.tspassword,)));
+                    // print(atten.nameStudent);
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => SubjectInFor(attendance: attendance[0],idstudent: widget.user.idstudent,tspassword: widget.tspassword,)));
                     // Navigator.of(context).pushNamed("/" + camera);         
                     // Navigator.of(context).pushNamed("/"+ subjectInFor);           
                   },
@@ -134,16 +135,16 @@ class _SubjectState extends State<Subject> {
     setState(() {_value = _counter;});
     if(_value != "-1"){
       
-      DataCheck newSend = new DataCheck(dataCheck: _value,tspassword: widget.tspassword);
+      DataCheck newSend = new DataCheck(dataCheck: _value,tspassword: widget.tspassword,idstudent: widget.user.idstudent);
       DataCheck news = await send(dateCheck,body: newSend.toMap());  
       if (news != null){
         print("--------------NULL-------------");
       }
       print(scanState.toString());
       print("_______________");
-      if(scanState.toString().length > 2){
+      if(scanState.toString() == "Success"){
         _choose();
-      }else{
+      }else if(scanState.toString() == "Error"){
         showDialog(             
           context: context,
           builder: (context) => new AlertDialog(
@@ -178,18 +179,21 @@ class _SubjectState extends State<Subject> {
         _upload();
    }
   void getAttendance() async {
-    
+   
     API.getAttendance(widget.user.idstudent,widget.tspassword.toString()).then((response) {   
-        print(response.body);
-        var save = response.body;
-        print("------------------------------------------------------------------------");
-        var data =save.split('"');
-        print(save.split('"'));
+      print(response.body); 
+      print("------------------------------------------------------------------------");
+      print(json.decode(response.body));
+        Iterable<dynamic> list = json.decode(response.body); 
+        attendance = list.map((model) => Attendance.fromJson(model)).toList();
+        // Iterable<dynamic> list = json.decode(response.body);
+        // Iterable<AuthenStudents> list = json.decode(response.body);
+        
+         
+        // Map list = json.decode(response.body);
+        // atten = new Attendance.fromJson(list);
 
-      
-        Map list = json.decode(data);
-        atten = new Attendance.fromJson(list);
-        final int statusCode = response.statusCode;
+        // final int statusCode = response.statusCode;
         // if (statusCode < 200 || statusCode > 400 || json == null) {
         //   throw new Exception("Error while fetching data");
         // }
