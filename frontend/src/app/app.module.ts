@@ -46,7 +46,6 @@ import 'hammerjs';
 import {AuthenStudentService } from './service/authen-student.service'
 import { SocketService } from "./service/socket.service";
 import { DataAuthenComponent } from './data-authen/data-authen.component';
-import { WebsocketComponent } from './websocket/websocket.component';
 import { SettingProfileComponent } from './setting-profile/setting-profile.component';
 import { SimpleTimer } from 'ng2-simple-timer';
 import { DataAuthenService } from './service/data-authen.service';
@@ -63,7 +62,6 @@ const appRoutes: Routes = [
   {path: 'Score', component: StudentScoreComponent},
   {path: 'DataAuthen', component: DataAuthenComponent},
   {path: 'ProfileSetting', component: SettingProfileComponent},
-  {path: 'Websocket', component: WebsocketComponent},
 ];
 
 @NgModule({
@@ -78,7 +76,6 @@ const appRoutes: Routes = [
     AuthenicatStudentComponent,
     StudentScoreComponent,
     DataAuthenComponent,
-    WebsocketComponent,
     SettingProfileComponent,
   ],
   imports: [

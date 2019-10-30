@@ -1,4 +1,4 @@
-import { userLogin, classOrder} from './../home2/home2.component';
+import { userLogin, classOrder, timeSubjectAuthen} from './../home2/home2.component';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
@@ -43,7 +43,7 @@ export class HomeService {
     headers.append('Access-Control-Allow-Origin', this.API);
     headers.append('Access-Control-Allow-Credentials', 'true');
     headers.append('Content-Type', 'application/json');
-    console.log(JSON.stringify(login));
+    // console.log(JSON.stringify(login));
     return this.httpClient.post<userLogin>(this.APING + 'user/' + 'login', JSON.stringify(login), {headers});
   }
 
@@ -60,7 +60,7 @@ export class HomeService {
     headers.append('Access-Control-Allow-Origin', this.API);
     headers.append('Access-Control-Allow-Credentials', 'true');
     headers.append('Content-Type', 'application/json');
-    console.log(JSON.stringify(newClass));
+    // console.log(JSON.stringify(newClass));
     return this.httpClient.post<classOrder>(this.APING + 'Subject/' + 'Add', JSON.stringify(newClass), {headers});
   }
 
@@ -84,7 +84,7 @@ export class HomeService {
 
   getGetPic(){
     var id = localStorage.getItem('id');
-    console.log(id);
+    // console.log(id);
     return this.httpClient.get(this.APING + 'user/' + 'getMyPic/' + id);
   }
   // getGetPic(){
@@ -92,4 +92,14 @@ export class HomeService {
   //   console.log(id);
   //   return this.httpClient.get(this.API + 'user/' + 'getMyPic/' + id);
   // }
+
+  public updateTime(newTime : timeSubjectAuthen){
+    // console.log(newDate);
+    var pass = localStorage.getItem('passOfCouse');
+    const headers = new HttpHeaders();
+    headers.append('Access-Control-Allow-Origin', this.API);
+    headers.append('Access-Control-Allow-Credentials', 'true');
+    headers.append('Content-Type', 'application/json');
+    return this.httpClient.put(this.APING + "Subject/" + "TimeEdit/" + pass, JSON.stringify(newTime), {headers}); 
+  }
 }

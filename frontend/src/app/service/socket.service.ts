@@ -10,29 +10,30 @@ export class SocketService {
   private socket: WebSocket;
   private listener: EventEmitter<any> = new EventEmitter();
   private API = "http://localhost:8080/";
+  private APING = environment.baseUrlWS;
   constructor(private httpClient: HttpClient) { }
 
   public newSocket(){
     // this.socket = new WebSocket("ws://localhost:8080/websocket/ws");
-    this.socket = new WebSocket("ws://db9982c1.ap.ngrok.io/Websocket/ws");
+    this.socket = new WebSocket("ws:"+ this.APING + "/Websocket/ws");
         this.socket.onopen = event => {
-          console.log("this.socket.onopen : " + event);
+          // console.log("this.socket.onopen : " + event);
             this.listener.emit({"type": "open", "data": event});
         }
         this.socket.onclose = event => {
-          console.log("this.socket.onclose : " + event);
+          // console.log("this.socket.onclose : " + event);
             this.listener.emit({"type": "close", "data": event});
         }
         this.socket.onmessage = event => {
-          console.log("this.socket.onmessage : " + event);
-            console.log("Evant data : " + event.data);
-            console.log("Evant data type : " + typeof event.data);
+          // console.log("this.socket.onmessage : " + event);
+          //   console.log("Evant data : " + event.data);
+          //   console.log("Evant data type : " + typeof event.data);
             this.listener.emit({"type": "message", "data": JSON.parse(event.data)});
         }
   }
 
   public send(data: string) {
-    console.log("Data from func public send : " + data);
+    // console.log("Data from func public send : " + data);
     this.socket.send(data);
   }
 

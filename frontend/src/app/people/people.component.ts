@@ -53,7 +53,6 @@ export class PeopleComponent implements OnInit {
       this.homeService.setID(this.userdata[0]['user_id']); //สำหรับserver DB
       this.homeService.getGetPic().subscribe(data =>{
         this.getPic = data;
-        console.log(this.isEmptyOrSpaces(this.getPic));
         if (this.getPic.trim() === ''){}
         else {  this.mypic = this.getPic }
       });

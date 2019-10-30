@@ -37,7 +37,7 @@ export class RoomdataSource extends DataSource<any>{
 })
 export class AuthenicatStudentComponent implements OnInit {
   mypic: string = '../../assets/fbb2978e127f2920ab9774076ade2a36.png';
-  displayedColumns: string[] = ['id','idStudent', 'nameStudent','date'];
+  displayedColumns: string[] = ['id','idStudent', 'nameStudent','date','id','idStudent', 'nameStudent','date','id','idStudent', 'nameStudent','date','id','idStudent', 'nameStudent','date'];
   dataSource = new RoomdataSource(this.authenService);
   private dataAuthen : any = null;
   tdId : any = null;

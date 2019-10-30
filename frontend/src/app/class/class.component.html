@@ -30,6 +30,9 @@
     <form class="dropdown2">
       <button mat-fab >
         <mat-icon svgIcon="add" id="btn_create" aria-label="tool" style="margin-top:-20px;" (click)="startWebsocket()"></mat-icon>
+        <!-- <div class="dropdown-content">
+          <a *ngFor="let item of timeSubject; let i=index">{{item.Time}}</a>
+        </div> -->
       </button>
     </form>
   </div>
@@ -75,6 +78,11 @@
         <div class="QrCode_panel" >
           <img src="data:image/gif;base64,{{ShowdDataQr}}" style="width: 600px;" />
         </div>
+        <div id="qrCodeBlockPanel" class="qrCodeBlockPanel">
+          <div>
+              <label>Time out</label>
+          </div>
+        </div>
       </section>
 
       <section class="peple_Container">
@@ -90,6 +98,14 @@
           </div>
         </section>
       </section>
+    </div>
+  </div>
+
+  <div class="setTimeAuthenicateContainer" id="setTimeAuthenicateContainer">
+    <div class="setTimeAuthenicatePanel">
+      <form>
+        
+      </form>
     </div>
   </div>
 </body>

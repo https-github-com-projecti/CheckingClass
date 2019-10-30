@@ -45,8 +45,6 @@ export class DataAuthenComponent implements OnInit {
     })
     this.dataAuthenService.getDataStudent().subscribe(data => {
       this.dataStudentforJoin = data;
-      console.log("this.dataStudentforJoin = ");
-      console.log(this.dataStudentforJoin);
     });
   }
   isEmptyOrSpaces(str){

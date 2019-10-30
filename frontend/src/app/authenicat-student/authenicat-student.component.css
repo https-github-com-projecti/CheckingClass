@@ -311,58 +311,41 @@ main .class_site{
 .studentTable-container{
   width: 900px;
   height: auto;
-  background-color: whitesmoke;
+  background-color: aquamarine;
   margin-top: 5%;
   margin-bottom: 5%;
   overflow-x: auto;
 }
 
 table {
-  font-family: arial, sans-serif;
+  display: inline;
   border-collapse: collapse;
-  width: 100%;
-  margin-right: 2px;
   text-align: center;
-  overflow-x: auto;
-  border: 1px solid #ddd;
 }
 
+table th {
+  min-width: 10px;
+  background-color: #f8f8f8;
+}
+
+table th, table td {
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: .75em;
+  border-right: 1px solid rgba(0,0,0,0.05);
+  text-align: center;
+}
 tr {
   /* width: 100%; */
   overflow-x: auto;
   background-color: #f2f2f2;
-}
+} 
 
 td, th {
   border: 1px solid #dddddd;
-}
-
-th, td .Student_name{
-  width: 700px;
-  padding: 20px;
-  margin-right: 10px;
-}
-
-th#Student_id{
-  width: 200px;
-}
-td#Student_id{
-  width: 200px;
-}
-
-th#NO{
-  width: 100px;
-}
-td#NO{
-  width: 100px;
-}
-
-th#date_authenStudent{
-  width: 150px;
-}
-td#date_authenStudent{
-  width: 150px;
-}
+} 
 
 tr:nth-child(even) {
   background-color: #dddddd;

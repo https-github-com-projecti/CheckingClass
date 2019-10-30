@@ -97,23 +97,53 @@
           </mat-form-field>
         </form>
 
+        <label style="margin-bottom: 10px;"> กรุณาระบุเวลาเรียนในเทอมของท่าน </label>
+
+        <form id="formAddTimeSubject" class="formAddTimeSubject">
+            <mat-form-field appearance="outline">
+              <mat-label>Start time of subject</mat-label>
+              <input matInput placeholder="Start time of subject" name="startAuthen" value=" " [(ngModel)]="startAuthen">
+            </mat-form-field>
+            <label> - </label>
+            <mat-form-field appearance="outline">
+                <mat-label>Last time of subject</mat-label>
+                <input matInput placeholder="Last time of subject" name="lastAuthen" value=" " [(ngModel)]="lastAuthen">
+            </mat-form-field>
+        </form>
+        <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+          <mat-chip *ngFor="let chip of newAddTime; let i=index" selected [color]="chip.color">
+            {{chip.Time}}
+            <button mat-icon-button (click)='removeInput(i)'>
+              <mat-icon>indeterminate_check_box</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+        <form>
+          <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon">
+              <mat-icon svgIcon="add" aria-label="tool" (click)="addTimeSubject()"></mat-icon>
+          </button>
+        </form>
+
         <form class="f_b_site" >
             <button id="bt_saveClass" mat-raised-button (click)="checkClassOrder()">Create class</button>
         </form>
       </div>
   </div>
   <div class="grid-container">
-      <div *ngFor="let item of teacherClass; let i=index" class="panel" (click)="selectClass(item)">
+      <div *ngFor="let item of teacherClass; let i=index" class="panel" id="selectClass">
         <div class="card_grid_site" [ngStyle]="{'background-image': 'url('+ randomImg(item,i)[i] +')'}" id="card_grid_site">
-          <div style="width: 270px; height: 200px;position: relative;margin-left: 10px;">
+            <div class="matIcon_Panel">
+              <mat-icon svgIcon="alarm" id="btn_alarm" aria-label="tool" (click)="clickEditAlarm(item)"></mat-icon>
+              <mat-icon svgIcon="delete" id="btn_delete" aria-label="tool"></mat-icon>
+              <mat-icon svgIcon="edit" id="btn_edit" aria-label="tool"></mat-icon>
+            </div>
+          <div class="cradDataPanel" (click)="selectClass(item)">
             <div>
               <p class="textPanel" name="className">{{item.TSName}}</p>
             </div>
             <p class="textIDpanel" name="classId">{{item.TSID}}</p>
             <p class="textDescPanel" name="classDesc">Description : {{item.TSDescription}}</p>
           </div>
-          <mat-icon svgIcon="delete" id="btn_screen" aria-label="tool"></mat-icon>
-          <mat-icon svgIcon="edit" id="btn_screen" aria-label="edit"></mat-icon>
         </div>
     </div>
   </div>
@@ -127,6 +157,33 @@
           <mat-hint style="font-size: 14px;">กรุณานำรหัสที่อาจารย์ผู้สอนมาใส่เพื่อเพิ่มวิชาที่ท่านต้องการเรียน</mat-hint>
         </mat-form-field>
         <button mat-raised-button class="btnJoinClass" (click)="join()">Join class</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="edit_alarm" id="editAlarmContainer">
+    <div class="editAlarmPanel" id="editAlarmPanel"> 
+      <label style="margin-bottom: 5px;">หมดเวลาเข้าเรียน</label>
+      <form style="margin-bottom: 45px;width: 100%;">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>Exam : 30 เวลาจะเป็นนาที</mat-label>
+          <input matInput placeholder="Placeholder" id="input1" name="timeOut" value=" " [(ngModel)]="newtimeSubjectAuthen.Time">
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+          <mat-hint>ถ้าหากใส่ค่าเป็น 0 = นับเวลาจนหมดชั่วโมงเรียน ถ้าหากใส่ค่าอื่น = จะบวกเวลาจากชั่วโมงเรียนไปจนครบกำหนด</mat-hint>
+        </mat-form-field>
+      </form>
+      <label style="margin-bottom: 5px;">เวลาเช็คสายหลังจาก</label>
+      <form style="width: 100%;margin-bottom: 15px;">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>Exam : 30 เวลาจะเป็นนาที</mat-label>
+          <input matInput placeholder="Placeholder" id="input2" name="timelate" value=" " [(ngModel)]="newtimeSubjectAuthen.TimeoutTemp">
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+          <mat-hint>Exam : เราตั้งค่าไว้ที่ 30 นาที และเริ่มเรีมเรียนที่เวลา 8 โมงเช้า แสดงว่า เป็นที่จะเป็นการเช็คสายจะเท่ากับ หลังจาก 8:30 เป็นต้นไป จนกว่าจะครบตามกำหนดเวลาเช็คชื่อ</mat-hint>
+        </mat-form-field>
+      </form>
+
+      <form>
+          <button mat-raised-button class="btnJoinClass" (click)="UpdateTime()">Update time</button>
       </form>
     </div>
   </div>

@@ -7,12 +7,17 @@ import {HomeService} from '../service/home.service';
 import { Router } from '@angular/router';
 import { SocketService } from "../service/socket.service";
 import { DataAuthenService } from '../service/data-authen.service';
+import { newTimeSubject } from '../home2/home2.component';
 
 export interface createQrcode {
   time : string;
   user : string;
   passOfCouse : number;
   clientId : string;
+}
+
+export interface date{
+  ADate : string; 
 }
 
 @Component({
@@ -27,7 +32,7 @@ export class ClassComponent implements OnInit {
   pipe = new DatePipe('en-US');
   private nows = Date.now();
   myFormattedDates = this.pipe.transform(this.nows, 'medium');
-  private Qrcode : Object = null;
+  private Qrcode : any = null;
   private userdata = null;
   public getPic = null; 
   public check : any = null;
@@ -39,10 +44,6 @@ export class ClassComponent implements OnInit {
   private messages: Array<any>;
   private chatBox: string;
   private StudentNow : any = null;  
-  public colors = ['#ff0000', '#00ff00', '#0000ff','#ff0000', '#00ff00', '#0000ff','#ff0000', '#00ff00', '#0000ff','#ff0000', '#00ff00', '#0000ff'];
-  public colors2 = [];
-  public random_color = this.colors[Math.floor(Math.random() * this.colors.length)];
-  private times;
   today: number = Date.now();
   TypeObject : object;
   public state = false
@@ -51,6 +52,8 @@ export class ClassComponent implements OnInit {
   public ATimeAuthen : string;
   private arr : any = [];
   private arrdata : any = [];
+  public timeLimite : any = null; 
+  private timeSubject : any = null;
 
   newQr : createQrcode = {
     time : null,
@@ -65,6 +68,10 @@ export class ClassComponent implements OnInit {
     TSDescription: null,
     TSID: null,
     TSpassword: null,
+  }
+
+  newDate : date = {
+    ADate : null,
   }
 
   constructor(
@@ -90,50 +97,41 @@ export class ClassComponent implements OnInit {
     );
     this.messages = [];
     this.chatBox = "";
-    
    }
 
   ngOnInit() {
-    console.log("state : " + this.state);
-    this.ShowTime()
     var showQr = document.getElementById("showQr-contrainer");
-    // var showQr2 = document.getElementById("showQr-contrainer2");
     var showQr3 = document.getElementById("qrCode_Container");
-    this.loadData();
     this.Username = localStorage.getItem('isLogin');
     this.classService.getmyClass().subscribe(data =>{
       this.myClass = data;
-      console.log( this.myClass);
       this.classService.passofClass(this.myClass[0]["TSpassword"]);
-      console.log("this.classService.passofClass = " + typeof this.myClass[0]["TSpassword"]);
       this.loadData();
     });
 
     window.onclick = function(event) {
       if (event.target == showQr) {
-        // showQr.style.display = "none";
         showQr.style.transition = "all ease-out 600ms";
         showQr.style.transform = "rotateX(60deg)";
         showQr.style.top = "-100%";
+        var panel = document.getElementById("qrCodeBlockPanel");
+        panel.style.display = "none";
+        clearInterval();
       }
       if (event.target ==  showQr3){
-        // showQr.style.display = "none";
         showQr.style.transition = "all ease-out 600ms";
         showQr.style.transform = "rotateX(60deg)";
         showQr.style.top = "-100%";
+        var panel = document.getElementById("qrCodeBlockPanel");
+        panel.style.display = "none";
+        clearInterval();
       }
     }
     this.sockets.getEventListener().subscribe(event => {
-      console.log("event type : " + event.type );
-      console.log("event data : " + event.data.content + "event data type : " + typeof event.data.content);
-      console.log("event data sender : " + event.data.sender);
       if(event.type == "message") {
-        console.log("event message : " + event);
-        console.log(event);
           let data = event.data.content;
           if(event.data.sender) {
               data = event.data.sender + ": " + data;
-              console.log("Data sender : " + data);
               if(event.data.content == "Success"){
                 this.state = true;
                 if(this.stateClickCreate == 1){
@@ -144,54 +142,135 @@ export class ClassComponent implements OnInit {
               } 
               else if ((typeof event.data.content) == "object") {
                 var Id = localStorage.getItem('clientID');
-                console.log("Id = localStorage.getItem('clientID') " + Id);
                 if (Id == event.data.sender){
                   this.StudentNow = event.data.content[0]["Astudent"];
-                  console.log(this.StudentNow);
                 }
               }
               else {
-                console.log("--------------" + typeof event.data.content + "-----------------");
                 alert("Error กรุณาลองใหม่อีกครั้ง");
               }
               
           }
-          console.log("Data : " + data);
           this.messages.push(data);
-          console.log("this.messages.push(data) : " + this.messages);
       }
       if(event.type == "close") {
-        console.log("event close : " + event);
           this.messages.push("/The socket connection has been closed");
       }
       if(event.type == "open") {
-        console.log("event open : " + event);
           this.messages.push("/The socket connection has been established");
       }
     });
   }
 
-  // public ngOnDestroy(): void {
-  //   //Called once, before the instance is destroyed.
-  //   //Add 'implements OnDestroy' to the class.
-  //   this.sockets.close();
-  // }
-
+  //---------------------------------- start websockget ---------------------------------------------
   startWebsocket(){
-    this.sockets.newSocket();
-    this.stateClickCreate = 1;
+    const now = Date.now();
+    if (this.Qrcode == null){
+      this.sockets.newSocket();
+      this.stateClickCreate = 1;
+    }
+    else {
+      this.classService.getmyQr().subscribe(
+        data =>{
+          this.Qrcode = data;
+          var lenNow = this.Qrcode.length - 1;
+          this.newDate.ADate = this.Qrcode[lenNow]["ADate"]; 
+          // -------------- เวลาQrcode ล่าสุด ----------------------------
+          var nowQrcode = this.Qrcode[lenNow]["ADate"];
+          nowQrcode = nowQrcode.split(" ");
+          var nowQrcodeDate = nowQrcode[0];
+          var nowQrcodeTime = nowQrcode[1];
+          var nowQrcodeDateSplite = nowQrcodeDate.split("-");
+          var nowQrcodeTimeSplite = nowQrcodeTime.split(":");
+
+          // -------------- เวลาสิ้นสุด ----------------------------
+          this.classService.getTimeLimite(this.newDate).subscribe(data => {
+            this.timeLimite = data;
+            var timeLimiteHMS = this.timeLimite
+            var timeLimiteHMSSplite = this.timeLimite.split(":");
+
+            // -------------- เวลาปัจจุบัน ----------------------------
+            const myFormattedNowDate : string = this.pipe.transform(now, 'd-MMM-y');  
+            const myFormattedNowTime : string = this.pipe.transform(now, 'H:mm:ss');
+            var myFormattedNowDateSplite = myFormattedNowDate.split("-");
+            var myFormattedNowTimeSplite = myFormattedNowTime.split(":");
+            
+            // Now
+            if ((myFormattedNowTimeSplite[0] == timeLimiteHMSSplite[0]) && (nowQrcodeDate == myFormattedNowDate)){
+              var SUMTimeNowTime = this.SUMAllArrayTreeValue(myFormattedNowTimeSplite);
+              var SUMTimeLimite = this.SUMAllArrayTreeValue(timeLimiteHMSSplite); 
+              if(SUMTimeNowTime > SUMTimeLimite){
+                this.sockets.newSocket();
+                this.stateClickCreate = 1;
+              }
+            }
+             // Month & Year 
+             else if ((myFormattedNowDateSplite[1] != nowQrcodeDateSplite[1]) || (myFormattedNowDateSplite[2] != nowQrcodeDateSplite[2])){
+              this.sockets.newSocket();
+              this.stateClickCreate = 1;
+            }
+            // Day no same
+            else if ((myFormattedNowDateSplite[0] != nowQrcodeDateSplite[0]) && (myFormattedNowDateSplite[1] == nowQrcodeDateSplite[1]) && (myFormattedNowDateSplite[2] == nowQrcodeDateSplite[2])){
+              var countNowDate = +myFormattedNowDateSplite[0];
+              var countnowQrcodeDate = +nowQrcodeDateSplite[0];
+              var CountDate = countNowDate - countnowQrcodeDate;
+              if(CountDate < 0){
+                CountDate = countnowQrcodeDate - countNowDate;
+              }
+              var countNowTimeH = +myFormattedNowTimeSplite[0];
+              var counttimeLimiteH = +timeLimiteHMSSplite[0]; 
+              var CountTimeH = countNowTimeH - counttimeLimiteH;
+              if(CountTimeH < 0){
+                CountTimeH = counttimeLimiteH - countNowTimeH;
+              }
+              if (CountDate > 1){
+                this.sockets.newSocket();
+                this.stateClickCreate = 1;
+              } 
+              else if (CountTimeH != 23) {
+                this.sockets.newSocket();
+                this.stateClickCreate = 1;
+              }
+              else{
+                var numNowQrcodeTimeSpliteM = +nowQrcodeTimeSplite[2]
+                if ((nowQrcodeTimeSplite[0] == "23") && (numNowQrcodeTimeSpliteM > 30) && (CountTimeH == 23)){
+                  if (myFormattedNowTimeSplite[0] == "0") {
+                    var SUMTimeNowTime = this.SUMAllArrayTreeValue(myFormattedNowTimeSplite);
+                    var SUMTimeLimite = this.SUMAllArrayTreeValue(timeLimiteHMSSplite); 
+                    if(SUMTimeNowTime > SUMTimeLimite){
+                      this.sockets.newSocket();
+                      this.stateClickCreate = 1;
+                    }
+                  }
+                }
+              }
+            }
+            // Day == 
+            else {
+              var SUMTimeNowTime = this.SUMAllArrayTreeValue(myFormattedNowTimeSplite);
+              var SUMTimeLimite = this.SUMAllArrayTreeValue(timeLimiteHMSSplite); 
+              if(SUMTimeNowTime > SUMTimeLimite){
+                this.sockets.newSocket();
+                this.stateClickCreate = 1;
+              }
+            }
+          });
+        }
+      );
+    }
   }
 
+  //---------------------------------- สร้าง Qr code ---------------------------------------------
   createAuthenicate(){
     const now = Date.now();
-    const myFormattedDate : string = this.pipe.transform(now, 'medium');
+    const myFormattedDate : string = this.pipe.transform(now, 'd-MMM-y H:mm:ss');
     const user = localStorage.getItem('isLogin');
     this.newQr.time = myFormattedDate;
     this.newQr.user = user;
     this.newQr.passOfCouse = this.myClass[0]["TSpassword"];
-    console.log(this.newQr);
 
-    this.classService.createQr(this.newQr).subscribe(
+    if (this.stateClickCreate == 1){
+      this.classService.createQr(this.newQr).subscribe(
         data => {
           this.check = data;
           if (this.check  == "Success"){
@@ -199,27 +278,25 @@ export class ClassComponent implements OnInit {
             this.ADate = null;
             this.ATimeAuthen = null;
             this.showQrCode();
+            this.stateClickCreate = 0;
           }
         },
         error  => {
-          alert('Error กรุณาลองใหม่');
-          console.log('Error', error);
+          alert('Error กรุณาลองใหม่' + error);
         }     
-    );
+      );
+    }
   }
-
+  //---------------------------------- dataAuthen ---------------------------------------------
   dataAuthen(x){
-    // var panel = document.getElementById("panelCard");
-    // var btn_screen = document.getElementById("btnScreen");
-    // var btn_delete = document.getElementById("btnDelete");
     var pass = x.ASpassword;
     var date = x.ADate;
     var time = x.ATimeAuthen;
     this.dataAuthenService.getDataClassAndQrcode(pass,date,time);
     this.router.navigate(['/DataAuthen']);
-    // console.log(x);
   }
 
+  //---------------------------------- load date ---------------------------------------------
   loadData() {
     this.homeService.getUserdata().subscribe(data =>{
       this.userdata = data;
@@ -227,7 +304,6 @@ export class ClassComponent implements OnInit {
       this.homeService.setID(this.userdata[0]['user_id']); //สำหรับserver DB
       this.homeService.getGetPic().subscribe(data =>{
         this.getPic = data;
-        // console.log(this.isEmptyOrSpaces(this.getPic));
         if (this.getPic.trim() === ''){}
         else {  this.mypic = this.getPic }
       });
@@ -235,29 +311,38 @@ export class ClassComponent implements OnInit {
     this.classService.getmyQr().subscribe(
       data =>{
         this.Qrcode = data;
-        console.log(this.Qrcode);
       }
     );
-    this.StudentNow = null;
+    this.classService.getTStimesubject().subscribe(data => {
+      console.log(data);
+      this.timeSubject = data;
+    });
+    this.StudentNow = null; //refresh UI show student
   }
+  //---------------------------------- เช็คค่า null ---------------------------------------------
   isEmptyOrSpaces(str){
     return str === null || str.match(/^ *$/) !== null;
   }
 
+  //----------------------------------  logout ---------------------------------------------
   logout(){
     localStorage.clear();
     this.router.navigate(['/Home']);
   }
 
+  //----------------------------------  หน้าUI โชQrcode ---------------------------------------------
   showQrCode(){
+    this.ShowdDataQr == null;
+    var panel = document.getElementById("qrCodeBlockPanel");
+    panel.style.display = "none";
     this.classService.getmyQr().subscribe(
       data =>{
         this.oneQrcode = data;
-        console.log(this.oneQrcode);
         var numQrcode = this.oneQrcode.length - 1;
         this.ShowdDataQr = this.oneQrcode[numQrcode]["PicQRcode"];
         this.ADate = this.oneQrcode[numQrcode]["ADate"];
         this.ATimeAuthen = this.oneQrcode[numQrcode]["ATimeAuthen"];
+        this.ShowTime(this.ADate);
       }
     )
     var showQr = document.getElementById("showQr-contrainer");
@@ -267,31 +352,127 @@ export class ClassComponent implements OnInit {
     showQr.style.transform = "rotateX(0deg)";
   }
 
-  zoomScreen(x){
+  //----------------------------------  หน้าUI โชQrcode เก่า ---------------------------------------------
+  public zoomScreen(x){
+    //start web socket 
     if(this.state == false){
       this.sockets.newSocket();
     }
-    console.log(x);
+    //load data student
+    var pass = x.ASpassword;
+    var date = x.ADate;
+    var time = x.ATimeAuthen;
+    this.loadDataJoinStudent(pass, date, time);
+    // set value panel
     this.ShowdDataQr = x.PicQRcode;
-    console.log("x.AClientid " + x.AClientid);
     this.classService.ClientID(x.AClientid);
-    console.log(this.QrShow);
     this.ADate = x.ADate;
     this.ATimeAuthen = x.ATimeAuthen;
+    //start time 
+    this.ShowTime(x.ADate);
+    //check time out
+    const now = Date.now();
+    this.newDate.ADate = x.ADate;
+    // ----------------------- time limite ---------------------------------
+    this.classService.getTimeLimite(this.newDate).subscribe(data => {
+      this.timeLimite = data;
+      var timeLimiteHMS = this.timeLimite;
+      var timeLimiteHMSSplite = this.timeLimite.split(":");
+
+      // -------------- เวลาปัจจุบัน ----------------------------
+      const myFormattedNowDate : string = this.pipe.transform(now, 'd-MMM-y');  
+      const myFormattedNowTime : string = this.pipe.transform(now, 'H:mm:ss');
+      var myFormattedNowDateSplite = myFormattedNowDate.split("-");
+      var myFormattedNowTimeSplite = myFormattedNowTime.split(":");
+
+      // -------------- เวลาQrcode ล่าสุด ----------------------------
+      var nowQrcode = x.ADate; 
+      nowQrcode = nowQrcode.split(" ");
+      var nowQrcodeDate = nowQrcode[0];
+      var nowQrcodeTime = nowQrcode[1];
+      var nowQrcodeDateSplite = nowQrcodeDate.split("-");
+      var nowQrcodeTimeSplite = nowQrcodeTime.split(":");
+      var panel = document.getElementById("qrCodeBlockPanel"); // หน้าต่าง UI
+      // Now
+      if ((myFormattedNowTimeSplite[0] == timeLimiteHMSSplite[0]) && (nowQrcodeDate == myFormattedNowDate)){
+        var SUMTimeNowTime = this.SUMAllArrayTreeValue(myFormattedNowTimeSplite);
+        var SUMTimeLimite = this.SUMAllArrayTreeValue(timeLimiteHMSSplite); 
+        if(SUMTimeNowTime > SUMTimeLimite){
+          panel.style.display = "flex";
+        }
+      }
+      // Month & Year 
+      else if ((myFormattedNowDateSplite[1] != nowQrcodeDateSplite[1]) || (myFormattedNowDateSplite[2] != nowQrcodeDateSplite[2])){
+        panel.style.display = "flex";
+      }
+      // Day no same
+      else if ((myFormattedNowDateSplite[0] != nowQrcodeDateSplite[0]) && (myFormattedNowDateSplite[1] == nowQrcodeDateSplite[1]) && (myFormattedNowDateSplite[2] == nowQrcodeDateSplite[2])){
+        var countNowDate = +myFormattedNowDateSplite[0];
+        var countnowQrcodeDate = +nowQrcodeDateSplite[0];
+        var CountDate = countNowDate - countnowQrcodeDate;
+        if(CountDate < 0){
+          CountDate = countnowQrcodeDate - countNowDate;
+        }
+        var countNowTimeH = +myFormattedNowTimeSplite[0];
+        var counttimeLimiteH = +timeLimiteHMSSplite[0]; 
+        var CountTimeH = countNowTimeH - counttimeLimiteH;
+        if(CountTimeH < 0){
+          CountTimeH = counttimeLimiteH - countNowTimeH;
+        }
+        if (CountDate > 1){
+          panel.style.display = "flex";
+        } 
+        else if (CountTimeH != 23) {
+          panel.style.display = "flex";
+        }
+        else{
+          var numNowQrcodeTimeSpliteM = +nowQrcodeTimeSplite[2]
+          if ((nowQrcodeTimeSplite[0] == "23") && (numNowQrcodeTimeSpliteM > 30) && (CountTimeH == 23)){
+            if (myFormattedNowTimeSplite[0] == "23"){}
+            else if (myFormattedNowTimeSplite[0] == "0") {
+              var SUMTimeNowTime = this.SUMAllArrayTreeValue(myFormattedNowTimeSplite);
+              var SUMTimeLimite = this.SUMAllArrayTreeValue(timeLimiteHMSSplite); 
+              if(SUMTimeNowTime > SUMTimeLimite){
+                panel.style.display = "flex";
+              }
+            }
+          }
+        }
+      }
+      // Day == 
+      else {
+        var SUMTimeNowTime = this.SUMAllArrayTreeValue(myFormattedNowTimeSplite);
+        var SUMTimeLimite = this.SUMAllArrayTreeValue(timeLimiteHMSSplite); 
+        if(SUMTimeNowTime > SUMTimeLimite){
+          panel.style.display = "flex";
+        }
+      }
+    })
+    
+    //Show Qrcode
     var showQr = document.getElementById("showQr-contrainer");
     showQr.style.display = "flex";
     showQr.style.transition = "all ease-out 600ms";
     showQr.style.top = "0";
     showQr.style.transform = "rotateX(0deg)";
-    var pass = x.ASpassword;
-    var date = x.ADate;
-    var time = x.ATimeAuthen;
-    this.loadDataJoinStudent(pass, date, time);
+    
   }
+
+  public SUMAllArrayTreeValue(time){
+    var sum : number = 0;
+    for (var num = 0; num < time.length - 1; num++){
+      var intnum = +time[num];
+      if (num == 0){
+        sum = sum + intnum;
+      } else {
+        sum = (sum*100) + intnum;
+      }
+    }
+    return sum
+  }
+
   public loadDataJoinStudent(x,y,z){
     this.classService.getClientData(x,y,z).subscribe(data => {
-      console.log("data clientData = ");
-      console.log(data);
       this.StudentNow = data;
     });
     this.loadData();
@@ -299,15 +480,12 @@ export class ClassComponent implements OnInit {
 
   public send() {
     if(this.chatBox) {
-      console.log("Data chatbox : " + this.chatBox);
         this.sockets.send(this.chatBox);
         this.chatBox = "";
     }
   }
 
   public isSystemMessage(message: string) {
-  console.log("message : " + message.substring(1));
-  console.log("message : " + message);
   return message.startsWith("/") ? "<strong>" + message.substring(1) + "</strong>" : message;
   }
 
@@ -323,36 +501,19 @@ export class ClassComponent implements OnInit {
     if (this.arr.length < this.arrdata.length){
       this.arr.push(trueColor);
     }
-    console.log("arr = " + this.arr);
-    console.log("arrdata = " + this.arrdata);
     return this.arr
   }
 
-  ShowTime(){
+  ShowTime(ADate){
+    // console.log("Hello Showtime!");
     var time = new Date();
     var H = time.getHours();
     var M = time.getMinutes();
     var S = time.getSeconds();
-
-    if(H == 0){
-      H = 12;
-    }
-    if (H > 12){
-      H = H - 12;
-    }
-    var h = (H < 10) ? "0" + H:H;
-    var m = (M < 10) ? "0" + M:M;
-    var s = (S < 10) ? "0" + S:S;
-    var realTime = h + ":" + + m + ":" + s;
+    var realTime = H + ":" + M + ":" + S;
     document.getElementById('timeShow').innerText = realTime;
     document.getElementById('timeShow').textContent = realTime;
-    var qrCodepanel = document.getElementById('showQr-contrainer');
-    // qrCodepanel.style.backgroundColor = "red";
-    // setInterval(this.offBackgroundColor, 500);
-    setInterval(this.ShowTime, 1000)
-  }
-  offBackgroundColor(){
-    var qrCodepanel = document.getElementById('showQr-contrainer');
-    qrCodepanel.style.backgroundColor = "white";
+    this.newDate.ADate = ADate;
+    setInterval(this.ShowTime, 1000); 
   }
 }
