@@ -16,6 +16,9 @@ type StudentRepository interface {
 	GetStudentAttendance(password string)  ([]model.Attendance, error)
 	GETStudenClasses(id int)  ([]model.Subject, error)
 	DeleteStudent(id string) error
+	EditPassword(username string, password string) error
+	EditEmail(username string, email string) error
+	EditPhone(username string, phone string) error
 }
 //StudentRepositoryMongo is ...
 type StudentRepositoryMongo struct {
@@ -78,4 +81,22 @@ func (StudentMongo StudentRepositoryMongo) GETStudenClasses(id int)  ([]model.Su
 func (StudentMongo StudentRepositoryMongo) DeleteStudent(id string) error{
 	objectID := bson.ObjectIdHex(id)
 	return StudentMongo.ConnectionDB.DB(DBName).C(collectionStudent).RemoveId(objectID)
+}
+//EditPassword is ...
+func (StudentMongo StudentRepositoryMongo) EditPassword(username string, password string) error {
+	name := bson.M{"Susername" : username ,}
+	newPassword := bson.M{"$set": bson.M{"Spassword": password, }}
+	return StudentMongo.ConnectionDB.DB(DBName).C(collectionStudent).Update(name, newPassword)
+}
+//EditEmail is ...
+func (StudentMongo StudentRepositoryMongo) EditEmail(username string, email string) error {
+	name := bson.M{"Susername" : username ,}
+	newPassword := bson.M{"$set": bson.M{"Semail": email, }}
+	return StudentMongo.ConnectionDB.DB(DBName).C(collectionStudent).Update(name, newPassword)
+}
+//EditPhone is ...
+func (StudentMongo StudentRepositoryMongo) EditPhone(username string, phone string) error {
+	name := bson.M{"Susername" : username ,}
+	newPassword := bson.M{"$set": bson.M{"Sphone": phone, }}
+	return StudentMongo.ConnectionDB.DB(DBName).C(collectionStudent).Update(name, newPassword)
 }

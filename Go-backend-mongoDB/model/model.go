@@ -45,7 +45,22 @@ type Subject struct {
 	TSTeacher	  	string          	`json:"TSTeacher" bson:"TSTeacher"`
 	TSpassword		int					`json:"TSpassword" bson:"TSpassword"`
 	TstudentInfo	[]TstudentInfos     `json:"TstudentInfo" bson:"TstudentInfo"`
+	TStimesubject	[]Time         		`json:"TStimesubject" bson:"TStimesubject"`
+	TSlimit			[]Time				`json:"TSlimit" bson:"TSlimit"`
+	TStimeout		[]Time				`json:"TStimeout" bson:"TStimeout"`
+		
 
+}
+//Time is ...
+type Time struct {
+	Time			string             	`json:"Time" bson:"Time"`
+}
+//TimeLimitandtimeOut is ...
+type TimeLimitandtimeOut struct {
+	Timetemp			string             	`json:"Time" bson:"Time"`
+	TimeoutTemp			string             	`json:"TimeoutTemp" bson:"Time"`
+	TSlimit				[]Time				`json:"TSlimit" bson:"TSlimit"`
+	TStimeout			[]Time				`json:"TStimeout" bson:"TStimeout"`
 }
 //TstudentInfos is ...
 type TstudentInfos struct {
@@ -93,10 +108,13 @@ type Student struct {
 
 //Qrcode is ...
 type Qrcode struct {
-	Time 		string `json:"time"`
-	User 		string `json:"user"`
-	Pass 		int    `json:"passOfCouse"`
-	Clientid  	string `json:"clientId"`
+	Time 		string 				`json:"time"`
+	User 		string 				`json:"user"`
+	Pass 		int    				`json:"passOfCouse"`
+	Clientid  	string 				`json:"clientId"`
+	Limit		string				`json:"limit"`
+	Timeout		string				`json:"timeout"`
+	
 }
 //CreateQr is ...
 type CreateQr struct {
@@ -116,6 +134,7 @@ type Attendance struct {
 	ATimeAuthen		int 				`json:"ATimeAuthen" bson:"ATimeAuthen"`
 	Clientid		string				`json:"AClientid" bson:"AClientid"`
 	Astudent		[]CheckStudent		`json:"Astudent" bson:"Astudent"`
+	
 }
 //CheckStudent is ...	
 type CheckStudent struct{
@@ -130,6 +149,10 @@ type CheckStudent struct{
 //CheckQRcode is ...	
 type CheckQRcode struct{
 	AQRcode			string				`json:"AQRcode" bson:"AQRcode"`
+	TSpassword		int					`json:"TSpassword" bson:"TSpassword"`
+	Rtime			string				`json:"Rtime" bson:"Rtime"`
+	StudentID		string         		`json:"StudentID" bson:"StudentID"`
+
 }
 //SubjectOnly is ...	
 type SubjectOnly struct{

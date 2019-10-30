@@ -196,12 +196,16 @@ func (api StudentAPI) GetAttendancebyPassandID(context *gin.Context) {
 		AuthenStudentOut2 = nil
 		// fmt.Println("AuthenStudentOut2 = ", AuthenStudentOut2)
 	}
+	var NewDataPassIn []model.NewDataAttendancebyPass
 	for _, copy := range NewDataAttendancebyPassOut {
 			if sid == copy.IDStudent {
 				fmt.Println("NewDataAttendancebyPassOut = ", copy)
-				context.JSON(http.StatusOK, copy)
+				NewDataPassIn = append(NewDataPassIn,copy)
+				// context.JSON(http.StatusOK, copy)
 			}
 		}
+
+		context.JSON(http.StatusOK, NewDataPassIn)
 }
 //DeleteStudentHandler is ...
 func (api StudentAPI) DeleteStudentHandler(context *gin.Context) {
@@ -212,4 +216,58 @@ func (api StudentAPI) DeleteStudentHandler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 	}
 	context.JSON(http.StatusNoContent, gin.H{"message": "Success"})
+}
+//EditstudentPasswordHandler is ...
+func (api StudentAPI) EditstudentPasswordHandler(context *gin.Context) {
+	var user model.Student
+	err := context.ShouldBindJSON(&user)
+	fmt.Println(user)
+	if err != nil {
+		log.Println("error EditstudentPasswordHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	err = api.StudentRepository.EditPassword(user.Susername, user.Spassword)
+	if err != nil {
+		log.Println("error EditPassword", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK,  "Success")
+}
+//EditstudentEmailHandler is ...
+func (api StudentAPI) EditstudentEmailHandler(context *gin.Context) {
+	var user model.Student
+	err := context.ShouldBindJSON(&user)
+	fmt.Println(user)
+	if err != nil {
+		log.Println("error EditstudentEmailHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	err = api.StudentRepository.EditEmail(user.Susername, user.Semail)
+	if err != nil {
+		log.Println("error EditPassword", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK,  "Success")
+}
+//EditstudentPhoneHandler is ...
+func (api StudentAPI) EditstudentPhoneHandler(context *gin.Context) {
+	var user model.Student
+	err := context.ShouldBindJSON(&user)
+	fmt.Println(user)
+	if err != nil {
+		log.Println("error EditstudentPhoneHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	err = api.StudentRepository.EditPhone(user.Susername, user.Sphone)
+	if err != nil {
+		log.Println("error EditPassword", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK,  "Success")
 }

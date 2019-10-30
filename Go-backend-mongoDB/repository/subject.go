@@ -18,6 +18,8 @@ type SubjectRepository interface {
 	GetOneSubject(id string)  ([]model.Subject, error)
 	GETStudentinClass(id int)  ([]model.Subject, error)
 	UserJoin(user model.JoinUser) error
+	GETTime(id int)  ([]model.Subject, error)
+	EditTimeLimit(id int, subject model.Subject ,time model.TimeLimitandtimeOut) error
 }
 //SubjectRepositoryMongo is ...
 type SubjectRepositoryMongo struct {
@@ -76,4 +78,17 @@ func (SubjectMongo SubjectRepositoryMongo) UserJoin(user model.JoinUser) error{
 	name := bson.M{"TSpassword" : user.Pass ,}
 	newPassword := bson.M{"$push": bson.M{"TSTeacher": user.User, }}
 	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Update(name, newPassword)
+}
+//GETTime is ...
+func (SubjectMongo SubjectRepositoryMongo) GETTime(id int)  ([]model.Subject, error){
+	var subjects []model.Subject
+	name := bson.M{"TSpassword" : id ,}
+	err:= SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Find(name).All(&subjects)
+	return subjects, err
+}
+//EditTimeLimit is ...
+func (SubjectMongo SubjectRepositoryMongo) EditTimeLimit(id int, subject model.Subject ,time model.TimeLimitandtimeOut) error {
+	name := bson.M{"TSpassword" : id ,}
+	newDescription := bson.M{"$set": bson.M{"TSlimit": time.TSlimit, "TStimeout": time.TStimeout}}
+	return SubjectMongo.ConnectionDB.DB(DBName).C(collectionSubject).Update(name, newDescription)
 }

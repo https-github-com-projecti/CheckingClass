@@ -35,10 +35,12 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	route.GET("Subject/list", subjectAPI.SubjectListHandler)
 	route.POST("Subject/Add", subjectAPI.AddSubjectHandeler)
 	route.PUT("Subject/Edit", subjectAPI.EditDescriptionHandler)
+	route.PUT("Subject/TimeEdit/:pass", subjectAPI.EditTimelimitHandler)
 	route.DELETE("Subject/Delete/:id", subjectAPI.DeleteSubjectHandler)
 	route.GET("Subject/GetOneSubject/:id", subjectAPI.GETONESubjectHandeler)
 	route.GET("Subject/GetMySubject/:id", subjectAPI.GETMySubjectHandeler)
 	route.GET("Subject/GetStudent/:pass", subjectAPI.GETStudentinClassHandeler)
+	route.GET("Subject/time/:pass", subjectAPI.GETTimeHandeler)
 	route.POST("Subject/join", subjectAPI.JoinClassHandeler)
 	route.POST("Subject/Userjoin", subjectAPI.UserJoinHandler)
 
@@ -57,7 +59,7 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	route.GET("Attendance/getAttendance/:pass", attendanceAPI.GetAttendanceCheck)
 	route.GET("Attendance/getQRcode/:pass", attendanceAPI.GETQRcoderHandeler)
 	route.POST("Attendance/Checkname", attendanceAPI.CheckNameClassHandeler)
-	route.GET("Attendance/time", attendanceAPI.TimelimitHandeler)
+	route.POST("Attendance/time", attendanceAPI.TimelimitHandeler)
 	route.GET("Attendance/selfie/:pass/:date/:timeauthens", attendanceAPI.GETSelfieHandeler)
 	route.GET("Attendance/clientid/:clientid", attendanceAPI.GETClientHandeler)
 	route.POST("Attendance/Checknamewithsocket", attendanceAPI.CheckwithSocketHandeler)
@@ -82,6 +84,9 @@ func NewRouteUser(route *gin.Engine, connectionDB *mgo.Session) {
 	route.GET("Student/subject/:sid", studentAPI.StudenSubjectListHandler)
 	route.GET("Student/Attendance/:sid/:pass", studentAPI.GetAttendancebyPassandID)
 	route.DELETE("Student/Delete/:id", studentAPI.DeleteStudentHandler)
+	route.PUT("Student/Editpassword", studentAPI.EditstudentPasswordHandler)
+	route.PUT("Student/Editemail", studentAPI.EditstudentEmailHandler)
+	route.PUT("Student/Editphone", studentAPI.EditstudentPhoneHandler)
 	
 	
 	//WS

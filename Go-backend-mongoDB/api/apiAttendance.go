@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/skip2/go-qrcode"
@@ -179,19 +180,105 @@ func (api AttendanceAPI) CheckQRcodeHandeler(context *gin.Context) {
 	var check model.CheckQRcode
 	err := context.ShouldBindJSON(&check)
 	onesubject, err := api.AttendanceRepository.Checkcode(check.AQRcode)
+	str := strings.Split(check.AQRcode,";")
+	pass, err := strconv.Atoi(str[2])
+	fmt.Println(pass)
+	timeinclass, err := api.AttendanceRepository.GETStudenClass(pass)
 	if check.AQRcode == "" {
 		fmt.Println("No data")
 	}
 	if err != nil {
-		log.Println("error LoginHandler", err.Error())
+		log.Println("error CheckQRcodeHandeler", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
-	for _, copy := range onesubject {
-		if copy.AQRcode == check.AQRcode {
-			context.JSON(http.StatusOK, "Success")
+	var can bool
+	var checktime []string
+	var limit []string
+	var timeout []string
+	for _, copy := range timeinclass{
+		for _, copy2 := range copy.TSlimit {
+			limit 	= append(limit,copy2.Time)	
+		}
+		for _, copy2 := range copy.TStimeout {
+			timeout 	= append(timeout,copy2.Time)
+		}
+		for _, copy2 := range copy.TStimesubject {
+			checktime 	= append(checktime,copy2.Time)
 		}
 	}
+	for i := 0;i< len(checktime) ;i++{
+			t := time.Now()
+			
+			check.Rtime = t.Format("2006-01-02 15:04:05")
+			str1 := strings.Split(check.Rtime, " ")
+			str2 := strings.Split(str1[1], ":")
+			chour := str2[0]
+			cmin := str2[1]
+			// fmt.Println ("h1",chour)
+			// fmt.Println ("m1",cmin)
+			// str3 := strings.Split(limit[i], "-")
+			// str4 := strings.Split(str3[0], ".")
+			// limithour2 := str4[0]
+			// limitmin2 := str4[1]
+			// fmt.Println ("h2",limithour2)
+			// fmt.Println ("m2",limitmin2)
+			str5 := strings.Split(timeout[i], "-")
+			str6 := strings.Split(str5[0], ".")
+			outhour3 := str6[0]
+			outmin3 := str6[1]
+			// fmt.Println ("h3",outhour3)
+			// fmt.Println ("m3",outmin3)
+			// str7 := strings.Split(checktime[i], "-")
+			// str8 := strings.Split(str7[0], ".")
+			// basehour := str8[0]
+			// basemin  := str8[1]
+			// fmt.Println ("base",basehour)
+			// fmt.Println ("basemin",basemin)
+			if(chour < outhour3 &&  cmin > outmin3 || chour == outhour3 &&  cmin < outmin3){
+				can = true
+				fmt.Println("can =",  can)
+			}else{
+				can = false
+				fmt.Println("can=" , can)
+
+			}
+	}
+	studenClass, err:= api.AttendanceRepository.GetAttendance(str[2])
+	authen,err := strconv.Atoi (str[3])
+
+	for _, copy := range studenClass {
+		for _, copy2 := range copy.Astudent {
+			if copy2.StudentID == check.StudentID && copy.ATimeAuthen == authen{
+				fmt.Println ("checked")
+				can = false
+				fmt.Println("can=" , can)
+			}
+		
+		}
+	}
+		
+	
+	fmt.Println("checktime",checktime)
+	fmt.Println("limit",limit)
+	fmt.Println("timeout",timeout)
+	fmt.Println("check.Rtime",check.Rtime)
+
+
+
+
+	for _, copy := range onesubject {
+		
+		if copy.AQRcode == check.AQRcode &&  check.TSpassword == pass && can == true {
+
+			context.JSON(http.StatusOK, "Success")
+			
+		}else{
+			context.JSON(http.StatusOK, "Error")
+		}
+	}
+
+	
 
 }
 
@@ -226,29 +313,32 @@ func (api AttendanceAPI) TimelimitHandeler(context *gin.Context) {
 		return
 	}
 
-	str := strings.Split(time.Date, ",")
-	fmt.Println(str[2])
+	str := strings.Split(time.Date, " ")
+	fmt.Println("TIME ---",time)
+	fmt.Println("STR---",str)
 
-	str2 := strings.Split(str[2], ":")
-	str3 := strings.Split(str2[0], " ")
-	fmt.Println(str3)
+	str2 := strings.Split(str[1], ":")
+	fmt.Println(str2)
 	i, err := strconv.Atoi(str2[1])
-	fmt.Println("str2[1] is -----" + str2[1])
-	fmt.Println("i is -----", i)
-	s, err := strconv.Atoi(str3[1])
-	fmt.Println("str2[0] is -----" + str2[0])
-	fmt.Println("j is -----++++", s)
+	s, err := strconv.Atoi(str2[0])
+	x :=s+1
 	var s0, s1 string
 	if i+30 >= 60 {
+		fmt.Println("60++++")
 		s1 = strconv.Itoa((i + 30) - 60)
-		s0 = strconv.Itoa(s + 1)
+		if x > 23 {
+			s = 0
+			s0 = strconv.Itoa(s)
+		}else {
+		s0 = strconv.Itoa(s+1)
+		}
 	} else {
 		s0 = strconv.Itoa(s)
 		s1 = strconv.Itoa((i + 30))
 	}
 
-	limit := s0 + ":" + s1 + ":" + str2[2]
-	fmt.Println("Start time is -----" + str[2])
+	limit := s0 + ":" + s1 + ":" +str2[2]
+	fmt.Println("Start time is -----" + str[1])
 	fmt.Println("limit is -----" + limit)
 
 	context.JSON(http.StatusOK, limit)
@@ -338,29 +428,63 @@ func (api AttendanceAPI) CheckwithSocketHandeler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"message1": err.Error()})
 		return
 	}
-	attendances, err := api.AttendanceRepository.CheckingNamewithSocket(check)
+	fmt.Println(check.AQRcode)
+	str := strings.Split(check.AQRcode,";")
+	fmt.Println(str[2])
+	fmt.Println(str[3])
+	studenClass, err:= api.AttendanceRepository.GetAttendance(str[2])
+	authen,err := strconv.Atoi (str[3])
 	if err != nil {
-		log.Println("error CheckingName", err.Error())
+		log.Println("error GETTime", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
+	var attendances []model.Attendance
+	for _, copy := range studenClass {
+		for _, copy2 := range copy.Astudent {
+			if copy2.StudentID == check.StudentID && copy.ATimeAuthen == authen{
+				fmt.Println ("checked")
+				return
+			}
+		
+		}
+	}
+	attendances, err = api.AttendanceRepository.CheckingNamewithSocket(check)
+				if err != nil {
+					log.Println("error CheckingName", err.Error())
+					context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+					return
+				}
+	fmt.Println ("checking")
 	context.JSON(http.StatusOK, "Success")
 	var clientid string
 	var data1 newDataSocket
 	var data2 []newDataSocket
 	for _, copy := range attendances {
-		clientid = copy.Clientid
-		data1.Astudent = copy.Astudent
-		fmt.Println("data1 = ", data1)
-		data2 = append(data2, data1)
+	clientid = copy.Clientid
+	data1.Astudent = copy.Astudent
+	fmt.Println("data1 = ", data1)
+	data2 = append(data2, data1)
 	}
+	jsonMessage, _ := json.Marshal(&Message2{Sender: clientid, Content: data2})
+	websocket.Manager.Broadcast <- jsonMessage
+	
+	// var clientid string
+	// var data1 newDataSocket
+	// var data2 []newDataSocket
+	// for _, copy := range attendances {
+	// 	clientid = copy.Clientid
+	// 	data1.Astudent = copy.Astudent
+	// 	fmt.Println("data1 = ", data1)
+	// 	data2 = append(data2, data1)
+	// }
 	// out, err := json.Marshal(data2)
 	// fmt.Printf("Out(type) = %T \n", out)
 	// if err != nil {
 	// 	panic(err)
 	// }
-	jsonMessage, _ := json.Marshal(&Message2{Sender: clientid, Content: data2})
-	websocket.Manager.Broadcast <- jsonMessage
+	// jsonMessage, _ := json.Marshal(&Message2{Sender: clientid, Content: data2})
+	// websocket.Manager.Broadcast <- jsonMessage
 	// context.JSON(http.StatusOK, data2)
 }
 

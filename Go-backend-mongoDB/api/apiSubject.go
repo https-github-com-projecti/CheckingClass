@@ -14,7 +14,8 @@ import (
 	"fmt"
 	"strconv"
 	"math/rand"
-    "time"
+	"time"
+	"strings"
 	
 )
 //SubjectAPI is ...
@@ -42,9 +43,7 @@ func (api SubjectAPI) AddSubjectHandeler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
-
 	subject.TSpassword = api.RandPassClass() 
-
 	err = api.SubjectRepository.AddSubject(subject)
 	if err != nil {
 		log.Println("error AddSubjectHandeler", err.Error())
@@ -108,12 +107,32 @@ func (api SubjectAPI) JoinClassHandeler(context *gin.Context) {
 	}
 	i, _  := strconv.Atoi(join.Password)
 	fmt.Println(i)
-	err = api.SubjectRepository.JoinClass(i, join)
 	if err != nil {
 		log.Println("error JoinClass", err.Error())
 		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 		return
 	}
+	timeinclass, err:= api.SubjectRepository.GETTime(i)
+	if err != nil {
+		log.Println("error GETTime", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	for _, copy := range timeinclass {
+		for _, copy2 := range copy.TstudentInfo {
+			if copy2.StudentID  == join.StudentID{
+			fmt.Println("joined")
+			return
+		}
+		}
+
+	}
+
+
+			
+	fmt.Println("joining")
+	err = api.SubjectRepository.JoinClass(i, join)
+	
 	context.JSON(http.StatusOK, "WTF!")
 }
 //GETONESubjectHandeler is ...
@@ -213,5 +232,116 @@ func (api SubjectAPI) UserJoinHandler(context *gin.Context) {
 		return
 	}
 	context.JSON(http.StatusOK, "Success")
-}
 
+}
+//GETTimeHandeler is ...
+func (api SubjectAPI) GETTimeHandeler(context *gin.Context) {
+	id:= context.Param("pass")
+	fmt.Println(id)
+	i, err := strconv.Atoi(id)
+	timeinclass, err:= api.SubjectRepository.GETTime(i)
+	
+	if err != nil {
+		log.Println("error GETTimeHandeler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	fmt.Println(timeinclass)
+	for _, copy := range timeinclass {
+		context.JSON(http.StatusOK, copy.TStimesubject)
+	}
+}
+//EditTimelimitHandler is ...
+func (api SubjectAPI) EditTimelimitHandler(context *gin.Context) {
+	var subject model.Subject
+	var time model.TimeLimitandtimeOut
+	err := context.ShouldBindJSON(&time)
+	if err != nil {
+		log.Println("error EditTimelimitHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	pass:= context.Param("pass")
+	fmt.Println(pass)
+	id, err := strconv.Atoi(pass)
+	timeinclass, err:= api.SubjectRepository.GETTime(id)
+	if err != nil {
+		log.Println("error GETTime", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	
+	for _, copy := range timeinclass {
+		time.TSlimit = copy.TStimesubject
+		time.TStimeout = copy.TStimesubject
+		
+		
+	}
+	fmt.Println("time",time)
+	fmt.Println("time.TSlimit",time.TSlimit)
+	fmt.Println("time.TStimeout",time.TStimeout)
+	// time.Timetemp = "10"
+	// time.TimeoutTemp = "90"
+	var temptime model.TimeLimitandtimeOut
+	for _, copy := range time.TSlimit {
+		fmt.Println(copy)
+		str := strings.Split(copy.Time, "-")
+		fmt.Println(str)
+		str2 := strings.Split(str[0], ".")
+		fmt.Println(str2)
+		h, err := strconv.Atoi(str2[0])
+		m, err := strconv.Atoi(str2[1])
+		j, err := strconv.Atoi(time.Timetemp)
+		fmt.Println(err)
+		var h1 int
+		if j/60 !=0 {
+			h1 = j/60
+			
+		}
+		j1 := j%60
+		h = h+h1
+		x :=m+j1
+		s0 := strconv.Itoa(x)
+		s1 := strconv.Itoa(h)
+		copy.Time = s1+"."+s0+"-"+str[1]
+		temptime.TSlimit = append(temptime.TSlimit,copy) 
+		fmt.Println(copy.Time)
+	}
+	time.TSlimit = temptime.TSlimit
+
+	for _, copy := range time.TStimeout {
+		str := strings.Split(copy.Time, "-")
+		str2 := strings.Split(str[0], ".")
+		h, err := strconv.Atoi(str2[0])
+		m, err := strconv.Atoi(str2[1])
+		j, err := strconv.Atoi(time.TimeoutTemp)
+		fmt.Println(err)
+		var h1 int
+		if j/60 !=0 {
+			h1 = j/60
+			
+		}
+		j1 := j%60
+		h = h+h1
+		x :=m+j1
+		s0 := strconv.Itoa(x)
+		s1 := strconv.Itoa(h)
+		copy.Time = s1+"."+s0+"-"+str[1]
+		temptime.TStimeout = append(temptime.TStimeout,copy) 
+		fmt.Println(copy.Time)
+	}
+	time.TStimeout = temptime.TStimeout
+	
+	fmt.Println("time.Limit",time.TSlimit)
+	fmt.Println("time.Timeout",time.TStimeout)
+	
+	
+
+	err = api.SubjectRepository.EditTimeLimit(id ,subject,time)
+	if err != nil {
+		log.Println("error EditTimelimitHandler", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, "Success")
+}
